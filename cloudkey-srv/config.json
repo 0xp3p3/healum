@@ -1,0 +1,11 @@
+{
+  "service": {
+    "version": "0.0.1",
+    "name": "healum.srv.cloudkey",
+    "description": "Key management service cloudkey-srv which is backed by Google Cloud Key Management Service (KMS)"
+  },
+  "gce": {
+    "ProjectID": "atlassian-1020",
+    "BucketName": "go-project-test"
+  }
+}

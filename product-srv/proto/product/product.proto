@@ -1,0 +1,264 @@
+syntax = "proto3";
+
+package go.micro.srv.product;
+import "server/user-srv/proto/user/user.proto";
+import "server/static-srv/proto/static/static.proto";
+
+service ProductService {
+  rpc AllProducts(AllProductsRequest) returns (AllProductsResponse) {}
+  rpc CreateProduct(CreateProductRequest) returns (CreateProductResponse) {}
+  rpc UpdateProduct(UpdateProductRequest) returns (UpdateProductResponse) {}
+  rpc ReadProduct(ReadProductRequest) returns (ReadProductResponse) {}
+  rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse) {}
+  rpc AutocompleteProduct(AutocompleteProductRequest)
+      returns (AutocompleteProductResponse) {}
+
+  rpc AllServices(AllServicesRequest) returns (AllServicesResponse) {}
+  rpc CreateService(CreateServiceRequest) returns (CreateServiceResponse) {}
+  rpc UpdateService(UpdateServiceRequest) returns (UpdateServiceResponse) {}
+  rpc ReadService(ReadServiceRequest) returns (ReadServiceResponse) {}
+  rpc DeleteService(DeleteServiceRequest) returns (DeleteServiceResponse) {}
+  rpc AutocompleteService(AutocompleteServiceRequest)
+      returns (AutocompleteServiceResponse) {}
+
+  rpc AllBatches(AllBatchesRequest) returns (AllBatchesResponse) {}
+  rpc CreateBatch(CreateBatchRequest) returns (CreateBatchResponse) {}
+  rpc UpdateBatch(UpdateBatchRequest) returns (UpdateBatchResponse) {}
+  rpc ReadBatch(ReadBatchRequest) returns (ReadBatchResponse) {}
+  rpc DeleteBatch(DeleteBatchRequest) returns (DeleteBatchResponse) {}
+}
+
+message ProductData { Product product = 1; }
+
+message ProductArrData { repeated Product products = 1; }
+
+message ServiceData { Service service = 1; }
+
+message ServiceArrData { repeated Service services = 1; }
+
+message BatchData { go.micro.srv.static.Batch batch = 1; }
+
+message BatchArrData { repeated go.micro.srv.static.Batch batches = 1; }
+
+message AllProductsRequest {
+  string org_id = 1;
+  string team_id = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+  string sort_parameter = 5;
+  string sort_direction = 6;
+}
+
+message AllProductsResponse {
+  ProductArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateProductRequest {
+  Product product = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message CreateProductResponse {
+  ProductData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message UpdateProductRequest {
+  Product product = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message UpdateProductResponse {
+  ProductData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ReadProductRequest {
+  string id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message ReadProductResponse {
+  ProductData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message DeleteProductRequest {
+  string id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message DeleteProductResponse {
+  int64 code = 1;
+  string message = 2;
+}
+
+message AutocompleteProductRequest { string title = 1; }
+
+message AutocompleteProductResponse {
+  ProductArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message AllServicesRequest {
+  string org_id = 1;
+  string team_id = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+  string sort_parameter = 5;
+  string sort_direction = 6;
+}
+
+message AllServicesResponse {
+  ServiceArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateServiceRequest {
+  Service service = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message CreateServiceResponse {
+  ServiceData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message UpdateServiceRequest {
+  Service service = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message UpdateServiceResponse {
+  ServiceData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ReadServiceRequest {
+  string id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message ReadServiceResponse {
+  ServiceData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message DeleteServiceRequest {
+  string id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message DeleteServiceResponse {
+  int64 code = 1;
+  string message = 2;
+}
+
+message AutocompleteServiceRequest { string title = 1; }
+
+message AutocompleteServiceResponse {
+  ServiceArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message AllBatchesRequest {
+  string org_id = 1;
+  string team_id = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+  string sort_parameter = 5;
+  string sort_direction = 6;
+}
+
+message AllBatchesResponse {
+  BatchArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateBatchRequest {
+  go.micro.srv.static.Batch batch = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message CreateBatchResponse {
+  BatchData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message UpdateBatchRequest {
+  go.micro.srv.static.Batch batch = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message UpdateBatchResponse {
+  BatchData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ReadBatchRequest {
+  string id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message ReadBatchResponse {
+  BatchData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message DeleteBatchRequest {
+  string id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message DeleteBatchResponse {
+  int64 code = 1;
+  string message = 2;
+}
+
+message Product {
+  string id = 1;
+  string org_id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string name = 5;
+  string description = 6;
+  string image = 7;                     // can be null
+  go.micro.srv.user.User createdBy = 8; // team member id
+  repeated go.micro.srv.user.User owners = 9;
+}
+
+message Service {
+  string id = 1;
+  string name = 2;
+  string org_id = 3;
+  int64 created = 4;
+  int64 updated = 5;
+  repeated go.micro.srv.static.Batch batches = 6;
+}

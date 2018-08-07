@@ -1,0 +1,10 @@
+{
+    "dependencies": {
+        "golang.org/x/oauth2": {
+            "branch": "master"
+        },
+        "google.golang.org/api": {
+            "branch": "master"
+        }
+    }
+}

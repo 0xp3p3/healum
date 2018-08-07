@@ -1,0 +1,10 @@
+{
+  "service": {
+    "version": "0.0.1",
+    "name": "go.micro.srv.sms",
+    "description": "SMS server is a microservice to send sms message",
+    "TWILIO_AUTH_TOKEN": "f6b2a085c65d3c3981879abfb3219692",
+    "TWILIO_ACCOUNT_SID": "ACaa3f9590a634f3276c392a34471cf975",
+    "TWILIO_FROM": "+13152828170"
+  }
+}

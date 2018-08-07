@@ -1,0 +1,1964 @@
+syntax = "proto3";
+
+package go.micro.srv.static;
+
+service StaticService {
+    rpc AllApps(AllAppsRequest) returns (AllAppsResponse) {}
+    rpc CreateApp(CreateAppRequest) returns (CreateAppResponse) {}
+    rpc UpdateApp(UpdateAppRequest) returns (UpdateAppResponse) {}
+    rpc ReadApp(ReadAppRequest) returns (ReadAppResponse) {}
+    rpc DeleteApp(DeleteAppRequest) returns (DeleteAppResponse) {}
+
+    rpc AllPlatforms(AllPlatformsRequest) returns (AllPlatformsResponse) {}
+    rpc CreatePlatform(CreatePlatformRequest) returns (CreatePlatformResponse) {}
+    rpc UpdatePlatform(UpdatePlatformRequest) returns (UpdatePlatformResponse) {}
+    rpc ReadPlatform(ReadPlatformRequest) returns (ReadPlatformResponse) {}
+    rpc DeletePlatform(DeletePlatformRequest) returns (DeletePlatformResponse) {}
+
+    rpc AllDevices(AllDevicesRequest) returns (AllDevicesResponse) {}
+    rpc CreateDevice(CreateDeviceRequest) returns (CreateDeviceResponse) {}
+    rpc UpdateDevice(UpdateDeviceRequest) returns (UpdateDeviceResponse) {}
+    rpc ReadDevice(ReadDeviceRequest) returns (ReadDeviceResponse) {}
+    rpc DeleteDevice(DeleteDeviceRequest) returns (DeleteDeviceResponse) {}
+    
+    rpc AllWearables(AllWearablesRequest) returns (AllWearablesResponse) {}
+    rpc CreateWearable(CreateWearableRequest) returns (CreateWearableResponse) {}
+    rpc UpdateWearable(UpdateWearableRequest) returns (UpdateWearableResponse) {}
+    rpc ReadWearable(ReadWearableRequest) returns (ReadWearableResponse) {}
+    rpc DeleteWearable(DeleteWearableRequest) returns (DeleteWearableResponse) {}
+
+    rpc AllMarkers(AllMarkersRequest) returns (AllMarkersResponse) {}
+    rpc CreateMarker(CreateMarkerRequest) returns (CreateMarkerResponse) {}
+    rpc UpdateMarker(UpdateMarkerRequest) returns (UpdateMarkerResponse) {}
+    rpc ReadMarker(ReadMarkerRequest) returns (ReadMarkerResponse) {}
+    rpc DeleteMarker(DeleteMarkerRequest) returns (DeleteMarkerResponse) {}
+    rpc FilterMarker(FilterMarkerRequest) returns (FilterMarkerResponse) {}
+
+    rpc AllModules(AllModulesRequest) returns (AllModulesResponse) {}
+    rpc CreateModule(CreateModuleRequest) returns (CreateModuleResponse) {}
+    rpc UpdateModule(UpdateModuleRequest) returns (UpdateModuleResponse) {}
+    rpc ReadModule(ReadModuleRequest) returns (ReadModuleResponse) {}
+    rpc DeleteModule(DeleteModuleRequest) returns (DeleteModuleResponse) {}
+
+    rpc AllBehaviourCategories(AllBehaviourCategoriesRequest) returns (AllBehaviourCategoriesResponse) {}
+    rpc ReadBehaviourCategory(ReadBehaviourCategoryRequest) returns (ReadBehaviourCategoryResponse) {}
+    rpc CreateBehaviourCategory(CreateBehaviourCategoryRequest) returns (CreateBehaviourCategoryResponse) {}
+    rpc UpdateBehaviourCategory(UpdateBehaviourCategoryRequest) returns (UpdateBehaviourCategoryResponse) {}
+    rpc DeleteBehaviourCategory(DeleteBehaviourCategoryRequest) returns (DeleteBehaviourCategoryResponse) {}
+    rpc FilterBehaviourCategory(FilterBehaviourCategoryRequest) returns (FilterBehaviourCategoryResponse) {}
+
+    rpc AllSocialTypes(AllSocialTypesRequest) returns (AllSocialTypesResponse) {}
+    rpc CreateSocialType(CreateSocialTypeRequest) returns (CreateSocialTypeResponse) {}
+    rpc UpdateSocialType(UpdateSocialTypeRequest) returns (UpdateSocialTypeResponse) {}
+    rpc ReadSocialType(ReadSocialTypeRequest) returns (ReadSocialTypeResponse) {}
+    rpc DeleteSocialType(DeleteSocialTypeRequest) returns (DeleteSocialTypeResponse) {}
+
+    rpc AllNotifications(AllNotificationsRequest) returns (AllNotificationsResponse) {}
+    rpc CreateNotification(CreateNotificationRequest) returns (CreateNotificationResponse) {}
+    rpc UpdateNotification(UpdateNotificationRequest) returns (UpdateNotificationResponse) {}
+    rpc ReadNotification(ReadNotificationRequest) returns (ReadNotificationResponse) {}
+    rpc DeleteNotification(DeleteNotificationRequest) returns (DeleteNotificationResponse) {}
+
+    rpc AllTrackerMethods(AllTrackerMethodsRequest) returns (AllTrackerMethodsResponse) {}
+    rpc CreateTrackerMethod(CreateTrackerMethodRequest) returns (CreateTrackerMethodResponse) {}
+    rpc UpdateTrackerMethod(UpdateTrackerMethodRequest) returns (UpdateTrackerMethodResponse) {}
+    rpc ReadTrackerMethod(ReadTrackerMethodRequest) returns (ReadTrackerMethodResponse) {}
+    rpc DeleteTrackerMethod(DeleteTrackerMethodRequest) returns (DeleteTrackerMethodResponse) {}
+    rpc FilterTrackerMethod(FilterTrackerMethodRequest) returns (FilterTrackerMethodResponse) {}
+
+    rpc AllBehaviourCategoryAims(AllBehaviourCategoryAimsRequest) returns (AllBehaviourCategoryAimsResponse) {}
+    rpc CreateBehaviourCategoryAim(CreateBehaviourCategoryAimRequest) returns (CreateBehaviourCategoryAimResponse) {}
+    rpc UpdateBehaviourCategoryAim(UpdateBehaviourCategoryAimRequest) returns (UpdateBehaviourCategoryAimResponse) {}
+    rpc ReadBehaviourCategoryAim(ReadBehaviourCategoryAimRequest) returns (ReadBehaviourCategoryAimResponse) {}
+    rpc DeleteBehaviourCategoryAim(DeleteBehaviourCategoryAimRequest) returns (DeleteBehaviourCategoryAimResponse) {}
+
+    rpc AllContentParentCategories(AllContentParentCategoriesRequest) returns (AllContentParentCategoriesResponse) {}
+    rpc CreateContentParentCategory(CreateContentParentCategoryRequest) returns (CreateContentParentCategoryResponse) {}
+    rpc UpdateContentParentCategory(UpdateContentParentCategoryRequest) returns (UpdateContentParentCategoryResponse) {}
+    rpc ReadContentParentCategory(ReadContentParentCategoryRequest) returns (ReadContentParentCategoryResponse) {}
+    rpc DeleteContentParentCategory(DeleteContentParentCategoryRequest) returns (DeleteContentParentCategoryResponse) {}
+
+    rpc AllContentCategories(AllContentCategoriesRequest) returns (AllContentCategoriesResponse) {}
+    rpc CreateContentCategory(CreateContentCategoryRequest) returns (CreateContentCategoryResponse) {}
+    rpc UpdateContentCategory(UpdateContentCategoryRequest) returns (UpdateContentCategoryResponse) {}
+    rpc ReadContentCategory(ReadContentCategoryRequest) returns (ReadContentCategoryResponse) {}
+    rpc DeleteContentCategory(DeleteContentCategoryRequest) returns (DeleteContentCategoryResponse) {}
+    rpc ReadContentCategoryByNameslug(ReadByNameslugRequest) returns (ReadContentCategoryResponse) {}
+    rpc ReadContentCategoryByNameslugOrCreate(ReadByNameslugRequest) returns (ReadContentCategoryResponse) {}
+
+    rpc AllContentTypes(AllContentTypesRequest) returns (AllContentTypesResponse) {}
+    rpc CreateContentType(CreateContentTypeRequest) returns (CreateContentTypeResponse) {}
+    rpc UpdateContentType(UpdateContentTypeRequest) returns (UpdateContentTypeResponse) {}
+    rpc ReadContentType(ReadContentTypeRequest) returns (ReadContentTypeResponse) {}
+    rpc DeleteContentType(DeleteContentTypeRequest) returns (DeleteContentTypeResponse) {}
+
+    rpc AllContentSourceTypes(AllContentSourceTypesRequest) returns (AllContentSourceTypesResponse) {}
+    rpc CreateContentSourceType(CreateContentSourceTypeRequest) returns (CreateContentSourceTypeResponse) {}
+    rpc UpdateContentSourceType(UpdateContentSourceTypeRequest) returns (UpdateContentSourceTypeResponse) {}
+    rpc ReadContentSourceType(ReadContentSourceTypeRequest) returns (ReadContentSourceTypeResponse) {}
+    rpc DeleteContentSourceType(DeleteContentSourceTypeRequest) returns (DeleteContentSourceTypeResponse) {}
+
+    rpc AllModuleTriggers(AllModuleTriggersRequest) returns (AllModuleTriggersResponse) {}
+    rpc CreateModuleTrigger(CreateModuleTriggerRequest) returns (CreateModuleTriggerResponse) {}
+    rpc UpdateModuleTrigger(UpdateModuleTriggerRequest) returns (UpdateModuleTriggerResponse) {}
+    rpc ReadModuleTrigger(ReadModuleTriggerRequest) returns (ReadModuleTriggerResponse) {}
+    rpc DeleteModuleTrigger(DeleteModuleTriggerRequest) returns (DeleteModuleTriggerResponse) {}
+    rpc FilterModuleTrigger(FilterModuleTriggerRequest) returns (FilterModuleTriggerResponse) {}
+
+    rpc AllTriggerContentTypes(AllTriggerContentTypesRequest) returns (AllTriggerContentTypesResponse) {}
+    rpc CreateTriggerContentType(CreateTriggerContentTypeRequest) returns (CreateTriggerContentTypeResponse) {}
+    rpc UpdateTriggerContentType(UpdateTriggerContentTypeRequest) returns (UpdateTriggerContentTypeResponse) {}
+    rpc ReadTriggerContentType(ReadTriggerContentTypeRequest) returns (ReadTriggerContentTypeResponse) {}
+    rpc DeleteTriggerContentType(DeleteTriggerContentTypeRequest) returns (DeleteTriggerContentTypeResponse) {}
+    rpc FilterTriggerContentType(FilterTriggerContentTypeRequest) returns (FilterTriggerContentTypeResponse) {}
+
+    rpc CreateRole(CreateRoleRequest) returns (CreateRoleResponse) {}
+    rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse) {}
+    rpc ReadRoleByNameslug(ReadRoleByNameslugRequest) returns (ReadRoleByNameslugResponse) {}
+
+    rpc AllSetbacks(AllSetbacksRequest) returns (AllSetbacksResponse) {}
+    rpc CreateSetback(CreateSetbackRequest) returns (CreateSetbackResponse) {}
+    rpc UpdateSetback(UpdateSetbackRequest) returns (UpdateSetbackResponse) {}
+    rpc ReadSetback(ReadSetbackRequest) returns (ReadSetbackResponse) {}
+    rpc DeleteSetback(DeleteSetbackRequest) returns (DeleteSetbackResponse) {}
+    rpc AutocompleteSetbackSearch(AutocompleteSetbackSearchRequest) returns (AllSetbacksResponse) {}
+
+    rpc ReadMarkerByNameslug(ReadByNameslugRequest) returns (ReadMarkerResponse) {}
+    rpc ReadBehaviourCategoryAimByNameslug(ReadByNameslugRequest) returns (ReadBehaviourCategoryAimResponse) {}
+    rpc ReadTrackerMethodByNameslug(ReadByNameslugRequest) returns (ReadTrackerMethodResponse) {}
+    rpc ReadAppByNameslug(ReadByNameslugRequest) returns (ReadAppResponse) {}
+    rpc ReadWearableByNameslug(ReadByNameslugRequest) returns (ReadWearableResponse) {}
+    rpc ReadDeviceByNameslug(ReadByNameslugRequest) returns (ReadDeviceResponse) {}
+
+    rpc UploadBehaviourCategoryAim(UploadRequest) returns (UploadResponse) {}
+    rpc UploadContentCategory(UploadRequest) returns (UploadResponse) {}
+    rpc UploadMarker(UploadRequest) returns (UploadResponse) {}
+    rpc UploadBehaviourCategory(UploadRequest) returns (UploadResponse) {}
+    rpc UploadContentCategoryItem(UploadRequest) returns (UploadResponse) {}
+    rpc UploadTrackerMethod(UploadRequest) returns (UploadResponse) {}
+}
+
+message AppData {
+    App app = 1;
+}
+
+message AppArrData {
+    repeated App apps = 1;
+}
+
+message PlatformData {
+    Platform platform = 1;
+}
+
+message PlatformArrData {
+    repeated Platform platforms = 1;
+}
+
+message DeviceData {
+    Device device = 1;
+}
+
+message DeviceArrData {
+    repeated Device devices = 1;
+}
+
+message WearableData {
+    Wearable wearable = 1;
+}
+
+message WearableArrData {
+    repeated Wearable wearables = 1;
+}
+
+message MarkerData {
+    Marker marker = 1;
+}
+
+message MarkerArrData {
+    repeated Marker markers = 1;
+}
+
+message ModuleData {
+    Module module = 1;
+}
+
+message ModuleArrData {
+    repeated Module modules = 1;
+}
+
+message BehaviourCategoryData {
+    BehaviourCategory category = 1;
+}
+
+message BehaviourCategoryArrData {
+    repeated BehaviourCategory categories = 1;
+}
+
+message SocialTypeData {
+    SocialType socialType = 1;
+}
+
+message SocialTypeArrData {
+    repeated SocialType socialTypes = 1;
+}
+
+message NotificationData {
+    Notification notification = 1;
+}
+
+message NotificationArrData {
+    repeated Notification notifications = 1;
+}
+
+
+message TrackerMethodData {
+    TrackerMethod trackerMethod = 1;
+}
+
+message TrackerMethodArrData {
+    repeated TrackerMethod trackerMethods = 1;
+}
+
+message BehaviourCategoryAimData {
+    BehaviourCategoryAim behaviourCategoryAim = 1;
+}
+
+message BehaviourCategoryAimArrData {
+    repeated BehaviourCategoryAim behaviourCategoryAims = 1;
+}
+
+message ContentParentCategoryData {
+    ContentParentCategory contentParentCategory = 1;
+}
+
+message ContentParentCategoryArrData {
+    repeated ContentParentCategory contentParentCategories = 1;
+}
+
+message ContentCategoryData {
+    ContentCategory contentCategory = 1;
+}
+
+message ContentCategoryArrData {
+    repeated ContentCategory contentCategories = 1;
+}
+
+message ContentTypeData {
+    ContentType contentType = 1;
+}
+
+message ContentTypeArrData {
+    repeated ContentType contentTypes = 1;
+}
+
+message ContentSourceTypeData {
+    ContentSourceType contentSourceType = 1;
+}
+
+message ContentSourceTypeArrData {
+    repeated ContentSourceType contentSourceTypes = 1;
+}
+
+message ModuleTriggerData {
+    ModuleTrigger moduleTrigger = 1;
+}
+
+message ModuleTriggerArrData {
+    repeated ModuleTrigger moduleTriggers = 1;
+}
+
+message TriggerContentTypeData {
+    TriggerContentType triggerContentType = 1;
+}
+
+message TriggerContentTypeArrData {
+    repeated TriggerContentType triggerContentTypes = 1;
+}
+
+message RoleData {
+    Role role = 1;
+}
+
+message RoleArrData {
+    repeated Role roles = 1;
+}
+
+message AllAppsRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6; 
+}
+
+message AllAppsResponse {
+    AppArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateAppRequest {
+    App app = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateAppResponse {
+    AppData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateAppRequest {
+    App app = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateAppResponse {
+    AppData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadAppRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadAppResponse {
+    AppData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteAppRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteAppResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message AllPlatformsRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6; 
+}
+
+message AllPlatformsResponse {
+    PlatformArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreatePlatformRequest {
+    Platform platform = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreatePlatformResponse {
+    PlatformData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdatePlatformRequest {
+    Platform platform = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdatePlatformResponse {
+    PlatformData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadPlatformRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadPlatformResponse {
+    PlatformData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeletePlatformRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeletePlatformResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message AllDevicesRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6; 
+}
+
+message AllDevicesResponse {
+    DeviceArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateDeviceRequest {
+    Device device = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateDeviceResponse {
+    DeviceData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateDeviceRequest {
+    Device device = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateDeviceResponse {
+    DeviceData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadDeviceRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadDeviceResponse {
+    DeviceData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteDeviceRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteDeviceResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message AllWearablesRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;
+    string sort_parameter = 5;
+    string sort_direction = 6; 	
+}
+
+message AllWearablesResponse {
+    WearableArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateWearableRequest {
+    Wearable wearable = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateWearableResponse {
+    WearableData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateWearableRequest {
+    Wearable wearable = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateWearableResponse {
+    WearableData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadWearableRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadWearableResponse {
+    WearableData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteWearableRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteWearableResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message AllMarkersRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6; 
+}
+
+message AllMarkersResponse {
+    MarkerArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateMarkerRequest {
+    Marker marker = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateMarkerResponse {
+    MarkerData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateMarkerRequest {
+    Marker marker = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateMarkerResponse {
+    MarkerData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadMarkerRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadMarkerResponse {
+    MarkerData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteMarkerRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteMarkerResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message FilterMarkerRequest {
+    repeated string trackerMethods = 1;
+    string org_id = 2;
+    string team_id = 3;
+    int64 limit = 4;
+    int64 offset = 5;	
+    string sort_parameter = 6;
+    string sort_direction = 7; 
+}
+
+message FilterMarkerResponse {
+    MarkerArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message AllModulesRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;
+    string sort_parameter = 5;
+    string sort_direction = 6; 	
+}
+
+message AllModulesResponse {
+    ModuleArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateModuleRequest {
+    Module module = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateModuleResponse {
+    ModuleData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateModuleRequest {
+    Module module = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateModuleResponse {
+    ModuleData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadModuleRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadModuleResponse {
+    ModuleData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteModuleRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteModuleResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message AllBehaviourCategoriesRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6; 
+}
+
+message AllBehaviourCategoriesResponse {
+    BehaviourCategoryArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateBehaviourCategoryRequest {
+    BehaviourCategory category = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateBehaviourCategoryResponse {
+    BehaviourCategoryData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateBehaviourCategoryRequest {
+    BehaviourCategory category = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateBehaviourCategoryResponse {
+    BehaviourCategoryData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadBehaviourCategoryRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadBehaviourCategoryResponse {
+    BehaviourCategoryData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteBehaviourCategoryRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteBehaviourCategoryResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message FilterBehaviourCategoryRequest {
+    repeated string markers = 1;
+    string org_id = 2;
+    string team_id = 3;
+    int64 limit = 4;
+    int64 offset = 5;	
+    string sort_parameter = 6;
+    string sort_direction = 7; 
+}
+
+message FilterBehaviourCategoryResponse {
+    BehaviourCategoryArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message AllSocialTypesRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6; 
+}
+
+message AllSocialTypesResponse {
+    SocialTypeArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateSocialTypeRequest {
+    SocialType socialType = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateSocialTypeResponse {
+    SocialTypeData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateSocialTypeRequest {
+    SocialType socialType = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateSocialTypeResponse {
+    SocialTypeData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadSocialTypeRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadSocialTypeResponse {
+    SocialTypeData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteSocialTypeRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteSocialTypeResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message AllNotificationsRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6; 
+}
+
+message AllNotificationsResponse {
+    NotificationArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateNotificationRequest {
+    Notification notification = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateNotificationResponse {
+    NotificationData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateNotificationRequest {
+    Notification notification = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateNotificationResponse {
+    NotificationData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadNotificationRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadNotificationResponse {
+    NotificationData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteNotificationRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteNotificationResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message AllTrackerMethodsRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6; 
+}
+
+message AllTrackerMethodsResponse {
+    TrackerMethodArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateTrackerMethodRequest {
+    TrackerMethod trackerMethod = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateTrackerMethodResponse {
+    TrackerMethodData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateTrackerMethodRequest {
+    TrackerMethod trackerMethod = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateTrackerMethodResponse {
+    TrackerMethodData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadTrackerMethodRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+    string name_slug = 4;
+}
+
+message ReadTrackerMethodResponse {
+    TrackerMethodData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteTrackerMethodRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteTrackerMethodResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message FilterTrackerMethodRequest {
+    repeated string markers = 1;
+    string org_id = 2;
+    string team_id = 3;
+    int64 limit = 4;
+    int64 offset = 5;	
+    string sort_parameter = 6;
+    string sort_direction = 7;     
+}
+
+message FilterTrackerMethodResponse {
+    TrackerMethodArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message AllBehaviourCategoryAimsRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6; 
+}
+
+message AllBehaviourCategoryAimsResponse {
+    BehaviourCategoryAimArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateBehaviourCategoryAimRequest {
+    BehaviourCategoryAim behaviourCategoryAim = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateBehaviourCategoryAimResponse {
+    BehaviourCategoryAimData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateBehaviourCategoryAimRequest {
+    BehaviourCategoryAim behaviourCategoryAim = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateBehaviourCategoryAimResponse {
+    BehaviourCategoryAimData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadBehaviourCategoryAimRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadBehaviourCategoryAimResponse {
+    BehaviourCategoryAimData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteBehaviourCategoryAimRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteBehaviourCategoryAimResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+
+message AllContentParentCategoriesRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;
+    string sort_parameter = 5;
+    string sort_direction = 6; 	
+}
+
+message AllContentParentCategoriesResponse {
+    ContentParentCategoryArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateContentParentCategoryRequest {
+    ContentParentCategory contentParentCategory = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateContentParentCategoryResponse {
+    ContentParentCategoryData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateContentParentCategoryRequest {
+    ContentParentCategory contentParentCategory = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateContentParentCategoryResponse {
+    ContentParentCategoryData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadContentParentCategoryRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadContentParentCategoryResponse {
+    ContentParentCategoryData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteContentParentCategoryRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteContentParentCategoryResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+
+message AllContentCategoriesRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6; 
+}
+
+message AllContentCategoriesResponse {
+    ContentCategoryArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateContentCategoryRequest {
+    ContentCategory contentCategory = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateContentCategoryResponse {
+    ContentCategoryData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateContentCategoryRequest {
+    ContentCategory contentCategory = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateContentCategoryResponse {
+    ContentCategoryData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadContentCategoryRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadContentCategoryResponse {
+    ContentCategoryData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteContentCategoryRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteContentCategoryResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message AllContentTypesRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6; 
+}
+
+message AllContentTypesResponse {
+    ContentTypeArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateContentTypeRequest {
+    ContentType contentType = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateContentTypeResponse {
+    ContentTypeData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateContentTypeRequest {
+    ContentType contentType = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateContentTypeResponse {
+    ContentTypeData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadContentTypeRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadContentTypeResponse {
+    ContentTypeData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteContentTypeRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteContentTypeResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message AllContentSourceTypesRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6; 
+}
+
+message AllContentSourceTypesResponse {
+    ContentSourceTypeArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateContentSourceTypeRequest {
+    ContentSourceType contentSourceType = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateContentSourceTypeResponse {
+    ContentSourceTypeData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateContentSourceTypeRequest {
+    ContentSourceType contentSourceType = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateContentSourceTypeResponse {
+    ContentSourceTypeData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadContentSourceTypeRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadContentSourceTypeResponse {
+    ContentSourceTypeData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteContentSourceTypeRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteContentSourceTypeResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message AllModuleTriggersRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6; 
+}
+
+message AllModuleTriggersResponse {
+    ModuleTriggerArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateModuleTriggerRequest {
+    ModuleTrigger moduleTrigger = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateModuleTriggerResponse {
+    ModuleTriggerData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateModuleTriggerRequest {
+    ModuleTrigger moduleTrigger = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateModuleTriggerResponse {
+    ModuleTriggerData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadModuleTriggerRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadModuleTriggerResponse {
+    ModuleTriggerData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteModuleTriggerRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteModuleTriggerResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message FilterModuleTriggerRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    repeated string module = 5;
+    repeated int64 triggerType = 6;
+    string sort_parameter = 7;
+    string sort_direction = 8; 
+}
+
+message FilterModuleTriggerResponse {
+    ModuleTriggerArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message AllTriggerContentTypesRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;
+    string sort_parameter = 5;
+    string sort_direction = 6; 	
+}
+
+message AllTriggerContentTypesResponse {
+    TriggerContentTypeArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateTriggerContentTypeRequest {
+    TriggerContentType triggerContentType = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateTriggerContentTypeResponse {
+    TriggerContentTypeData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateTriggerContentTypeRequest {
+    TriggerContentType triggerContentType = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateTriggerContentTypeResponse {
+    TriggerContentTypeData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadTriggerContentTypeRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadTriggerContentTypeResponse {
+    TriggerContentTypeData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteTriggerContentTypeRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteTriggerContentTypeResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message FilterTriggerContentTypeRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;
+    repeated string module_trigger = 5;
+    string sort_parameter = 6;
+    string sort_direction = 7; 	
+}
+
+message FilterTriggerContentTypeResponse {
+    TriggerContentTypeArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateRoleRequest {
+    Role role = 1;
+}
+
+message CreateRoleResponse {
+    RoleData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message UpdateRoleRequest {
+    Role role = 1;
+}
+
+message UpdateRoleResponse {
+    RoleData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message ReadRoleByNameslugRequest {
+    string name_slug = 1;
+}
+
+message ReadRoleByNameslugResponse {
+    RoleData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message UploadRequest {
+    string upload_file = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UploadResponse {
+    int64 code = 1;
+    string message = 2;
+}
+
+message SetbackData {
+    Setback setback = 1;
+}
+
+message SetbackArrData {
+    repeated Setback setbacks = 1;
+}
+
+message AllSetbacksRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6; 	
+}
+
+message AllSetbacksResponse {
+    SetbackArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateSetbackRequest {
+    Setback setback = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateSetbackResponse {
+    SetbackData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateSetbackRequest {
+    Setback setback = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateSetbackResponse {
+    SetbackData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadSetbackRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadSetbackResponse {
+    SetbackData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteSetbackRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteSetbackResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message AutocompleteSetbackSearchRequest {
+    string title = 1;
+}
+
+message ReadByNameslugRequest {
+    string name_slug = 1;
+}
+
+message App {
+    string id = 1;
+    string name = 2;
+    string summary = 3;
+    string description = 4;
+    string icon_slug = 5;
+    int64 created = 6;
+    int64 updated = 7;
+    string image = 8;
+    repeated string tags = 9;
+    repeated Platform platforms = 10;
+    string name_slug = 11;
+}
+
+message Platform {
+    string id = 1;
+    string name = 2;
+    string name_slug = 3;
+    string icon_slug = 4;
+    string url = 5;
+    int64 created = 6;
+    int64 updated = 7;
+}
+
+message Wearable {
+    string id = 1;
+    string name = 2;
+    string summary = 3;
+    string description = 4;
+    string icon_slug = 5;
+    int64 created = 6;
+    int64 updated = 7;
+    string image = 8 ;
+    string url = 9;
+    repeated string tags = 10;
+    string name_slug = 11;
+}
+
+message Device {
+    string id = 1;
+    string name = 2;
+    string summary = 3;
+    string description = 4;
+    string icon_slug = 5;
+    int64 created = 6;
+    int64 updated = 7;
+    string image = 8;
+    string url = 9;
+    repeated string tags = 10;
+    string name_slug = 11;
+}
+
+message Marker {
+    string id = 1; 
+    string name = 2; 
+    string summary = 3; 
+    string description = 4; 
+    string icon_slug = 5;
+    string org_id = 6;
+    int64 created = 7;
+    int64 updated = 8;
+    repeated string unit = 9; //variations of units
+    repeated App apps = 10;
+    repeated Wearable wearables = 11;
+    repeated Device devices = 12;
+    repeated TrackerMethod trackerMethods = 13;
+    string name_slug = 14;
+}
+
+message Module {
+    string id = 1;
+    string name = 2;
+    string summary = 3;
+    string description = 4;
+    string icon_slug = 5;
+    string name_slug = 6;
+    int64 created = 7;
+    int64 updated = 8;
+    string settings = 9; // we will be adding this later
+    string display_name = 10;
+    string path = 11;
+}
+
+message Social {
+    SocialType type = 1;
+    string customMessage = 2;
+}
+
+//this needs to be changed in code for survey-sry, plan-srv, response-srv, behaviour-srv
+message SocialType {
+    string id = 1;
+    string name= 2;
+    string url = 3;
+    string name_slug = 4;
+    int64 created = 5;
+    int64 updated = 6;
+}
+
+//this needs to be changed in code for survey-sry, plan-srv, response-srv, behaviour-srv
+message Notification {
+    string id = 1;
+    string module_id = 2;
+    string name = 3;
+    string description = 4;
+    NotificationTarget target = 5;
+    string name_slug = 6;
+    string icon_slug = 7;
+    int64 created = 8;
+    int64 updated = 9;
+    int64 notificationReminder = 10; //can be null
+    string unit = 11; //mins,hours,days
+}
+
+enum NotificationTarget {
+    NotificationTarget_NONE = 0;
+    APP_USER = 1;//"Users on app",
+    NO_APP_USER = 2;//"Users not on app",
+    FACILITATOR = 3;//"Facilitator"
+ } 
+
+//this needs to be changed in code for behaviour-srv
+message TrackerMethod {
+    string id = 1;
+    string name = 2;
+    string name_slug = 3;
+    string icon_slug = 4;
+    int64 created = 5;
+    int64 updated = 6;
+}
+
+//this needs to be changed in code for behaviour-srv (make appropriate change in behaviour-srv GoalCategoryAims  to BehaviourCategoryAims)
+message BehaviourCategoryAim {
+    string id = 1;
+    string name = 2;
+    string name_slug = 3;
+    string icon_slug = 4;
+    int64 created = 5;
+    int64 updated = 6;
+}
+
+message BehaviourCategory {
+    string id = 1;
+    string name = 2;
+    string summary = 3;
+    string description = 4;
+    string icon_slug = 5;
+    string org_id = 6;
+    int64 created = 7;
+    int64 updated = 8;
+    repeated string tags = 9;
+    repeated BehaviourCategoryAim aims = 10; //available aims for this category
+    Marker markerDefault = 11;
+    repeated Marker markerOptions = 12;
+}       
+
+message ContentParentCategory {
+    string id = 1;
+    string name = 2;
+    string summary = 3;
+    string description = 4;
+    string icon_slug = 5;
+    string org_id = 6;
+    int64 created = 7;
+    int64 updated = 8;
+    repeated string tags = 9;
+}
+
+message ContentCategory {
+    string id = 1;
+    string name = 2;
+    string name_slug = 3;
+    string summary = 4;
+    string description = 5;
+    string icon_slug = 6;
+    string org_id = 7;
+    repeated ContentParentCategory parent = 8; //can have more than one parent category
+    repeated Action actions = 9;
+    int64 created = 10;
+    int64 updated = 11;
+    repeated string tags = 12;
+    repeated TrackerMethod trackerMethods = 13;
+}
+
+message Action  {
+    string id = 1;
+    string  name = 2;
+    string  description = 3;
+    string  icon_slug = 4;
+    string  action_slug = 5;
+    string org_id = 6;
+    int64 created = 7;
+    int64 updated = 8;
+    repeated string tags = 9;
+    ActionMethod method = 10;
+    string name_slug = 11;
+}
+
+message ContentSourceType {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    int64 created = 4;
+    int64 updated = 5;
+    repeated string tags = 6;
+    string name_slug = 7;
+    string icon_slug = 8;
+}
+
+message ContentType {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    string contentTypeString = 4;
+    int64 created = 5;
+    int64 updated = 6;
+    repeated string tags = 7;
+    string name_slug = 8;
+    string icon_slug = 9;
+}
+
+message ModuleTrigger {
+    string id = 1;
+    string name = 2;
+    string summary = 3;
+    string description = 4;
+    string icon_slug = 5;
+    int64 created = 6;
+    int64 updated = 7;
+    TriggerType type = 8;
+    Module module = 9;
+    repeated TriggerEvent events = 10;
+    repeated string duration = 11;  //RRule in the form of string
+    string delay = 12;  //RRule in the form of string
+    repeated TriggerContentType contentTypes = 13;
+    ActionMethod actioMethod = 14;  //how to sent i.e. through what channel
+    // Schedule schedule = 15;  // at what time and how often
+}
+
+enum TriggerType {
+    TriggerType_NONE = 0;
+    EVENT = 1;
+    TIME = 2;
+}
+
+message Schedule {
+    string RRule = 1;
+} 
+
+message TriggerContentType {
+    string id = 1;
+    string name = 2;
+    string name_slug = 3;
+    int64 created = 4;
+    int64 updated = 5;
+}
+
+message TriggerEvent {
+    string id = 1;
+    string name = 2;
+    string name_slug = 3;
+    string org_id = 4; 
+    int64 created = 5;
+    int64 updated = 6;
+}
+
+message Address {
+	string type = 1;
+	string addressLocality = 2;
+	string addressRegion = 3;
+	string postalCode = 4;
+	string streetAddress = 5;
+	string address1 = 6;
+	string address2 = 7;
+	string city = 8;
+	string county = 9;
+	string country = 10;
+	string postcode = 11;
+}
+
+message Role {
+    string id = 1;
+    string org_id = 2;
+    int64 created = 3;
+    int64 updated = 4;
+    string summary = 5;
+    string name = 6;
+    string name_slug = 7;
+    string description = 8;
+    repeated Permission permissions = 9;
+}
+
+enum Permission {
+    Permission_NONE = 0;
+    VIEW = 1;
+    CREATE = 2;
+    DELETE = 3;
+    OWNER = 4;
+}
+
+//store this in static-srv or content-srv
+enum ShareStatus {
+    ShareStatus_NONE = 0;
+    SHARED = 1;
+    RECEIVED = 2;
+    VIEWED = 3;
+    ACTIONED = 4;
+}
+
+message AutocompleteResponse {
+    string id = 1;
+    string org_id = 2;
+    string title = 3;
+}
+
+message Target {
+    BehaviourCategoryAim aim = 1;
+    Marker marker = 2;
+    int64 targetValue = 4;
+    string unit = 5;
+    repeated Recurrence recurrence = 6;
+}
+
+message Recurrence { 
+    string RRule = 1; 
+}
+
+enum Visibility {
+    Visibility_NONE = 0;
+    PUBLIC = 1;
+    PRIVATE = 2;
+}
+
+//which classification taxonmy is being used for this content
+message Taxonomy {
+    string id = 1;
+    string name = 2;
+    string short_name = 3;
+    string description = 4;
+    string org_id = 5;
+    int64 created = 6;
+    int64 updated = 7;
+    repeated string tags = 8;
+    int64 weight = 9;
+    int64 priority = 10;
+    string name_slug = 11;
+}
+
+//different category item
+message ContentCategoryItem {
+    string id = 1;
+    string name = 2;
+    string name_slug = 3;
+    string icon_slug = 4;
+    string summary = 5;
+    string description = 6;
+    string org_id = 7;
+    int64 created = 8;
+    int64 updated = 9;
+    repeated string tags = 10;
+    Taxonomy taxonomy = 11;
+    int64 weight = 12;
+    int64 priority = 13;
+    ContentCategory category = 14;  // Added content category
+}
+
+message Setback {
+    string id = 1;
+    string org_id = 2;
+    string name = 3;
+    int64 created  = 4;
+    int64 updated = 5;
+    string description = 6;
+    Action action = 7;
+}
+
+enum ActionMethod {
+    ActionMethod_NONE = 0;
+    NOTIFICATION = 1;
+    CHAT = 2;
+    SMS = 3;
+    EMAIL = 4;
+    PHONE = 5;
+    ALL = 6;
+}
+
+message Setting {
+    go.micro.srv.static.Visibility visibility = 1;
+    repeated go.micro.srv.static.Notification notifications = 2;
+    repeated go.micro.srv.static.Social social = 3;
+    bool linkSharingEnabled = 4;
+    bool embeddingEnabled = 5;
+    string shareableLink = 6;
+    bool authenticationRequired = 7; //default to true
+    bool showCaptcha = 8;  //default to true
+}
+
+enum Gender {
+  Gender_NONE = 0;
+  MALE = 1;
+  FEMALE = 2;
+  OTHER = 3;
+}
+
+message Batch {
+    string id = 1;
+    string name = 2;
+    string org_id = 3;
+    int64 created = 4;
+    int64 updated = 5;
+  }
+
+enum ExpectedProgressType {
+    ExpectedProgressType_NONE = 0;
+    LINEAR = 1;
+    EXPONENTIAL = 2;
+    SINE = 3;
+    BELL = 4;
+}
+
+message SharedUserId {
+    string user_id = 1;
+}

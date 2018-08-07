@@ -1,0 +1,195 @@
+syntax = "proto3";
+
+import "server/static-srv/proto/static/static.proto";
+import "server/content-srv/proto/content/content.proto";
+import "server/account-srv/proto/account/account.proto";
+import "server/user-srv/proto/user/user.proto";
+
+package go.micro.srv.organisation;
+
+service OrganisationService {
+  rpc All(AllRequest) returns (AllResponse) {}
+  rpc Create(CreateRequest) returns (CreateResponse) {}
+  rpc Update(UpdateRequest) returns (UpdateResponse) {}
+  rpc Read(ReadRequest) returns (ReadResponse) {}
+  rpc CreateOrganisationProfile(CreateOrganisationProfileRequest)
+      returns (CreateOrganisationProfileResponse) {}
+  rpc CreateOrganisationSetting(CreateOrganisationSettingRequest)
+      returns (CreateOrganisationSettingResponse) {}
+
+  rpc ReadOrgInfo(ReadOrgInfoRequest) returns (ReadOrgInfoResponse) {}
+  rpc PutOrgInfo(PutOrgInfoRequest) returns (PutOrgInfoResponse) {}
+
+  rpc WarmupCacheOrganisation(WarmupCacheOrganisationRequest)
+      returns (WarmupCacheOrganisationResponse) {}
+
+  rpc UpdateModules(UpdateModulesRequest) returns (UpdateModulesResponse) {}
+  rpc GetModulesByOrg(GetModulesByOrgRequest)
+      returns (GetModulesByOrgResponse) {}
+}
+
+message OrgData { Organisation organisation = 1; }
+
+message AllRequest {
+  int64 offset = 1;
+  int64 limit = 2;
+  string sort_parameter = 3;
+  string sort_direction = 4; 
+}
+
+message AllResponse {
+  message Data { repeated Organisation organisations = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateRequest {
+  Organisation organisation = 1;
+  go.micro.srv.user.User user = 2;
+  go.micro.srv.account.Account account = 3;
+  repeated go.micro.srv.static.Module modules = 4;
+}
+
+message CreateResponse {
+  message Data {
+    Organisation organisation = 1;
+    go.micro.srv.account.Account account = 2;
+    go.micro.srv.user.User user = 3;
+  }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message UpdateRequest {
+  Organisation organisation = 1;
+}
+
+message UpdateResponse {
+  message Data {
+    Organisation organisation = 1;
+  }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ReadRequest { string org_id = 1; }
+
+message ReadResponse {
+  OrgData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateOrganisationProfileRequest { OrganisationProfile profile = 1; }
+
+message CreateOrganisationProfileResponse {
+  message Data { OrganisationProfile profile = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateOrganisationSettingRequest { OrganisationSetting setting = 1; }
+
+message CreateOrganisationSettingResponse {
+  message Data { OrganisationSetting setting = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ReadOrgInfoRequest { string org_id = 1; }
+
+message ReadOrgInfoResponse { OrgInfo org_info = 1; }
+
+message PutOrgInfoRequest {
+  string org_id = 1;
+  OrgInfo org_info = 2;
+}
+
+message PutOrgInfoResponse {}
+
+message WarmupCacheOrganisationRequest {
+  string sort_parameter = 1;
+  string sort_direction = 2;
+}
+
+message WarmupCacheOrganisationResponse {}
+
+message Organisation {
+  string id = 1;
+  string name = 2;
+  OrganisationType type = 3;
+  Organisation parent = 4;         // can be null
+  repeated Organisation child = 5; // can be null
+  repeated go.micro.srv.static.Module modules = 6;
+  repeated go.micro.srv.content.Place locations = 7;
+  go.micro.srv.user.User owner = 8;
+  int64 created = 9;
+  int64 updated = 10;
+  string domain = 11;
+  string email = 12;
+  string friendly_name = 13;
+}
+
+// to be update later
+message OrganisationProfile {
+  string id = 1;
+  string org_id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+}
+
+// to be updated later
+message OrganisationSetting {
+  string id = 1;
+  string org_id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+}
+
+message OrganisationModule {
+  string id = 1;
+  string org_id = 2;
+  string display_name = 5;
+  //some more information can be added here like module specific limits for this organisation, organisation specific pricing for this module
+}
+enum OrganisationType {
+  NONE = 0;
+  ROOT = 1;
+  CUSTOMER = 2;
+  PARTNER = 3;
+  REFERRER = 4;
+  SERVICE_PROVIDER = 5;
+}
+
+message OrgInfo {
+  string org_id = 1;
+  OrganisationType type = 2;
+  go.micro.srv.user.User owner = 7;
+  repeated go.micro.srv.static.Module modules = 5;
+}
+
+message UpdateModulesRequest {
+  repeated go.micro.srv.static.Module modules = 1;
+  string org_id = 2;
+}
+
+message UpdateModulesResponse {
+  message Data { repeated go.micro.srv.static.Module modules = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message GetModulesByOrgRequest { string org_id = 1; }
+
+message GetModulesByOrgResponse {
+  message Data { repeated go.micro.srv.static.Module modules = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}

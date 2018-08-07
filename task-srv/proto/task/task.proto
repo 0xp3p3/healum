@@ -1,0 +1,206 @@
+syntax = "proto3";
+
+import "server/user-srv/proto/user/user.proto";
+
+package go.micro.srv.task;
+
+service TaskService {
+  rpc All(AllRequest) returns (AllResponse) {}
+  rpc Create(CreateRequest) returns (CreateResponse) {}
+  rpc Update(UpdateRequest) returns (UpdateResponse) {}
+  rpc Read(ReadRequest) returns (ReadResponse) {}
+  rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+  rpc Search(SearchRequest) returns (SearchResponse) {}
+
+  rpc ByCreator(ByCreatorRequest) returns (ByCreatorResponse) {}
+  rpc ByAssign(ByAssignRequest) returns (ByAssignResponse) {}
+  rpc Filter(FilterRequest) returns (FilterResponse) {}
+  rpc CountByUser(CountByUserRequest) returns (CountByUserResponse) {}
+}
+
+message Data { Task task = 1; }
+
+message ArrData { repeated Task tasks = 1; }
+
+message AllRequest {
+  string org_id = 1;
+  string team_id = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+  string sort_parameter = 5;
+  string sort_direction = 6;
+}
+
+message AllResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateRequest {
+  Task task = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message CreateResponse {
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message UpdateRequest {
+  Task task = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message UpdateResponse {
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ReadRequest {
+  string id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message ReadResponse {
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message DeleteRequest {
+  string id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message DeleteResponse {
+  int64 code = 2;
+  string message = 3;
+}
+
+message SearchRequest {
+  string name = 1;
+  string org_id = 2;
+  string team_id = 3;
+  int64 limit = 4;
+  int64 offset = 5;
+  int64 from = 6;
+  int64 to = 7;
+  string sort_parameter = 8;
+  string sort_direction = 9;
+}
+
+message SearchResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ByCreatorRequest {
+  string user_id = 1;
+  string org_id = 11;
+  string team_id = 12;
+  int64 limit = 13;
+  int64 offset = 14;
+  string sort_parameter = 5;
+  string sort_direction = 6;
+}
+
+message ByCreatorResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ByAssignRequest {
+  string user_id = 1;
+  string org_id = 11;
+  string team_id = 12;
+  int64 limit = 13;
+  int64 offset = 14;
+  string sort_parameter = 5;
+  string sort_direction = 6;
+}
+
+message ByAssignResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message FilterRequest {
+  repeated TaskStatus status = 1;
+  repeated string category = 2;
+  repeated int64 priority = 3;
+  string org_id = 11;
+  string team_id = 12;
+  int64 limit = 13;
+  int64 offset = 14;
+  string sort_parameter = 5;
+  string sort_direction = 6;
+}
+
+message FilterResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CountByUserRequest {
+  string user_id = 1;
+  string org_id = 11;
+  string team_id = 12;
+}
+
+message CountByUserResponse {
+  message TaskCount {
+    int64 expired = 1;
+    int64 assigned = 2;
+  }
+  TaskCount task_count = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message Task {
+  string id = 1;
+  string org_id = 20;
+  string title = 2;
+  string description = 3;
+  int64 created = 4;
+  int64 updated = 5;
+  go.micro.srv.user.User user = 6;
+  go.micro.srv.user.User creator =
+      7; // SHOULD BE a team member i.e. should be a user that belongs to a team
+  go.micro.srv.user.User assignee =
+      8; // SHOULD BE a team member i.e. should be a user that belongs to a team
+  TaskStatus status = 9;
+  string category = 10;
+  repeated string tags = 11;
+  int64 priority = 12;
+  int64 start = 13;
+  int64 due = 14;
+  repeated string links = 15;
+  VisiblityEnum visibility = 16;
+}
+
+enum TaskStatus {
+  TaskStatus_NONE = 0;
+  COMPLETE = 1;
+  INCOMPLETE = 2;
+  INPROGRESS = 3;
+  ON_HOLD = 4;
+}
+
+enum VisiblityEnum {
+  VisiblityEnum_NONE = 0;
+  DEFAULT = 1;
+  PUBLIC = 2;
+  PRIVATE = 3;
+}

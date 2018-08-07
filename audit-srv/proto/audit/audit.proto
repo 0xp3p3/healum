@@ -1,0 +1,101 @@
+syntax = "proto3";
+
+package go.micro.srv.audit;
+
+import "server/static-srv/proto/pubsub/pubsub.proto";
+
+service AuditService {
+    rpc Subscribe(go.micro.srv.static.SubscribeRequest) returns (go.micro.srv.static.SubscribeResponse) {}
+
+    rpc AllAudits(AllAuditsRequest) returns (AllAuditsResponse) {}
+    rpc CreateAudit(CreateAuditRequest) returns (CreateAuditResponse) {}
+    rpc FilterAudits(FilterAuditsRequest) returns (FilterAuditsResponse) {}
+}
+
+message AuditData {
+    Audit audit = 1;
+}
+
+message AuditArrData {
+    repeated Audit audits = 1;
+}
+
+enum ActionType {
+    ActionType_NONE = 0;
+    VIEW = 1;
+    UPDATE = 2;
+    CREATED = 3;
+    DELETED = 4;
+}
+
+message AllAuditsRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6;
+}
+
+message AllAuditsResponse {
+    AuditArrData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message CreateAuditRequest {
+    Audit audit = 1;
+    string user_id = 2;
+    string org_id = 3;
+    string team_id = 4;
+}
+
+message CreateAuditResponse {
+    AuditData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message FilterAuditsRequest {
+    string org_id = 1;
+    string team_id = 2;
+    ActionType action_type = 3; //(VIEW, UPDATE, CREATED, DELETED)
+    string action_name = 4;
+    string action_source_user = 5; //user_id who is taking the action 
+    string action_target_user = 6; //on which user_id the source is performing action on (in case of normal user source and target will be the same user_id)
+    int64 action_timestamp = 7;
+    string action_resource = 8; // resource type with Any using @type uri such as user, goal, challenge, content etc.
+    string action_service = 9; //which service is sending the log data
+    string action_method = 10; //the function that is calling this function (this may not be included in the response for search of filtering)
+    string action_meta_data = 11; //like IP, Useragent
+    int64 limit = 12;
+    int64 offset = 13;	
+    string sort_parameter = 14;
+    string sort_direction = 15;
+}
+
+message FilterAuditsResponse {
+    AuditArrData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message Audit {
+    string id = 1;
+    string org_id = 2;
+    int64 created = 3;
+    int64 updated = 4;
+    string action_name = 5;
+    ActionType action_type = 6; //(VIEW, UPDATE, CREATED, DELETED)
+    string action_source_user = 7; //user_id who is taking the action 
+    string action_target_user = 8; //on which user_id the source is performing action on (in case of normal user source and target will be the same user_id)
+    int64 action_timestamp = 9;
+    string action_resource = 10; // resource type with Any using @type uri such as user, goal, challenge, content etc.
+    string action_parameters = 11; //any useful parameters?
+    string action_service = 12; //which service is sending the log data
+    string action_method = 13; //the function that is calling this function (this may not be included in the response for search of filtering)
+    string action_meta_data = 14; //like IP, Useragent
+    string action_authorisation = 15; // to be added later
+    string action_authentication = 16; //to be added later
+}
+

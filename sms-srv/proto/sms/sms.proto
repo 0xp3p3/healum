@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package go.micro.srv.sms;
+
+import "server/static-srv/proto/pubsub/pubsub.proto";
+
+service SmsService {
+    rpc Subscribe(go.micro.srv.static.SubscribeRequest) returns (go.micro.srv.static.SubscribeResponse) {}
+    rpc Send(SendRequest) returns (SendResponse) {}
+}
+
+message Subscribe {
+    // string user_id = 1;
+    string phone = 1;
+    string message = 2;
+}
+
+message SendRequest {
+    string phone = 1;
+    string message = 2;
+}
+
+message SendResponse {
+    int64 code = 1;
+    string message = 2;
+}

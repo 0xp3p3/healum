@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package go.micro.srv.mobpush;
+
+import "server/static-srv/proto/pubsub/pubsub.proto";
+
+service MobpushService {
+    rpc Subscribe(go.micro.srv.static.SubscribeRequest) returns (go.micro.srv.static.SubscribeResponse) {}
+    rpc Push (PushRequest) returns (PushResponse) {}
+}
+
+
+message PushRequest {
+    repeated Notification notifications = 1;
+}
+
+message PushResponse {
+    bool success = 1;
+    int32 counts = 2;
+}
+  
+message Notification {
+    repeated string tokens = 1;
+    int32 platform = 2;
+    string message = 3;
+    string title = 4;
+    string topic = 5;
+    int32 badge = 6;
+    string category = 7;
+    go.micro.srv.static.Alert alert = 8;
+    string sound = 9;
+    map<string, string> data = 10;
+}

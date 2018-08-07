@@ -1,0 +1,129 @@
+syntax = "proto3";
+
+package go.micro.srv.db;
+
+service DB {
+	rpc InitDb(InitDbRequest) returns(InitDbResponse) {}
+	rpc RemoveDb(RemoveDbRequest) returns(RemoveDbResponse) {}
+
+	rpc Read(ReadRequest) returns(ReadResponse) {}
+	rpc Create(CreateRequest) returns(CreateResponse) {}
+	rpc Update(UpdateRequest) returns(UpdateResponse) {}
+	rpc Delete(DeleteRequest) returns(DeleteResponse) {}
+	rpc Search(SearchRequest) returns(SearchResponse) {}
+	rpc RunQuery(RunQueryRequest) returns(RunQueryResponse) {}
+	rpc CreateDatabase(CreateDatabaseRequest) returns(CreateDatabaseResponse) {}
+	rpc DeleteDatabase(DeleteDatabaseRequest) returns(DeleteDatabaseResponse) {}
+}
+
+message Database {
+	string name = 1;
+	string table = 2;
+	string driver = 3;
+	map<string,string> metadata = 4;
+}
+
+message Record {
+	string id = 1;
+	int64 created = 2;
+	int64 updated = 3;
+	string name = 4;
+	string parameter1 = 5;
+	string parameter2 = 6;
+	string parameter3 = 7;
+	double lat = 8;
+	double lng = 9;
+	map<string,string> metadata = 10;
+}
+
+message InitDbRequest {
+
+}
+
+message InitDbResponse {
+
+}
+
+message RemoveDbRequest {
+
+}
+
+message RemoveDbResponse {
+	
+}
+
+message ReadRequest {
+	Database database = 1;
+	string id = 2;
+	string parameter3 = 3;
+}
+
+message ReadResponse {
+	Record record = 1;
+}
+
+message CreateRequest {
+	Database database = 1;
+	Record record = 2;
+}
+
+message CreateResponse {
+}
+
+message UpdateRequest {
+	Database database = 1;
+	Record record = 2;
+}
+
+message UpdateResponse {
+}
+
+message DeleteRequest {
+	Database database = 1;
+	string id = 2;
+	string parameter3 = 3;
+}
+
+message DeleteResponse {
+
+}
+
+message SearchRequest {
+	Database database = 1;
+	map<string,string> metadata = 2;
+	// timeseries bounds
+	int64 from = 3;
+	int64 to = 4;
+	// range bounds
+	int64 limit = 5;
+	int64 offset = 6;
+	// order
+	bool reverse = 7;
+}
+
+message SearchResponse {
+	repeated Record records = 1;
+}
+
+message RunQueryRequest {
+	Database database = 1;
+	string query = 2;
+}
+
+message RunQueryResponse {
+	repeated Record records = 1;
+}
+
+message CreateDatabaseRequest {
+	Database database = 1;
+}
+
+message CreateDatabaseResponse {
+}
+
+message DeleteDatabaseRequest {
+	Database database = 1;
+}
+
+message DeleteDatabaseResponse {
+}

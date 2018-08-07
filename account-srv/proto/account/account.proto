@@ -1,0 +1,275 @@
+syntax = "proto3";
+
+// import "server/static-srv/proto/static/static.proto";
+
+package go.micro.srv.account;
+
+service AccountService {
+  rpc ReadSession(ReadSessionRequest) returns (ReadSessionResponse) {}
+
+  rpc Read(ReadRequest) returns (ReadResponse) {}
+  rpc Create(CreateRequest) returns (CreateResponse) {}
+  rpc Update(UpdateRequest) returns (UpdateResponse) {}
+  rpc ConfirmRegister(ConfirmRegisterRequest)
+      returns (ConfirmRegisterResponse) {}
+  rpc ConfirmResend(ConfirmResendRequest) returns (ConfirmResendResponse) {}
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+  rpc Logout(LogoutRequest) returns (LogoutResponse) {}
+  rpc RecoverPassword(RecoverPasswordRequest)
+      returns (RecoverPasswordResponse) {}
+  rpc UpdatePassword(UpdatePasswordRequest) returns (UpdatePasswordResponse) {}
+  rpc Lock(LockRequest) returns (LockResponse) {}
+
+  rpc InternalConfirm(InternalConfirmRequest)
+      returns (InternalConfirmResponse) {}
+
+  rpc SetAccountStatus(SetAccountStatusRequest)
+      returns (SetAccountStatusResponse) {}
+  rpc GetAccountStatus(GetAccountStatusRequest)
+      returns (GetAccountStatusResponse) {}
+  rpc ResetUserPassword(ResetUserPasswordRequest)
+      returns (ResetUserPasswordResponse) {}
+
+  rpc NewAccountConfirmationToken(NewAccountConfirmationTokenRequest)
+      returns (NewAccountConfirmationTokenResponse) {}
+  rpc ConfirmVerify(ConfirmVerifyRequest) returns (ConfirmVerifyResponse) {}
+  rpc PassVerify(ConfirmVerifyRequest) returns (ConfirmVerifyResponse) {}
+}
+
+message ReadSessionRequest { string session_id = 1; }
+
+message ReadSessionResponse {
+  string user_id = 1;
+  string org_id = 2;
+}
+
+message AccountData { Account account = 1; }
+
+message ReadRequest { Account account = 1; }
+
+message ReadResponse {
+  AccountData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateRequest { Account account = 1; }
+
+message CreateResponse {
+  Account account = 1;
+  string token = 2;
+}
+
+message UpdateRequest { Account account = 1; }
+
+message UpdateResponse {
+  message Data { Account account = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ConfirmRegisterRequest {
+  string verification_token = 1;
+  string password = 2;
+  string passcode = 3;
+}
+
+message ConfirmRegisterResponse {
+  int64 code = 1;
+  string message = 2;
+}
+
+message ConfirmResendRequest {
+  string email = 1;
+  string phone = 2;
+}
+
+message ConfirmResendResponse {
+  int64 code = 1;
+  string message = 2;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+  string phone = 3;
+  string passcode = 4;
+  string device_token = 5;
+  int32 platform = 6;
+  string unique_identifier = 7;
+  string app_identifier = 8;
+}
+
+message LoginResponse {
+  message Data {
+    Session session = 1;
+    AccountInfo account_info = 2;
+  }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message LogoutRequest { 
+  string session_id = 1; 
+  string user_id = 2;
+  string org_id = 3;
+}
+
+message LogoutResponse {
+  int64 code = 1;
+  string message = 2;
+}
+
+message RecoverPasswordRequest {
+  string email = 1;
+  string phone = 2;
+}
+
+message RecoverPasswordResponse {
+  message Data { string password_reset_token = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message UpdatePasswordRequest {
+  string password_reset_token = 1;
+  string password = 2;
+  string passcode = 3;
+}
+
+message UpdatePasswordResponse {
+  int64 code = 1;
+  string message = 2;
+}
+
+message LockRequest { string account_id = 1; }
+
+message LockResponse {
+  int64 code = 1;
+  string message = 2;
+}
+
+message InternalConfirmRequest {
+  string account_id = 1;
+  string password = 2;
+}
+
+message InternalConfirmResponse {}
+
+message GetAccountStatusRequest {
+  string user_id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message GetAccountStatusResponse {
+  message Data {
+    AccountStatusInfo account = 1;
+  }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message SetAccountStatusRequest {
+  string user_id = 1;
+  string org_id = 2;
+  string team_id = 3;
+  AccountStatus status = 4;
+}
+
+message SetAccountStatusResponse {
+  int64 code = 1;
+  string message = 2;
+}
+
+message ResetUserPasswordRequest {
+  string user_id = 1;
+  string org_id = 2;
+  string team_id = 3;
+  string password = 4;
+  string passcode = 5;
+}
+
+message ResetUserPasswordResponse {
+  int64 code = 1;
+  string message = 2;
+}
+
+message NewAccountConfirmationTokenRequest {
+  int32 mode = 1;
+  string token = 2;
+  Account account = 3;
+}
+
+message NewAccountConfirmationTokenResponse {}
+
+message ReadAccountTokenRequest {
+  string account_id = 1;
+}
+
+message ReadAccountTokenResponse {
+  string token = 1;
+}
+
+message Account {
+  string id = 1;
+  int64 created = 2;
+  int64 updated = 3;
+  string email = 4;    // can be null if phone is set
+  string password = 5; // can be null if  passcode is set
+  string phone = 6;    // can be null if email is set
+  string passcode = 7; // can be null if passcode is set
+  bool confirmed = 8;
+  AccountStatus status = 9;
+}
+
+enum AccountStatus {
+  AccountStatus_NONE = 0;
+  INACTIVE = 1;
+  ACTIVE = 2;
+  LOCKED = 3;
+  SUSPENDED = 4;
+}
+
+message VerificationToken {
+  string account_id = 1;
+  int64 expires_at = 2;
+}
+
+message VerificationAccount {
+  string token = 1;
+  int64 expires_at = 2;
+}
+
+message SessionInfo {
+  string account_id = 1;
+  string user_id = 2;
+  string org_id = 3;
+  int64 expires_at = 4;
+}
+
+message AccountInfo {
+  string user_id = 1;
+  string org_id = 2;
+  string employee = 3;
+}
+
+message AccountStatusInfo {
+  AccountStatus status = 1;
+}
+
+message Session {
+  string id = 1;
+  int64 expires_at = 2;
+}
+
+message ConfirmVerifyRequest { string token = 1; }
+
+message ConfirmVerifyResponse { 
+  int64 code = 1;
+  string message = 2;
+}

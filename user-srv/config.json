@@ -1,0 +1,11 @@
+{
+  "service": {
+    "version": "0.0.1",
+    "name": "go.micro.srv.user",
+    "description": "User server is a microservice to store user accounts and perform simple authentication"
+  },
+  "recaptcha": {
+    "public": "6LcLCQkUAAAAALCgUbs7nElZY3_7iQkc11OCHB4l",
+    "private": "6LcLCQkUAAAAAP0ecBMDe3Y1EHMFjrC9_lojdQNl"
+  }
+}

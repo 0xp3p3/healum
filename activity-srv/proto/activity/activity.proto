@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+import "server/content-srv/proto/content/content.proto";
+
+package go.micro.srv.activity;
+
+service ActivityService {
+	rpc Create(CreateRequest) returns (CreateResponse) {}
+
+	rpc ListConfig(ListConfigRequest) returns (ListConfigResponse) {}
+	rpc CreateConfig(CreateConfigRequest) returns (CreateConfigResponse) {}
+	rpc ReadConfig(ReadConfigRequest) returns (ReadConfigResponse) {}
+	rpc DeleteConfig(DeleteConfigRequest) returns (DeleteConfigResponse) {}
+}
+
+// message ActivityData {
+//     go.micro.srv.content.Activity activity = 1;
+// }
+
+message CreateRequest {
+	go.micro.srv.content.Activity activity = 1;
+}
+
+message CreateResponse {
+	message Data {
+		string content_id = 1;
+		google.protobuf.Any data = 2;
+	}
+	Data data = 1;
+}
+
+message ListConfigRequest {
+}
+
+message ListConfigResponse {
+	repeated Config configs = 1;
+}
+
+message CreateConfigRequest {
+	Config config = 1;
+}
+
+message CreateConfigResponse {
+	Config config = 1;
+}
+
+message ReadConfigRequest {
+	string id = 1;
+}
+
+message ReadConfigResponse {
+	Config config = 1;
+}
+
+message DeleteConfigRequest {
+	string id = 1;
+}
+
+message DeleteConfigResponse {
+}
+
+message Transform {
+	string type = 1;
+	string path = 2;
+	string variable = 3;
+}
+
+message Config {
+	string id = 1;
+	string name = 2;
+	string appURL = 3;
+	string next = 4;
+	int64 weight = 5;
+	int64 timeInterval = 6;
+	bool enabled = 7;
+	repeated Transform transform = 8;
+}

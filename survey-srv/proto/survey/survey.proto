@@ -1,0 +1,659 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+import "server/user-srv/proto/user/user.proto";
+import "server/static-srv/proto/static/static.proto";
+
+package go.micro.srv.survey;
+
+service SurveyService {
+    rpc All(AllRequest) returns (AllResponse) {}
+    rpc New(NewRequest) returns (NewResponse) {}
+    rpc Create(CreateRequest) returns (CreateResponse) {}
+    rpc Update(UpdateRequest) returns (UpdateResponse) {}
+    rpc Read(ReadRequest) returns (ReadResponse) {}
+    rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+    rpc Copy(CopyRequest) returns (CopyResponse) {}
+    rpc Questions(QuestionsRequest) returns (QuestionsResponse) {}
+    rpc QuestionRef(QuestionRefRequest) returns (QuestionRefResponse) {}
+    rpc CreateQuestion(CreateQuestionRequest) returns (CreateQuestionResponse) {}
+    rpc ByCreator(ByCreatorRequest) returns (ByCreatorResponse) {}
+    rpc Link(LinkRequest) returns (LinkResponse) {}
+    rpc Templates(TemplatesRequest) returns (TemplatesResponse) {}
+    rpc Filter(FilterRequest) returns (FilterResponse) {}
+    rpc Search(SearchRequest) returns (SearchResponse) {}
+
+    rpc ShareSurvey(ShareSurveyRequest) returns (ShareSurveyResponse) {}
+    rpc AutocompleteSearch(AutocompleteSearchRequest) returns (AutocompleteSearchResponse) {}
+
+    rpc GetTopTags(GetTopTagsRequest) returns (GetTopTagsResponse) {}
+    rpc AutocompleteTags(AutocompleteTagsRequest) returns (AutocompleteTagsResponse) {}
+    rpc WarmupCacheSurvey(WarmupCacheSurveyRequest) returns (WarmupCacheSurveyResponse) {}
+
+    rpc GetShareableSurveys(go.micro.srv.user.GetShareableSurveyRequest) returns (go.micro.srv.user.GetShareableSurveyResponse) {}
+}
+
+message Data {
+    Survey survey = 1;
+}
+
+message ArrData {
+    repeated Survey surveys = 1;
+}
+
+message AllRequest {
+    string org_id = 1;
+    string team_id = 2;
+	int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6; 
+}
+
+message AllResponse {
+    ArrData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message NewRequest {
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message NewResponse {
+    message Data {
+        string hash = 1;
+        string survey_id = 2;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message CreateRequest {
+    Survey survey = 1;
+    string org_id = 2;
+    string user_id = 3;
+    string team_id = 4;
+}
+
+message CreateResponse {
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message UpdateRequest {
+    Survey survey = 1;
+    string org_id = 2;
+    string user_id = 3;
+    string team_id = 4;
+}
+
+message UpdateResponse {
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message ReadRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadResponse {
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message DeleteRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteResponse {
+    int64 code = 2;
+    string message = 3;
+}
+
+message CopyRequest {
+    string survey_id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CopyResponse {
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message QuestionsRequest {
+    string survey_id = 1;
+    string org_id = 2;
+    string team_id = 3;
+    int64 limit = 4;
+    int64 offset = 5;
+    string sort_parameter = 6;
+    string sort_direction = 7; 
+}
+
+message QuestionsResponse {
+    message ArrData {
+        repeated Question questions = 1;
+        DefaultQuestion welcome = 2;
+        DefaultQuestion thankyou = 3;
+    }
+    ArrData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message QuestionRefRequest {
+    string survey_id = 1;
+    string question_ref = 2;
+    string org_id = 3;
+    string team_id = 4;
+}
+
+message QuestionRefResponse {
+    message Data {
+        Question question = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message CreateQuestionRequest {
+    string survey_id = 1;
+    Question question = 2;
+    string org_id = 3;
+    string team_id = 4;
+}
+
+message CreateQuestionResponse {
+    message Data {
+        Question question = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message ByCreatorRequest {
+    string user_id = 1;
+    string org_id = 2;
+    string team_id = 3;
+	int64 limit = 4;
+    int64 offset = 5;
+    string sort_parameter = 6;
+    string sort_direction = 7; 	
+}
+
+message ByCreatorResponse {
+    ArrData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message LinkRequest {
+    string survey_id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message LinkResponse {
+    string url_link = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message TemplatesRequest {
+    string org_id = 1;
+    string team_id = 2;
+	int64 limit = 3;
+    int64 offset = 4;
+    string sort_parameter = 5;
+    string sort_direction = 6; 	
+}
+
+message TemplatesResponse {
+    ArrData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message FilterRequest {
+    repeated SurveyStatus status = 1;
+    repeated string tags = 2;
+    repeated RenderTarget renderTarget = 3;
+    repeated go.micro.srv.static.Visibility visibility = 4;
+    repeated string created_by = 5;
+    string org_id = 6;
+    string team_id = 7;
+	int64 limit = 8;
+	int64 offset = 9;  
+    string sort_parameter = 10;
+    string sort_direction = 11;    
+}
+
+message FilterResponse {
+    ArrData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message SearchRequest {
+    string name = 1;
+    string org_id = 2;
+    string team_id = 3;
+
+	int64 limit = 4;
+	int64 offset = 5;	
+    string description = 6;
+    string user_name = 7;
+    string sort_parameter = 8;
+    string sort_direction = 9; 
+}
+
+message SearchResponse {
+    ArrData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message ShareSurveyRequest {
+    repeated Survey surveys = 1;
+    repeated go.micro.srv.user.User users = 2;
+    string user_id = 3;
+    string org_id = 4;
+    string team_id = 5;
+}
+
+message ShareSurveyResponse {
+    int64 code = 1;
+    string message = 2;
+}
+
+message AutocompleteSearchRequest {
+    string title = 1;
+}
+
+message AutocompleteSearchResponse {
+    message Data {
+        repeated go.micro.srv.static.AutocompleteResponse response = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message Survey {
+    string id = 1;
+    string org_id = 2;
+    string title = 3;
+    string description = 4;
+    repeated string tags = 5;
+    int64 created = 6;
+    int64 updated = 7;
+    // string creator_id = 7;
+    go.micro.srv.user.User creator = 8;
+    repeated go.micro.srv.user.User shares = 9;
+    repeated RenderTarget renders = 10;
+    go.micro.srv.static.Setting setting = 11;
+    DefaultQuestion welcome = 12;
+    DefaultQuestion thankyou = 13;
+    repeated Question questions = 14; // we need a unique id/ref for every question that is added to a survey
+    message Design {
+        ProgressBarStyle progress_bar_style = 1;
+        string default_bg_color = 2;
+        string default_logo_url = 3;
+    }
+    Design design = 15;
+    SurveyStatus status = 16;
+    bool isTemplate = 17;
+    string templateId = 18;
+    string summary = 19;
+}
+
+message Settings {
+    bool showButton = 1;
+    string buttonText = 2;
+    bool social_sharing_enabled = 3;
+    bool redirect_enabled = 4;
+    string redirect_url = 5;
+    SubmitMode submit_mode = 6;
+    bool showTimeToAnswer = 7;
+}
+message Design {
+    string bg_color = 1;
+    string logo_url = 2;
+}
+
+message DefaultQuestion {
+    QuestionType type = 1;
+    string title = 2;
+    string description = 3;
+    int64 order = 4;
+    Design design = 5;
+    Settings settings = 6;
+    repeated Attachment attachment = 7;
+}
+
+message Attachment {
+    AttachmentType type = 1;
+    string url = 2;
+    int64 width = 3;
+    int64 height = 4;
+}
+
+message Question {
+    string id = 1;  //unique question id generated for the question in the survey
+    QuestionType type = 2;
+    int64 order = 3;
+    string title = 4;
+    string description = 5;  //helpful info for the creator to describe this question
+    message Design {
+        string bg_color = 1;
+        string logo_url = 2;
+    }
+    Design design = 6;
+    google.protobuf.Any fields = 7;
+    google.protobuf.Any settings = 8;
+}
+
+enum ProgressBarStyle {
+    ProgressBarStyle_NONE = 0;
+    FILL = 1; //'fill',
+    NUMBERED = 2; //'numbered',
+    DOTTED = 3; //'dotted'
+}
+
+enum QuestionType {
+    QuestionType_NONE = 0;
+    WELCOME = 1; //= "welcome"
+    SHORTEXT = 2; //= "short-text";
+    MULTIPLE_CHOICE = 3; //"multiple-choice";
+    CONTACT = 4; //"contact";
+    LEGAL = 5; //"legal";
+    DROPDOWN = 6; //"dropdown";
+    FILE = 7; //"file";
+    BINARY = 8; //"binary";
+    RATING = 9; //"rating";
+    THANK_YOU = 10; //"thank-you";
+}
+
+enum AttachmentType {
+    AttachmentType_NONE = 0;
+    IMAGE = 1;
+    VIDEO = 2;
+}
+
+enum RenderTarget {
+    RenderTarget_NONE = 0;
+    WEB = 1;
+    MOBILE = 2;
+}
+
+enum SubmitMode {
+    SubmitMode_NONE = 0;
+    REELOAD = 1;
+    REDIRECT = 2;
+    SHOW_MESSAGE = 3;
+}
+
+enum SurveyStatus {
+    SurveyStatus_NONE = 0;
+    DRAFT = 1;
+    CREATED = 2;
+    ACTIVE = 3;
+    INACTIVE = 4;
+    DELETED = 5;
+}
+
+// enum Visibility {
+//     PUBLIC = 0;
+//     PRIVATE = 1;
+// }
+
+message Validation {
+
+}
+
+// Model for different question types 
+// Text Input (Short text, long text)
+
+message TextQuestionField {
+    message Attributes {
+        string description = 1;
+    }
+    Attributes attributes = 1;
+    repeated Validation validations = 2;
+    Attachment attachment = 3;
+}
+
+message TextQuestionSettings {
+    int64 maximum_characters = 1;
+    bool multiple_rows = 2;
+    bool mandatory = 3;
+    bool image = 4;
+    bool video = 5;
+    bool variable = 6;
+}
+
+// Multiple choice
+message MultipleChoiceQuestionField {
+    repeated Choice choices = 1;
+    message Attributes {
+        string description = 1;
+    }
+    Attributes attributes = 2;
+    repeated Validation validations = 3;
+}
+
+message MultipleChoiceQuestionSettings {
+    bool mandatory = 1;
+    bool multiple_selection = 2;
+    bool show_other = 3;
+    bool picture = 4;
+    bool randomise = 5;
+}
+
+message Choice {
+    string label = 1;
+    string image = 2;
+}
+
+// Contact
+message ContactQuestionField {
+    message Attributes {
+        string first_name = 1;
+        string last_name = 2;
+        string contact_number = 3;
+        string email = 4;
+        string address = 5;
+    }
+    Attributes attributes = 1;
+    repeated Validation validations = 2;
+}
+
+message ContactQuestionSettings {
+    bool mandatory = 1;
+    bool first_name = 2;
+    bool last_name = 3;
+    bool contact_number = 4;
+    bool email = 5;
+    bool address = 6;
+    repeated string required = 7; //required fields
+}
+
+// Legal
+message LegalQuestionField {
+    message Attributes {
+        string description = 1; // helpul info to display for the user too answer this question
+        string content = 2;
+    }
+    Attributes attributes = 1;
+    repeated Validation validations = 2;
+}
+
+message LegalQuestionSettings {
+    ButtonType buttonType = 1;
+    bool description = 2;
+    bool mandatory = 3;
+}
+
+enum ButtonType {
+    ButtonType_NONE = 0;
+    YES_NO = 1; //'yes/no',
+    ACCEPT_DECLINE = 2; //'accept/decline',
+    AGREE_DISAGREE = 3; //'agree/disagree',
+    THUMBS = 4; //'thumbs',
+    TICKS_CROSS = 5; //'ticks/cross'
+}
+
+// Dropdown
+message DropdownQuestionField {
+    message Attributes {
+        string description = 1; // helpul info to display for the user too answer this question
+        repeated string options = 2;
+    }
+    Attributes attributes = 1;
+    repeated Validation validations = 2;
+    repeated Choice choices = 3;
+}
+
+message DropdownQuestionSettings {
+    bool mandatory = 1;
+    bool show_other = 2;
+    bool randomise = 3;
+    bool alphabetical_order = 4;
+    bool multiple_selection = 5;
+}
+
+// File
+message FileQuestionField {
+    message Attributes {
+        string description = 1;
+    }
+    Attributes attributes = 1;
+    repeated Validation validations = 2;
+    Attachment attachment = 3;
+
+}
+
+message FileQuestionSettings {
+    bool mandatory = 1;
+    repeated FileType allowed_filetype = 2; 
+}
+
+enum FileType {
+    FileType_NONE = 0;
+    IMAGES = 1;
+    VIDEOS = 2;
+    DOC = 3;
+    TEXT = 4;
+    PDF = 5;
+    ANY = 6;
+}
+
+// Binary
+message BinaryQuestionField {
+    message Attributes {
+        string describe = 1;    // helpul info to display for the user too answer this question
+    }
+    Attributes attributes = 1;
+    repeated Validation validations = 2;
+    Attachment attachment = 3;
+
+}
+
+message BinaryQuestionSettings {
+    bool mandatory = 1;
+    bool image = 2;
+    bool video = 3;
+    ButtonType buttonType = 4;
+}
+
+// RangeSelect
+message RangeSelectQuestionField {
+    message Attributes {
+        string description = 1;
+        message Labels {
+            string left = 1;
+            string center = 2;
+            string right = 3;
+        }
+        Labels labels = 2;
+    }
+    Attributes attributes = 1;
+    repeated Validation validations = 2;
+}
+
+message RangeSelectQuestionSettings {
+    bool mandatory = 1;
+    int64 steps = 2;
+    RangeStyle style = 3;
+    bool show_only_left_right_labels = 4;
+    bool show_middle = 5;
+}
+
+enum RangeStyle {
+    RangeStyle_NONE = 0;
+    NUMBER = 1;
+    STAR = 2;
+    SMILEY = 3;
+}
+
+message ShareSurveyUser {
+    string id = 1;
+    Survey survey = 2;
+    go.micro.srv.user.User user = 3;
+    go.micro.srv.static.ShareStatus status = 4;
+    int64 updated = 5;
+    go.micro.srv.user.User shared_by = 6; // this has to be the employee from the session key
+    int64 count = 7;
+    int64 created = 8;
+}
+
+message GetTopTagsRequest {
+    string org_id = 1;
+    int64 n = 2;
+}
+
+message GetTopTagsResponse {
+    message Data {
+        repeated string tags = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message AutocompleteTagsRequest {
+    string org_id = 1;
+    string name = 2;
+}
+
+message AutocompleteTagsResponse {
+    message Data {
+        repeated string tags = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message WarmupCacheSurveyRequest {
+    string sort_parameter = 1; 
+    string sort_direction = 2;
+}
+
+message WarmupCacheSurveyResponse {
+
+}

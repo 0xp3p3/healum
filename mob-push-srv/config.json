@@ -1,0 +1,8 @@
+{
+  "service": {
+    "version": "0.0.1",
+    "name": "go.micro.srv.mobpush",
+    "description": "Mobile push server is a microservice to push the notification",
+    "gorush_address": "localhost:8088"
+  }
+}

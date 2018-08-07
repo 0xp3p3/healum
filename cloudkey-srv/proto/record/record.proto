@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package healum.srv.cloudkey;
+
+service CloudKeyService {
+	rpc CreateKey(CreateKeyRequest) returns (CreateKeyResponse) {}
+	rpc EncryptKey(EncryptKeyRequest) returns (EncryptKeyResponse) {}
+	rpc DecryptKey(DecryptKeyRequest) returns (DecryptKeyResponse) {}
+}
+
+message Storage {
+	string name = 1;
+	string subname = 2;
+	string driver = 3;
+}
+
+message CreateKeyRequest {
+	string orgid = 1;
+	string crypto_key = 2;
+}
+
+message CreateKeyResponse {
+}
+
+message EncryptKeyRequest {
+	string orgid = 1;
+	string dek = 2;
+	string crypto_key = 3;
+}
+
+message EncryptKeyResponse {
+	string encrypted_dek = 1;
+}
+
+message DecryptKeyRequest {
+	string orgid = 1;
+	string dek = 2;
+	string crypto_key = 3;
+}
+
+message DecryptKeyResponse {
+	string encrypted_dek = 1;
+}

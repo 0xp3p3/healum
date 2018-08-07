@@ -1,0 +1,424 @@
+syntax = "proto3";
+
+package go.micro.srv.plan;
+
+import "server/user-srv/proto/user/user.proto";
+import "server/todo-srv/proto/todo/todo.proto";
+import "server/behaviour-srv/proto/behaviour/behaviour.proto";
+import "server/static-srv/proto/static/static.proto";
+import "server/static-srv/proto/common/common.proto";
+
+service PlanService {
+  rpc All(AllRequest) returns (AllResponse) {}
+  rpc Create(CreateRequest) returns (CreateResponse) {}
+  rpc Update(UpdateRequest) returns (UpdateResponse) {}
+  rpc Read(ReadRequest) returns (ReadResponse) {}
+  rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+  rpc Search(SearchRequest) returns (SearchResponse) {}
+
+  rpc Templates(TemplatesRequest) returns (TemplatesResponse) {}
+  rpc Drafts(DraftsRequest) returns (DraftsResponse) {}
+  rpc ByCreator(ByCreatorRequest) returns (ByCreatorResponse) {}
+  rpc Filters(FiltersRequest) returns (FiltersResponse) {}
+  rpc TopFilters(TopFiltersRequest) returns (TopFiltersResponse) {}
+  rpc TimeFilters(TimeFiltersRequest) returns (TimeFiltersResponse) {}
+  rpc UseFilters(UseFiltersRequest) returns (UseFiltersResponse) {}
+  rpc SuccessFilters(SuccessFiltersRequest) returns (SuccessFiltersResponse) {}
+  rpc ConditionFilters(ConditionFiltersRequest)
+      returns (ConditionFiltersResponse) {}
+  rpc GoalFilters(GoalFiltersRequest) returns (GoalFiltersResponse) {}
+
+  rpc CreatePlanFilter(CreatePlanFilterRequest)
+      returns (CreatePlanFilterResponse) {}
+  rpc SharePlan(SharePlanRequest) returns (SharePlanResponse) {}
+
+  rpc AutocompleteSearch(AutocompleteSearchRequest)
+      returns (AutocompleteSearchResponse) {}
+
+  rpc GetTopTags(GetTopTagsRequest) returns (GetTopTagsResponse) {}
+  rpc AutocompleteTags(AutocompleteTagsRequest)
+      returns (AutocompleteTagsResponse) {}
+  rpc WarmupCache(WarmupCacheRequest) returns (WarmupCacheResponse) {}
+}
+
+message Data { Plan plan = 1; }
+
+message ArrData { repeated Plan plans = 1; }
+
+message AllRequest {
+  string org_id = 1;
+  string team_id = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+  string sort_parameter = 5;
+  string sort_direction = 6; 
+}
+
+message AllResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateRequest {
+  Plan plan = 1;
+  string user_id = 2;
+  string org_id = 3;
+  string team_id = 4;
+}
+
+message CreateResponse {
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message UpdateRequest {
+  Plan plan = 1;
+  string user_id = 2;
+  string org_id = 3;
+  string team_id = 4;
+}
+
+message UpdateResponse {
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ReadRequest {
+  string id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message ReadResponse {
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message DeleteRequest {
+  string id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message DeleteResponse {
+  int64 code = 2;
+  string message = 3;
+}
+
+message SearchRequest {
+  string name = 1;
+  string org_id = 2;
+  string team_id = 3;
+  int64 limit = 4;
+  int64 offset = 5;
+  int64 from = 6;
+  int64 to = 7;
+  string sort_parameter = 8;
+  string sort_direction = 9; 
+}
+
+message SearchResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message TemplatesRequest {
+  string org_id = 1;
+  string team_id = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+  string sort_parameter = 5;
+  string sort_direction = 6; 
+}
+
+message TemplatesResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message DraftsRequest {
+  string org_id = 1;
+  string team_id = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+  string sort_parameter = 5;
+  string sort_direction = 6; 
+}
+
+message DraftsResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ByCreatorRequest {
+  string user_id = 1;
+  string org_id = 11;
+  string team_id = 12;
+  int64 limit = 13;
+  int64 offset = 14;
+  string sort_parameter = 5;
+  string sort_direction = 6; 
+}
+
+message ByCreatorResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message FiltersRequest {
+  int64 limit = 1;
+  int64 offset = 2;
+  string sort_parameter = 3;
+  string sort_direction = 4; 
+}
+
+message FiltersResponse {
+  message Data { repeated PlanFilter filters = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message TopFiltersRequest {}
+
+message TopFiltersResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message TimeFiltersRequest {
+  int64 start_date = 1;
+  int64 end_date = 2;
+  string org_id = 3;
+  string team_id = 4;
+  int64 limit = 5;
+  int64 offset = 6;
+  string sort_parameter = 7;
+  string sort_direction = 8; 
+}
+
+message TimeFiltersResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message UseFiltersRequest {}
+
+message UseFiltersResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message SuccessFiltersRequest {}
+
+message SuccessFiltersResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ConditionFiltersRequest {}
+
+message ConditionFiltersResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message GoalFiltersRequest {
+  string goals = 1;
+  string org_id = 11;
+  string team_id = 12;
+  int64 limit = 13;
+  int64 offset = 14;
+  string sort_parameter = 5;
+  string sort_direction = 6; 
+}
+
+message GoalFiltersResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreatePlanFilterRequest {
+  PlanFilter filter = 1;
+  string org_id = 11;
+  string team_id = 12;
+  int64 limit = 13;
+  int64 offset = 14;
+}
+
+message CreatePlanFilterResponse {
+  PlanFilter filter = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message SharePlanRequest {
+  repeated Plan plans = 1;
+  repeated go.micro.srv.user.User users = 2;
+  string user_id = 3;
+  string org_id = 4;
+  string team_id = 5;
+}
+
+message SharePlanResponse {
+  int64 code = 1;
+  string message = 2;
+}
+
+message AutocompleteSearchRequest { 
+  string title = 1; 
+  string sort_parameter = 2;
+  string sort_direction = 3; 
+}
+
+message AutocompleteSearchResponse {
+  message Data {
+    repeated go.micro.srv.static.AutocompleteResponse response = 1;
+  }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message Plan {
+  string id = 1;
+  string name = 2;
+  string org_id = 30;
+  string pic = 3;
+  string description = 4;
+  int64 created = 5;
+  int64 updated = 6;
+  repeated go.micro.srv.user.User users = 7;
+  repeated go.micro.srv.behaviour.Goal goals = 8;
+  string duration = 9;
+  int64 start = 10;
+  int64 end = 11;
+  bool endTimeUnspecified = 12;
+  repeated go.micro.srv.static.Recurrence recurrence = 13;
+  go.micro.srv.user.User creator = 14; // SHOULD BE a team member i.e. should be
+                                       // a user that belongs to a team
+  repeated go.micro.srv.user.User collaborators = 15;
+  repeated go.micro.srv.user.User shares = 16;
+  map<string, go.micro.srv.static.DayItems> days = 17;
+  int64 items_count = 18;
+  bool isTemplate = 19;
+  string templateId = 20;
+  StatusEnum status = 21;
+  go.micro.srv.static.Setting setting = 22;
+  repeated string tags = 23;
+  string summary = 24;
+}
+
+enum StatusEnum {
+  StatusEnum_NONE = 0;
+  PUBLISH = 1;
+  DRAFT = 2;
+}
+
+// enum VisiblityEnum {
+//     DEFAULT = 0;
+//     PUBLIC = 1;
+//     PRIVATE = 2;
+// }
+
+message PlanItem {
+  message Item {
+    string id = 1;
+    string title = 2;
+    string pic_url = 3;
+  }
+  Item item = 1;
+  go.micro.srv.todo.Todo todo = 2;
+}
+
+// Todo (This model may change later)
+// message Todo {
+//     string id = 1;
+//     string title = 2;
+//     repeated string tasks = 3;
+//     string pic_url = 4;
+//     int64 created = 5;
+//     int64 updated = 6;
+// }
+
+// Goal (This model may change later)
+// message Goal {
+//     string id = 1;
+//     string title = 2;
+//     string desc = 3;
+//     bool vegetarian = 4;
+//     string pic_url = 5;
+//     int64 created = 6;
+//     int64 updated = 7;
+// }
+
+message User {
+  string id = 1;
+  string name = 2;
+  int64 created = 3;
+  int64 updated = 4;
+}
+
+message PlanFilter {
+  string displayName = 1;
+  string filterSlug = 2;
+}
+
+message SharePlanUser {
+  string id = 1;
+  Plan plan = 2;
+  go.micro.srv.user.User user = 3;
+  go.micro.srv.static.ShareStatus status = 4;
+  int64 updated = 5;
+  go.micro.srv.user.User shared_by = 6; // this has to be the employee from the session key
+  int64 created = 7;
+}
+
+message GetTopTagsRequest {
+    string org_id = 1;
+    int64 n = 2;
+}
+
+message GetTopTagsResponse {
+    message Data {
+        repeated string tags = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message AutocompleteTagsRequest {
+    string org_id = 1;
+    string name = 2;
+}
+
+message AutocompleteTagsResponse {
+    message Data {
+        repeated string tags = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message WarmupCacheRequest {
+}
+
+message WarmupCacheResponse {
+
+}

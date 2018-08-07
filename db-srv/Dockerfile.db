@@ -1,0 +1,10 @@
+FROM healum/server:v2
+
+ADD ./common /src/server/common
+
+ADD ./db-srv /src/server/db-srv
+
+RUN chmod 777 ./src/server/db-srv/dbentrypoint
+RUN cp ./src/server/db-srv/dbentrypoint ./bin/
+
+CMD wait_container dbentrypoint

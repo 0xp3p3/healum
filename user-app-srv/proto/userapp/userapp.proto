@@ -1,0 +1,987 @@
+syntax = "proto3";
+
+package go.micro.srv.userapp;
+
+import "google/protobuf/any.proto";
+import "server/static-srv/proto/static/static.proto";
+import "server/static-srv/proto/common/common.proto";
+import "server/user-srv/proto/user/user.proto";
+import "server/content-srv/proto/content/content.proto";
+import "server/behaviour-srv/proto/behaviour/behaviour.proto";
+import "server/plan-srv/proto/plan/plan.proto";
+import "server/track-srv/proto/track/track.proto";
+import "server/account-srv/proto/account/account.proto";
+import "server/todo-srv/proto/todo/todo.proto";
+
+service UserAppService {
+    rpc CreateBookmark(CreateBookmarkRequest) returns (CreateBookmarkResponse) {}
+    rpc ReadBookmarkContents(ReadBookmarkContentRequest) returns (ReadBookmarkContentResponse) {}
+    rpc ReadBookmarkContentCategorys(ReadBookmarkContentCategorysRequest) returns (ReadBookmarkContentCategorysResponse) {}
+    rpc ReadBookmarkByCategory(ReadBookmarkByCategoryRequest) returns (ReadBookmarkByCategoryResponse) {}
+    rpc DeleteBookmark(DeleteBookmarkRequest) returns (DeleteBookmarkResponse) {}
+    rpc SearchBookmarks(SearchBookmarkRequest) returns (go.micro.srv.user.GetShareableContentResponse) {}
+
+    rpc GetSharedContent(GetSharedContentRequest) returns (GetSharedContentResponse) {}
+    rpc GetSharedPlansForUser(GetSharedPlanRequest) returns (GetSharedPlanResponse) {}
+    rpc GetSharedSurveysForUser(GetSharedSurveyRequest) returns (GetSharedSurveyResponse) {}
+    rpc GetSharedGoalsForUser(GetSharedGoalRequest) returns (GetSharedGoalResponse) {}
+    rpc GetSharedChallengesForUser(GetSharedChallengeRequest) returns (GetSharedChallengeResponse) {}
+    rpc GetSharedHabitsForUser(GetSharedHabitRequest) returns (GetSharedHabitResponse) {}
+
+    rpc SignupToGoal(SignupToGoalRequest) returns (SignupToGoalResponse) {}
+    rpc GetCurrentJoinedGoals(ListGoalRequest) returns (ListGoalResponse) {}
+    rpc GetAllJoinedGoals(ListGoalRequest) returns (ListGoalResponse) {}
+    rpc SignupToChallenge(SignupToChallengeRequest) returns (SignupToChallengeResponse) {}
+    rpc GetCurrentJoinedChallenges(ListChallengeRequest) returns (ListChallengeResponse) {}
+    rpc GetAllJoinedChallenges(ListChallengeRequest) returns (ListChallengeResponse) {}
+    rpc SignupToHabit(SignupToHabitRequest) returns (SignupToHabitResponse) {}
+    rpc GetCurrentJoinedHabits(ListHabitRequest) returns (ListHabitResponse) {}
+    rpc GetAllJoinedHabits(ListHabitRequest) returns (ListHabitResponse) {}
+
+    rpc ListMarkers(ListMarkersRequest) returns (ListMarkersResponse) {}
+    rpc GetPendingSharedActions(GetPendingSharedActionsRequest) returns (GetPendingSharedActionsResponse) {}
+    rpc GetGoalProgress(GetGoalProgressRequest) returns (GetGoalProgressResponse) {}
+    rpc GetDefaultMarkerHistory(go.micro.srv.track.GetDefaultMarkerHistoryRequest) returns (go.micro.srv.track.GetDefaultMarkerHistoryResponse) {}
+    rpc GetCurrentChallengesWithCount(GetCurrentChallengesWithCountRequest) returns (GetCurrentChallengesWithCountResponse) {}
+    rpc GetCurrentHabitsWithCount(GetCurrentHabitsWithCountRequest) returns (GetCurrentHabitsWithCountResponse) {}
+
+    rpc GetContentCategorys(go.micro.srv.content.GetContentCategorysRequest) returns (go.micro.srv.content.GetContentCategorysResponse) {}
+    rpc GetContentByCategory(go.micro.srv.content.GetContentByCategoryRequest) returns (go.micro.srv.content.GetContentByCategoryResponse) {}
+    rpc GetFiltersForCategory(go.micro.srv.content.GetFiltersForCategoryRequest) returns (go.micro.srv.content.GetFiltersForCategoryResponse) {}
+    rpc FiltersAutocomplete(go.micro.srv.content.FiltersAutocompleteRequest) returns (go.micro.srv.content.FiltersAutocompleteResponse) {}
+    rpc FilterContentInParticularCategory(go.micro.srv.content.FilterContentInParticularCategoryRequest) returns (go.micro.srv.content.FilterContentInParticularCategoryResponse) {}
+    rpc SaveUserPreference(go.micro.srv.user.SaveUserPreferenceRequest) returns (go.micro.srv.user.SaveUserPreferenceResponse) {}
+    rpc GetUserPreference(go.micro.srv.user.ReadUserPreferenceRequest) returns (go.micro.srv.user.ReadUserPreferenceResponse) {}
+    rpc SaveUserDetails(SaveUserDetailsRequest) returns (SaveUserDetailsResponse) {}
+
+    rpc GetContentRecommendationByUser(go.micro.srv.content.GetContentRecommendationByUserRequest) returns (go.micro.srv.content.GetContentRecommendationByUserResponse) {}
+    rpc GetContentRecommendationByCategory(go.micro.srv.content.GetContentRecommendationByCategoryRequest) returns (go.micro.srv.content.GetContentRecommendationByCategoryResponse) {} 
+
+    rpc SaveRateForContent(SaveRateForContentRequest) returns (SaveRateForContentResponse) {}
+    rpc DislikeForContent(DislikeForContentRequest) returns (DislikeForContentResponse) {}
+    rpc DislikeForSimilarContent(DislikeForSimilarContentRequest) returns (DislikeForSimilarContentResponse) {}
+    rpc SaveUserFeedback(SaveUserFeedbackRequest) returns (SaveUserFeedbackResponse) {}
+
+    rpc JoinUserPlan(JoinUserPlanRequest) returns (JoinUserPlanResponse) {}
+    rpc CreateUserPlan(CreateUserPlanRequest) returns (CreateUserPlanResponse) {}
+    rpc GetUserPlan(GetUserPlanRequest) returns (GetUserPlanResponse) {}
+    rpc UpdateUserPlan(UpdateUserPlanRequest) returns (UpdateUserPlanResponse) {}
+    // rpc GetContentByCategory(GetContentByCategoryRequest) returns (GetContentByCategoryResponse) {}
+    rpc GetPlanItemsCountByCategory(GetPlanItemsCountByCategoryRequest) returns (GetPlanItemsCountByCategoryResponse) {}
+    rpc GetPlanItemsCountByDay(GetPlanItemsCountByDayRequest) returns (GetPlanItemsCountByDayResponse) {}
+    rpc GetPlanItemsCountByCategoryAndDay(GetPlanItemsCountByCategoryAndDayRequest) returns (GetPlanItemsCountByCategoryAndDayResponse) {}
+
+    rpc Login(go.micro.srv.account.LoginRequest) returns (go.micro.srv.account.LoginResponse) {}
+    rpc Logout(go.micro.srv.account.LogoutRequest) returns (go.micro.srv.account.LogoutResponse) {}
+
+    rpc AllGoalResponse(go.micro.srv.user.AllGoalResponseRequest) returns (go.micro.srv.user.AllGoalResponseResponse) {}
+    rpc AllChallengeResponse(go.micro.srv.user.AllChallengeResponseRequest) returns (go.micro.srv.user.AllChallengeResponseResponse) {}
+    rpc AllHabitResponse(go.micro.srv.user.AllHabitResponseRequest) returns (go.micro.srv.user.AllHabitResponseResponse) {}
+    rpc GetShareableContent(go.micro.srv.user.GetShareableContentRequest) returns (go.micro.srv.user.GetShareableContentResponse) {}
+    rpc ReceivedItems(ReceivedItemsRequest) returns (ReceivedItemsResponse) {}
+
+    rpc ReadUser(go.micro.srv.user.ReadRequest) returns (go.micro.srv.user.ReadResponse) {}
+    rpc AutocompleteContentCategoryItem(go.micro.srv.content.AutocompleteContentCategoryItemRequest) returns (go.micro.srv.content.AutocompleteContentCategoryItemResponse) {}
+    rpc AllContentCategoryItemByNameslug(go.micro.srv.content.AllContentCategoryItemByNameslugRequest) returns (go.micro.srv.content.AllContentCategoryItemByNameslugResponse) {}
+    rpc ReadMarkerByNameslug(go.micro.srv.static.ReadByNameslugRequest) returns (go.micro.srv.static.ReadMarkerResponse) {}
+
+    rpc GetGoalDetail(go.micro.srv.behaviour.ReadGoalRequest) returns (ReadGoalResponse) {}
+    rpc GetChallengeDetail(go.micro.srv.behaviour.ReadChallengeRequest) returns (ReadChallengeResponse) {}
+    rpc GetHabitDetail(go.micro.srv.behaviour.ReadHabitRequest) returns (ReadHabitResponse) {}
+    rpc GetContentDetail(go.micro.srv.content.ReadContentRequest) returns (ReadContentResponse) {}
+
+}
+
+message CreateBookmarkRequest {
+    string content_id = 1;
+    string user_id = 2;
+    string org_id = 3;
+}
+
+message CreateBookmarkResponse {
+    message Data {
+        string bookmark_id = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message ReadBookmarkContentRequest {
+    string user_id = 1;
+}
+
+message ReadBookmarkContentResponse {
+    message Data {
+        repeated BookmarkContent bookmarks = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message ReadBookmarkContentCategorysRequest {
+    string user_id = 1;
+}
+
+message ReadBookmarkContentCategorysResponse {
+    message Data {
+        repeated BookmarkContent categorys = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message ReadBookmarkByCategoryRequest {
+    string user_id = 1;
+    string category_id = 2;
+}
+
+message ReadBookmarkByCategoryResponse {
+    message Data {
+        repeated BookmarkContent bookmarks = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message DeleteBookmarkRequest {
+    string bookmark_id = 1;
+    string user_id = 2;
+    string org_id = 3;
+}
+
+message DeleteBookmarkResponse {
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetSharedPlanRequest {
+    string user_id = 1;
+}
+
+message GetSharedPlanResponse {
+    message Data {
+        repeated SharedPlan shared_plans = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetSharedSurveyRequest {
+    string user_id = 1;
+}
+
+message GetSharedSurveyResponse {
+    message Data {
+        repeated SharedSurvey shared_surveys = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetSharedContentRequest {
+    string user_id = 1;
+}
+
+message GetSharedContentResponse {
+    message Data {
+        repeated go.micro.srv.content.SharedContent shared_contents = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetSharedGoalRequest {
+    string user_id = 1;
+}
+
+message GetSharedGoalResponse {
+    message Data {
+        repeated SharedGoal shared_goals = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetSharedChallengeRequest {
+    string user_id = 1;
+}
+
+message GetSharedChallengeResponse {
+    message Data {
+       repeated SharedChallenge shared_challenges = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetSharedHabitRequest {
+    string user_id = 1;
+}
+
+message GetSharedHabitResponse {
+    message Data {
+        repeated SharedHabit shared_habits = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message SignupToGoalRequest {
+    string goal_id = 1;
+    string user_id = 2;
+    string org_id = 3;
+}
+
+message SignupToGoalResponse {
+    message Data {
+        JoinGoal join_goal = 1;
+        int64 count = 2;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message ListGoalRequest {
+    string user_id = 1;
+}
+
+message ListGoalResponse {
+    message Data {
+        repeated JoinGoalResponse response = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message SignupToChallengeRequest {
+    string challenge_id = 1;
+    string user_id = 2;
+    string org_id = 3;
+}
+
+message SignupToChallengeResponse {
+    message Data {
+        JoinChallenge join_challenge = 1;
+        int64 count = 2;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message ListChallengeRequest {
+    string user_id = 1;
+}
+
+message ListChallengeResponse {
+    message Data {
+        repeated JoinChallengeResponse response = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+
+message SignupToHabitRequest {
+    string habit_id = 1;
+    string user_id = 2;
+    string org_id = 3;
+}
+
+message SignupToHabitResponse {
+    message Data {
+        JoinHabit join_habit = 1;
+        int64 count = 2;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message ListHabitRequest {
+    string user_id = 1;
+}
+
+message ListHabitResponse {
+    message Data {
+        repeated JoinHabitResponse response = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message ListMarkersRequest {
+    string user_id = 1;
+}
+
+message ListMarkersResponse {
+    message Data {
+        repeated MarkerResponse markers = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetPendingSharedActionsRequest {
+    string user_id = 1;
+    string org_id = 2;
+    int64 offset = 3;
+    int64 limit = 4;
+    int64 from = 5;
+    int64 to = 6;
+    string sort_parameter = 7;
+    string sort_direction = 8;
+}
+
+message GetPendingSharedActionsResponse {
+    message Data {
+        repeated go.micro.srv.static.PendingResponse pendings = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetGoalProgressRequest {
+    string user_id = 1;
+}
+
+message GetGoalProgressResponse {
+    message Data {
+        repeated GoalProgressResponse response = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetCurrentChallengesWithCountRequest {
+    string user_id = 1;
+}
+
+message GetCurrentChallengesWithCountResponse {
+    message Data {
+        repeated ChallengeCountResponse response = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+message GetCurrentHabitsWithCountRequest {
+    string user_id = 1;
+}
+
+message GetCurrentHabitsWithCountResponse {
+    message Data {
+        repeated HabitCountResponse response = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message SaveRateForContentRequest {
+    string user_id = 1;
+    string org_id = 2;
+    string content_id = 3;
+    int64 rating = 4;
+}
+
+message SaveRateForContentResponse {
+    message Data {
+        ContentRating content_rating = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message DislikeForContentRequest {
+    string user_id = 1;
+    string org_id = 2;
+    string content_id = 3;
+}
+
+message DislikeForContentResponse {
+    message Data {
+        ContentDislike content_dislike = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message DislikeForSimilarContentRequest {
+    string user_id = 1;
+    string org_id = 2;
+    string content_id = 3;
+    repeated go.micro.srv.static.ContentCategoryItem tags = 4;
+}
+
+message DislikeForSimilarContentResponse {
+    message Data {
+        ContentDislikeSimilar content_dislike_similar = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message SaveUserDetailsRequest {
+    string firstname = 1;
+    string lastname = 2;
+    string avatar_url = 3;
+    go.micro.srv.static.Gender gender = 4;
+    int64 dob = 5;
+    string user_id = 6;
+    string org_id = 7;
+}
+
+message SaveUserDetailsResponse {
+    message Data {
+        string firstname = 1;
+        string lastname = 2;
+        string avatar_url = 3;
+        go.micro.srv.static.Gender gender = 4;
+        int64 dob = 5;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message SaveUserFeedbackRequest {
+    string feedback = 1;
+    int64 rating = 2;
+    string user_id = 3;
+    string org_id = 4;
+}
+
+message SaveUserFeedbackResponse {
+    message Data {
+        go.micro.srv.user.UserFeedback feedback = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message JoinUserPlanRequest {
+    string user_id = 1;
+    string plan_id = 2;
+    string org_id = 3;
+}
+
+message JoinUserPlanResponse {
+    message Data {
+        UserPlan user_plan = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message CreateUserPlanRequest {
+    string user_id = 1;
+    string goal_id = 2;
+    int64 days = 3;
+    int64 itemsPerDay = 4;
+}
+
+message CreateUserPlanResponse {
+    message Data {
+        UserPlan user_plan = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetUserPlanRequest {
+    string user_id = 1;
+}
+
+message GetUserPlanResponse {
+    message Data {
+        UserPlan user_plan = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message UpdateUserPlanRequest {
+    string id = 1;
+    string org_id = 2;
+    repeated go.micro.srv.behaviour.Goal goals = 3;
+    map<string, go.micro.srv.static.DayItems> days = 4;
+}
+
+message UpdateUserPlanResponse {
+    message Data {
+        UserPlan user_plan = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetPlanItemsCountByCategoryRequest {
+    string plan_id = 1;
+}
+
+message GetPlanItemsCountByCategoryResponse {
+    message Data {
+        repeated CategoryCountResponse content_count = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetPlanItemsCountByDayRequest {
+    string plan_id = 1;
+    string day_number = 2;
+}
+
+message GetPlanItemsCountByDayResponse {
+    message Data {
+        repeated CategoryCountResponse content_count = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetPlanItemsCountByCategoryAndDayRequest {
+    string plan_id = 1;
+}
+
+message GetPlanItemsCountByCategoryAndDayResponse {
+    message Data {
+        repeated CategoryCountResponse content_count = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message Bookmark {
+    string id = 1;
+    go.micro.srv.content.Content content = 2;
+    go.micro.srv.user.User user = 3;
+    int64 created = 4;
+    go.micro.srv.static.ContentCategory content_category = 5;
+}
+
+message BookmarkContent {
+    string id = 1;
+    string content_id = 2;
+    string image = 3;
+    string title = 4;
+    string category = 5;
+    string category_id = 6;
+}
+
+message SharedSurvey {
+    string id = 1;
+    string survey_id = 2;
+    string image = 3;
+    string title = 4;
+    int64 count = 5;
+    string summary = 6;
+    go.micro.srv.user.User shared_by = 7;
+
+}
+
+message SharedPlan {
+    string id = 1;
+    string plan_id = 2;
+    string image = 3;
+    string title = 4;
+    string duration = 5;
+    int64 count = 6;
+    string summary = 7;
+    go.micro.srv.user.User shared_by = 8;
+    //some more information might be added here later
+}
+
+message SharedGoal {
+    string id = 1;
+    string goal_id = 2;
+    string image = 3;
+    string title = 4;
+    int64 current = 5;
+    int64 target = 6;
+    string duration = 7;
+    string summary = 8;
+    go.micro.srv.user.User shared_by = 9;
+    //some more information might be added here later
+}
+
+message SharedHabit {
+    string id = 1;
+    string habit_id = 2;
+    string image = 3;
+    string title = 4;
+    int64 current = 5;
+    int64 target = 6;
+    string duration = 7;
+    string summary = 8;
+    go.micro.srv.user.User shared_by = 9;    
+    //some more information might be added here later
+}
+
+message SharedChallenge {
+    string id = 1;
+    string challenge_id = 2;
+    string image = 3;
+    string title = 4;
+    int64 current = 5;
+    int64 target = 6;
+    string duration = 7;
+    string summary = 8;
+    go.micro.srv.user.User shared_by = 9;    
+    //some more information might be added here later
+}
+
+message JoinGoal {
+    string id = 1;
+    go.micro.srv.behaviour.Goal goal = 2;
+    go.micro.srv.user.User user = 3;
+    ActionStatus status = 4;
+    int64 start = 5;
+    int64 end = 6; // from calculation using goal.duration
+    go.micro.srv.static.Target target = 7;
+}
+
+message JoinChallenge {
+    string id = 1;
+    go.micro.srv.behaviour.Challenge challenge  = 2;
+    go.micro.srv.user.User user = 3;
+    ActionStatus status = 4;
+    int64 start = 5;
+    int64 end = 6; // from calculation using goal.duration
+    go.micro.srv.static.Target target = 7;
+}
+
+message JoinHabit {
+    string id = 1;
+    go.micro.srv.behaviour.Habit habit = 2;
+    go.micro.srv.user.User user = 3;
+    ActionStatus status = 4;
+    int64 start = 5;
+    int64 end = 6; // from calculation using habit.duration
+    go.micro.srv.static.Target target = 7;
+}
+
+message JoinGoalResponse {
+    string id = 1;
+    string goal_id = 2;
+    string image = 3;
+    string title = 4;
+    string shared_by = 5;
+    string shared_by_image = 6;
+    int64 current = 7;
+    int64 target = 8;
+    string duration = 9;
+    //some more information might be added here later
+}
+
+message JoinChallengeResponse {
+    string id = 1;
+    string challenge_id = 2;
+    string image = 3;
+    string title = 4;
+    string shared_by = 5;
+    string shared_by_image = 6;
+    int64 current = 7;
+    int64 target = 8;
+    string duration = 9;
+    //some more information might be added here later
+}
+
+message JoinHabitResponse {
+    string id = 1;
+    string habit_id = 2;
+    string image = 3;
+    string title = 4;
+    string shared_by = 5;
+    string shared_by_image = 6;
+    int64 current = 7;
+    int64 target = 8;
+    string duration = 9;
+    //some more information might be added here later
+}
+
+enum ActionStatus {
+    ActionStatus_NONE = 0;
+    STARTED = 1;
+    IN_PROGRESS = 2;
+    COMPLETED_SUCCESS = 3;
+    COMPLETED_FAILURE = 4;
+    ABANDONED = 5;
+}
+
+message MarkerResponse{
+    bool is_default = 1; 
+    string marker_id = 2;
+    string name = 3;
+    string icon_slug = 4;
+    string name_slug = 5;
+    repeated string unit = 6;
+    repeated go.micro.srv.static.TrackerMethod tracker_methods = 7;
+}
+
+message GoalProgressResponse {
+    go.micro.srv.behaviour.Goal goal = 1; //: JoinGoal.Goal // where status = IN_PROGRESS
+    go.micro.srv.user.User user = 2; //:Goal.TargetedUser // should be the same as the user_id in request body
+    int64 latestValue = 3; //: max(TrackMarker.value) // where marker = Goal.BehaviourCategory.markerDefault
+    int64 target = 4; //: Goal.TargetedUser.TargetValue  // should be the same as the user_id in request body
+    string unit = 5;
+}
+
+message ChallengeCountResponse {
+    string challenge_id = 1; //: Challenge.id
+    string title = 2; //: Challenge.title
+    int64 current = 3; //: Share_challenge_user.currentValue
+    int64 target = 4; //: Challenge.Target.targetValue
+    string duration = 5; //: Challenge.duration
+    int64 count = 6; //: TrackChallenge.count
+    string image = 7;
+    //some more information might be added here later
+}
+
+
+message HabitCountResponse {
+    string habit_id = 1; //: Challenge.id
+    string title = 2; //: Challenge.title
+    int64 current = 3; //: Share_challenge_user.currentValue
+    int64 target = 4; //: Challenge.Target.targetValue
+    string duration = 5; //: Challenge.duration
+    int64 count = 6; //: TrackChallenge.count
+    string image = 7;
+}
+
+message ContentRating {
+    string org_id = 1;
+    string user_id = 2;
+    string content_id = 3;
+    int64 rating = 4;
+    int64 created = 5;
+    int64 updated = 6;
+}
+
+message ContentRatingMessage {
+    string user_id = 1;
+    string content_id = 2;
+    int64 rating = 3;
+}
+
+message ContentDislike {
+    string org_id = 1;
+    string user_id = 2;
+    string content_id = 3;
+    int64 created = 4;
+    int64 updated = 5;
+}
+
+message ContentDislikeMessage {
+    string user_id = 1;
+    string content_id = 2;
+}
+
+message ContentDislikeSimilar {
+    string org_id = 1;
+    string user_id = 2;
+    string content_id = 3;
+    repeated go.micro.srv.static.ContentCategoryItem tags = 4;
+    int64 created = 5;
+    int64 updated = 6;
+}
+
+message ContentDislikeSimilarMessage {
+    string user_id = 1;
+    string content_id = 2;
+    repeated go.micro.srv.static.ContentCategoryItem tags = 3;
+}
+
+message ContentBookmarkStatusMessage {
+    string user_id = 1;
+    string content_id = 2;
+    bool bookmarked = 3;  //value should be true
+}
+
+message UserPlan {
+    string id = 1;
+    string name = 2;
+    string org_id = 3;
+    string pic = 4;
+    string description = 5;
+    int64 created = 6;
+    int64 updated = 7;
+    string targetUser = 8;
+    go.micro.srv.plan.Plan plan = 9;
+    repeated go.micro.srv.behaviour.Goal goals = 10;
+    string duration = 11;
+    int64 start = 12;
+    int64 end = 13;
+    go.micro.srv.user.User creator = 14;  //can be Employee (in case it's a plan shared by employee) or normal user (in case where the plan has been created by the normal user)
+    map<string, go.micro.srv.static.DayItems> days = 15;
+    int64 items_count = 16;
+}
+
+message CategoryCountResponse {
+    string day_number = 1;
+    string category_id = 2;
+    string category_icon_slug = 3;
+    string category_name = 4;
+    int64 item_count = 5;
+}
+
+message SharedItem {
+    string type = 1;
+    string id = 2;
+}
+
+message ReceivedItemsRequest {
+    repeated SharedItem shared = 1;
+    string user_id = 2;
+}
+
+message ReceivedItemsResponse {
+    int64 code = 2;
+    string message = 3;
+}
+
+
+message ReadGoalResponse {
+    message Data {
+        GoalDetail detail = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+message ReadChallengeResponse {
+    message Data {
+        ChallengeDetail detail = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+message ReadHabitResponse {
+    message Data {
+        HabitDetail detail = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message ReadContentResponse {
+    message Data {
+        ContentDetail detail = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GoalDetail {
+    string goal_id = 1;
+    string title = 2;
+    string summary = 3;
+    string description = 4;
+    repeated string tags = 5;
+    string image = 6;
+    go.micro.srv.static.Target target = 7;
+    go.micro.srv.user.User shared_by = 8;
+    int64 current = 9;
+    string duration = 10;
+    string source = 11;
+    repeated go.micro.srv.behaviour.Challenge challenges = 12;
+    repeated go.micro.srv.behaviour.Habit habits = 13;
+    go.micro.srv.todo.Todo todos = 14;
+    go.micro.srv.static.BehaviourCategory category = 15;
+}
+
+message ChallengeDetail {
+    string challenge_id = 1;
+    string title = 2;
+    string summary = 3;
+    string description = 4;
+    repeated string tags = 5;
+    string image = 6;
+    go.micro.srv.static.Target target = 7;
+    go.micro.srv.user.User shared_by = 8;
+    int64 current = 9;
+    string duration = 10;
+    string source = 11;
+    repeated go.micro.srv.behaviour.Habit habits = 12;
+    go.micro.srv.todo.Todo todos = 13;
+    go.micro.srv.static.BehaviourCategory category = 14;
+}
+
+message HabitDetail {
+    string habit_id = 1;
+    string title = 2;
+    string summary = 3;
+    string description = 4;
+    repeated string tags = 5;
+    string image = 6;
+    go.micro.srv.static.Target target = 7;
+    go.micro.srv.user.User shared_by = 8;
+    int64 current = 9;
+    string duration = 10;
+    string source = 11;
+    go.micro.srv.todo.Todo todos = 12;
+    go.micro.srv.static.BehaviourCategory category = 13;
+}
+
+message ContentDetail {
+    string id = 1;
+    string image = 2;
+    string title = 3;
+    string summary = 4;
+    string category = 5;
+    string category_id = 6;
+    repeated go.micro.srv.static.Action actions = 7;
+    go.micro.srv.static.ContentType type = 8;
+    go.micro.srv.content.Source source = 9;
+    go.micro.srv.user.User shared_by = 10;
+    google.protobuf.Any item = 11;
+    int64 rating = 12;
+    bool bookmarked = 13;
+}
+
+message UpsertOperation {
+    string type = 1;
+}
+
+message SearchBookmarkRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+	int64 offset = 4;	
+    string title = 5;
+    string summary = 6;
+    string description = 7;
+    string user_id = 8;
+}

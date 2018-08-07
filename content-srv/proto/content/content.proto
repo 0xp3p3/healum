@@ -1,0 +1,1381 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+import "server/static-srv/proto/static/static.proto";
+import "server/user-srv/proto/user/user.proto";
+import "server/todo-srv/proto/todo/todo.proto";
+import "server/static-srv/proto/pubsub/pubsub.proto";
+
+package go.micro.srv.content;
+
+service ContentService {
+    rpc Subscribe(go.micro.srv.static.SubscribeRequest) returns (go.micro.srv.static.SubscribeResponse) {}
+
+    rpc AllSources(AllSourcesRequest) returns (AllSourcesResponse) {}
+    rpc CreateSource(CreateSourceRequest) returns (CreateSourceResponse) {}
+    rpc UpdateSource(UpdateSourceRequest) returns (UpdateSourceResponse) {}
+    rpc ReadSource(ReadSourceRequest) returns (ReadSourceResponse) {}
+    rpc DeleteSource(DeleteSourceRequest) returns (DeleteSourceResponse) {}
+
+    rpc AllTaxonomys(AllTaxonomysRequest) returns (AllTaxonomysResponse) {}
+    rpc CreateTaxonomy(CreateTaxonomyRequest) returns (CreateTaxonomyResponse) {}
+    rpc UpdateTaxonomy(UpdateTaxonomyRequest) returns (UpdateTaxonomyResponse) {}
+    rpc ReadTaxonomy(ReadTaxonomyRequest) returns (ReadTaxonomyResponse) {}
+    rpc DeleteTaxonomy(DeleteTaxonomyRequest) returns (DeleteTaxonomyResponse) {}
+    rpc ReadTaxonomyByNameslug(go.micro.srv.static.ReadByNameslugRequest) returns (ReadTaxonomyResponse) {}
+
+    rpc AllContentCategoryItems(AllContentCategoryItemsRequest) returns (AllContentCategoryItemsResponse) {}
+    rpc CreateContentCategoryItem(CreateContentCategoryItemRequest) returns (CreateContentCategoryItemResponse) {}
+    rpc UpdateContentCategoryItem(UpdateContentCategoryItemRequest) returns (UpdateContentCategoryItemResponse) {}
+    rpc ReadContentCategoryItem(ReadContentCategoryItemRequest) returns (ReadContentCategoryItemResponse) {}
+    rpc DeleteContentCategoryItem(DeleteContentCategoryItemRequest) returns (DeleteContentCategoryItemResponse) {}
+
+    rpc AllContents(AllContentsRequest) returns (AllContentsResponse) {}
+    rpc CreateContent(CreateContentRequest) returns (CreateContentResponse) {}
+    rpc UpdateContent(UpdateContentRequest) returns (UpdateContentResponse) {}
+    rpc ReadContent(ReadContentRequest) returns (ReadContentResponse) {}
+    rpc DeleteContent(DeleteContentRequest) returns (DeleteContentResponse) {}
+
+    rpc AllContentRules(AllContentRulesRequest) returns (AllContentRulesResponse) {}
+    rpc CreateContentRule(CreateContentRuleRequest) returns (CreateContentRuleResponse) {}
+    rpc UpdateContentRule(UpdateContentRuleRequest) returns (UpdateContentRuleResponse) {}
+    rpc ReadContentRule(ReadContentRuleRequest) returns (ReadContentRuleResponse) {}
+    rpc DeleteContentRule(DeleteContentRuleRequest) returns (DeleteContentRuleResponse) {}
+
+    rpc FilterContent(FilterContentRequest) returns (FilterContentResponse) {}
+    rpc SearchContent(SearchContentRequest) returns (SearchContentResponse) {}
+    rpc ShareContent(ShareContentRequest) returns (ShareContentResponse) {} 
+    
+    rpc CreateActivityContent(CreateActivityContentRequest) returns (CreateContentResponse) {}
+    rpc CreateRecipeContent(CreateRecipeContentRequest) returns (CreateContentResponse) {}
+    rpc CreateExerciseContent(CreateExerciseContentRequest) returns (CreateContentResponse) {}
+    rpc CreateArticleContent(CreateArticleContentRequest) returns (CreateContentResponse) {}
+    rpc CreatePlaceContent(CreatePlaceContentRequest) returns (CreateContentResponse) {}
+    rpc CreateWellbeingContent(CreateWellbeingContentRequest) returns (CreateContentResponse) {}
+    rpc CreateVideoContent(CreateVideoContentRequest) returns (CreateContentResponse) {}
+    rpc CreateProductContent(CreateProductContentRequest) returns (CreateContentResponse) {}
+    rpc CreateServiceContent(CreateServiceContentRequest) returns (CreateContentResponse) {}
+    rpc CreateEventContent(CreateEventContentRequest) returns (CreateContentResponse) {}
+    rpc CreateResearchContent(CreateResearchContentRequest) returns (CreateContentResponse) {}
+    rpc CreateAppContent(CreateAppContentRequest) returns (CreateContentResponse) {}
+
+    rpc CreateContentRecommendation(CreateContentRecommendationRequest) returns (CreateContentRecommendationResponse) {}
+
+    rpc GetContentCategorys(GetContentCategorysRequest) returns (GetContentCategorysResponse) {}
+    rpc GetContentDetail(GetContentDetailRequest) returns (GetContentDetailResponse) {}
+    rpc GetContentByCategory(GetContentByCategoryRequest) returns (GetContentByCategoryResponse) {}
+    rpc GetFiltersForCategory(GetFiltersForCategoryRequest) returns (GetFiltersForCategoryResponse) {}
+    rpc FiltersAutocomplete(FiltersAutocompleteRequest) returns (FiltersAutocompleteResponse) {}
+    rpc FilterContentInParticularCategory(FilterContentInParticularCategoryRequest) returns (FilterContentInParticularCategoryResponse) {}
+
+    rpc GetContentRecommendationByUser(GetContentRecommendationByUserRequest) returns (GetContentRecommendationByUserResponse) {}
+    rpc GetContentRecommendationByCategory(GetContentRecommendationByCategoryRequest) returns (GetContentRecommendationByCategoryResponse) {}
+
+    rpc GetRandomItems(GetRandomItemsRequest) returns (GetRandomItemsResponse) {}
+
+    rpc GetAllSharedContents(GetAllSharedContentsRequest) returns (GetAllSharedContentsResponse) {}
+    rpc GetContentRecommendations(GetContentRecommendationsRequest) returns (GetContentRecommendationsResponse) {}
+    rpc GetContentFiltersByPreference(GetContentFiltersByPreferenceRequest) returns (GetContentFiltersByPreferenceResponse) {}
+    rpc FilterContentRecommendations(FilterContentRecommendationsRequest) returns (FilterContentRecommendationsResponse) {}
+
+    rpc GetTopTags(GetTopTagsRequest) returns (GetTopTagsResponse) {}
+    rpc AutocompleteTags(AutocompleteTagsRequest)
+        returns (AutocompleteTagsResponse) {}
+    rpc WarmupCacheContent(WarmupCacheContentRequest) returns (WarmupCacheContentResponse) {}
+
+    rpc AutocompleteContentCategoryItem(AutocompleteContentCategoryItemRequest) returns (AutocompleteContentCategoryItemResponse) {}
+    rpc AllContentCategoryItemByNameslug(AllContentCategoryItemByNameslugRequest) returns (AllContentCategoryItemByNameslugResponse) {}
+
+    rpc GetShareableContents(go.micro.srv.user.GetShareableContentRequest) returns (go.micro.srv.user.GetShareableContentResponse) {}
+}
+
+message SourceData {
+    Source source = 1;
+}
+
+message SourceArrData {
+    repeated Source sources = 1;
+}
+
+message TaxonomyData {
+    go.micro.srv.static.Taxonomy taxonomy = 1;
+}
+
+message TaxonomyArrData {
+    repeated go.micro.srv.static.Taxonomy taxonomys = 1;
+}
+
+message ContentCategoryItemData {
+    go.micro.srv.static.ContentCategoryItem contentCategoryItem = 1;
+}
+
+message ContentCategoryItemArrData {
+    repeated go.micro.srv.static.ContentCategoryItem contentCategoryItems = 1;
+}
+
+message ContentData {
+    Content content = 1;
+}
+
+message ContentArrData {
+    repeated Content contents = 1;
+}
+
+message ContentRuleData {
+    ContentRule contentRule = 1;
+}
+
+message ContentRuleArrData {
+    repeated ContentRule contentRules = 1;
+}
+
+message AllSourcesRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6;
+}
+
+message AllSourcesResponse {
+    SourceArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateSourceRequest {
+    Source source = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateSourceResponse {
+    SourceData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateSourceRequest {
+    Source source = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateSourceResponse {
+    SourceData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadSourceRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadSourceResponse {
+    SourceData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteSourceRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteSourceResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message AllTaxonomysRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6;
+}
+
+message AllTaxonomysResponse {
+    TaxonomyArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateTaxonomyRequest {
+    go.micro.srv.static.Taxonomy taxonomy = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateTaxonomyResponse {
+    TaxonomyData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateTaxonomyRequest {
+    go.micro.srv.static.Taxonomy taxonomy = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateTaxonomyResponse {
+    TaxonomyData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadTaxonomyRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadTaxonomyResponse {
+    TaxonomyData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteTaxonomyRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteTaxonomyResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message AllContentCategoryItemsRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6;
+}
+
+message AllContentCategoryItemsResponse {
+    ContentCategoryItemArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateContentCategoryItemRequest {
+    go.micro.srv.static.ContentCategoryItem contentCategoryItem = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateContentCategoryItemResponse {
+    ContentCategoryItemData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateContentCategoryItemRequest {
+    go.micro.srv.static.ContentCategoryItem contentCategoryItem = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateContentCategoryItemResponse {
+    ContentCategoryItemData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadContentCategoryItemRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadContentCategoryItemResponse {
+    ContentCategoryItemData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteContentCategoryItemRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteContentCategoryItemResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message AllContentsRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6;
+}
+
+message AllContentsResponse {
+    ContentArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateContentRequest {
+    Content content = 1;
+    string user_id = 2;
+    string org_id = 3;
+    string team_id = 4;
+}
+
+message CreateContentResponse {
+    ContentData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateContentRequest {
+    Content content = 1;
+    string user_id = 2;
+    string org_id = 3;
+    string team_id = 4;
+}
+
+message UpdateContentResponse {
+    ContentData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadContentRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+    string user_id = 4;
+}
+
+message ReadContentResponse {
+    ContentData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteContentRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteContentResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message AllContentRulesRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6;
+}
+
+message AllContentRulesResponse {
+    ContentRuleArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateContentRuleRequest {
+    ContentRule contentRule = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateContentRuleResponse {
+    ContentRuleData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateContentRuleRequest {
+    ContentRule contentRule = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateContentRuleResponse {
+    ContentRuleData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadContentRuleRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadContentRuleResponse {
+    ContentRuleData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteContentRuleRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteContentRuleResponse {
+    int64 code = 1;
+    string message  = 2;
+}
+
+message FilterContentRequest {
+    string org_id = 11;
+    string team_id = 12;
+    int64 limit = 13;
+    int64 offset = 14;	
+    string sort_parameter = 15;
+    string sort_direction = 16;
+    
+    repeated string sources = 1;
+    repeated string sourceTypes = 2;
+    repeated string contentTypes = 3;
+    repeated string contentParentCategories = 4;
+    repeated string contentCategories = 5;
+    repeated string contentCategoryItems = 6;
+    repeated string type = 7;
+    repeated string created_by = 8;
+}
+
+message FilterContentResponse {    
+    ContentArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+
+message SearchContentRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+	int64 offset = 4;	
+    string title = 5;
+    string summary = 6;
+    string description = 7;
+}
+
+message SearchContentResponse {
+    message Data {
+        repeated Content contents = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message CreateActivityContentRequest {
+    repeated Activity activitys = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateRecipeContentRequest {
+    repeated Recipe recipes = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateExerciseContentRequest {
+    repeated Exercise exercises = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateArticleContentRequest {
+    repeated Article articles = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreatePlaceContentRequest {
+    repeated Place places = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateWellbeingContentRequest {
+    repeated Wellbeing wellbeings = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateVideoContentRequest {
+    repeated Video videos = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateProductContentRequest {
+    repeated Product products = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateServiceContentRequest {
+    repeated Service services = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateEventContentRequest {
+    repeated Event events = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateResearchContentRequest {
+    repeated Research researchs = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateAppContentRequest {
+    repeated go.micro.srv.static.App apps = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateContentRecommendationRequest {
+    ContentRecommendation recommendation = 1;
+    string org_id = 2;
+    string team_id = 4;
+}
+
+message CreateContentRecommendationResponse {
+    message Data {
+        ContentRecommendation recommendation = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetContentCategorysRequest {
+    
+}
+
+message GetContentCategorysResponse {
+    message Data {
+        repeated CategoryResponse categorys = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetContentDetailRequest {
+    string content_id = 1;
+}
+
+message GetContentDetailResponse {
+    message Data {
+        // string user_id = 1;
+        Content content = 2;
+        int64 rating = 3;
+        bool bookmarked = 4;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetContentByCategoryRequest {
+    string category_id = 1;
+    int64 offset = 2;
+    int64 limit = 3;
+}
+
+message GetContentByCategoryResponse {
+    message Data {
+        repeated ContentResponse contents = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetFiltersForCategoryRequest {
+    string category_id = 1;
+}
+
+message GetFiltersForCategoryResponse {
+    ContentCategoryItemArrData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message FiltersAutocompleteRequest {
+    string category_id = 1;
+    string name = 2;   
+}
+
+message FiltersAutocompleteResponse {
+    message Data {
+        repeated go.micro.srv.static.ContentCategoryItem contentCategoryItems = 2;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message FilterContentInParticularCategoryRequest {
+    string category_id = 1;
+    repeated string contentCategoryItems = 2;
+}
+
+message FilterContentInParticularCategoryResponse {
+    message Data {
+        repeated ContentResponse contents = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetContentRecommendationByUserRequest {
+    string user_id = 1;
+    string org_id = 2;
+    int64 offset = 3;
+    int64 limit = 4;
+    string sort_parameter = 5;
+    string sort_direction = 6;
+}
+
+message GetContentRecommendationByUserResponse {
+    message Data {
+        repeated Recommendation recommendations = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetContentRecommendationByCategoryRequest {
+    string user_id = 1;
+    string org_id = 2;
+    int64 offset = 3;
+    int64 limit = 4;
+    string category_id = 5;
+    string sort_parameter = 6;
+    string sort_direction = 7;
+}
+
+message GetContentRecommendationByCategoryResponse {
+    message Data {
+        repeated Recommendation recommendations = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetRandomItemsRequest {
+    int64 count = 1;
+}
+
+message GetRandomItemsResponse {
+    ContentArrData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetAllSharedContentsRequest {
+    string user_id = 1;
+    string org_id = 2;
+    int64 offset = 3;
+    int64 limit = 4;
+}
+
+message GetAllSharedContentsResponse {
+    message Data {
+        repeated ShareContentUser shareContentUsers = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetContentRecommendationsRequest {
+    string user_id = 1;
+    string org_id = 2;
+}
+
+message GetContentRecommendationsResponse {
+    message Data {
+        repeated ContentRecommendation recommendations = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message GetContentFiltersByPreferenceRequest {
+    string user_id = 1;
+    string org_id = 2;
+}
+
+message GetContentFiltersByPreferenceResponse {
+    message Data {
+        repeated go.micro.srv.static.ContentCategoryItem contentCategoryItems = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message FilterContentRecommendationsRequest {
+    repeated go.micro.srv.static.ContentCategoryItem items = 1;
+    string user_id = 2;
+    string org_id = 3;
+}
+
+message FilterContentRecommendationsResponse {
+    message Data {
+        repeated ContentResponse response = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+//the url or the source of this content
+message Source {
+    string id = 1;
+    string name = 2;    //in the case of activity Content.source will be set to the name of backend driver that is being used.
+    string description = 3;
+    string icon_slug = 4;
+    string url = 5;
+    string icon_url = 6;
+    bool attributionRequired = 7;
+    string org_id = 8;
+    int64 created = 9;
+    int64 updated = 10;
+    repeated string tags = 11;
+    go.micro.srv.static.ContentSourceType type = 12;
+}
+
+message Content {
+    string id = 1;
+    string  title = 2;
+    string summary = 3;
+    string description = 4;
+    string image = 5; //can be null
+    int64 created = 6;
+    int64 updated = 7;
+    string org_id = 8;
+    go.micro.srv.user.User createdBy = 9; // team member id
+    string url = 10;
+    string author = 11; //can be null
+    int64 timestamp = 12;
+    repeated go.micro.srv.static.ContentCategoryItem tags = 13;
+    go.micro.srv.static.ContentType type = 14;
+    Source source = 15; //can be null but represents if this data is coming from any specific source
+    go.micro.srv.static.ContentCategory category = 16;
+    google.protobuf.Any item = 17;
+    string hash = 18;
+    go.micro.srv.static.Setting setting = 19;
+    repeated go.micro.srv.user.User shares = 20;
+}
+
+message ContentRule {
+    string id = 1;
+    string org_id = 2; 
+    int64 created = 3;
+    int64 updated = 4;
+    RuleType type = 5; //whether this is a include rule or exclude rule
+    Source source = 7; // can be null
+    go.micro.srv.static.ContentSourceType sourceType = 9; // can be null
+    go.micro.srv.static.ContentType contentType = 11; //can be null
+    go.micro.srv.static.ContentParentCategory parentCategory = 13; //can be null
+    go.micro.srv.static.ContentCategory category = 15; //can be null
+    repeated go.micro.srv.static.ContentCategoryItem categoryItems = 17; //can be null
+    Expression expression = 18;  //can be null (if any of the above is not null. If all of the above is null, then needs to be present)
+}
+
+message Expression {
+    Operator operator = 1;
+    int64 min = 2;
+    int64 max = 3;
+}
+
+enum RuleType {
+    RuleType_NONE = 0;
+    INCLUDE = 1;
+    EXCLUDE = 2;
+}
+
+enum Operator {
+    Operator_NONE = 0;
+    PERCENTAGE = 1;
+    EQUAL = 2;
+    GTE = 3;
+    LTE = 4;
+}
+
+message Recipe {
+    float serves = 1;
+    repeated go.micro.srv.static.ContentCategoryItem diets = 2;
+    repeated go.micro.srv.static.ContentCategoryItem allergies = 3;
+    repeated Ingredient ingredients = 4;
+    float totalCalories = 5; // this number should be divided for serves number to get individual count
+    float  totalWeight = 6;
+    repeated Nutrition nutrition = 7;
+    //the following can be missing and can be null
+    int64 cookingTime = 9; //minutes
+    int64 prepTime = 10; //minutes
+    string cookingMethod = 11;
+    repeated string instructions = 12;
+
+    //set these details on content object
+    string url = 13;
+    string image = 14;
+    string source = 15;
+    string title = 16;
+
+    repeated string cautions = 17;
+    //DietLabels      []string `json:"dietLabels,omitempty"`
+    //HealthLabels    []string `json:"healthLabels,omitempty"`
+
+}
+
+message Nutrition {
+    string label = 1;
+    string abbreviation = 2;
+    float totalValue = 3;
+    float daily_allowance = 4;
+    string unit = 5;
+    bool rdi = 6;
+    repeated Nutrition sub = 7;
+}
+
+message Ingredient {
+    string text = 1;
+    float quantity = 2;
+    string measure = 3;
+    float weight = 4;
+    string food = 5;
+}
+
+message Article {
+    repeated string image = 1;
+    repeated string video = 2;
+    string text = 3;
+}
+
+// message Article {
+//     string title = 1;
+//     string summary = 2;
+//     string description = 3;
+//     string image = 4; //can be null
+//     repeated string tags = 5;
+//     int64 created = 6;
+//     int64 updated = 7;
+//     Category category = 8;
+//     string org_id = 9;
+//     go.micro.srv.user.User createdBy = 10; // team member id
+//     string source = 11; //can be null but represents if this data is coming from any specific source
+//     string url = 12;
+//     string author = 13; //can be null
+//     int64 timestamp = 14;
+//     string text = 15;
+// }
+
+message Exercise {
+    string methodology = 1;
+    Level level = 2;
+    int64 reps = 3;
+    int64 sets = 4;
+    go.micro.srv.static.TrackerMethod trackering = 5;
+    repeated string image = 6; //can be null
+    repeated string videos = 7;
+    repeated string equipment = 8;
+    repeated go.micro.srv.todo.Todo todo = 9;
+    string rest = 10;  // ISO 8601 duration format
+    string duration = 11;  // ISO 8601 duration format
+    int64 totalCalories = 12;
+    repeated Recurrence recurrence = 13;
+    go.micro.srv.static.ContentCategory category = 14;
+}
+
+message Level {
+    string resistance = 1;
+    string intensity = 2;
+    string experience = 3;
+}
+
+message Wellbeing {
+    go.micro.srv.static.Target target = 1;
+    string duration = 2; //ISO 8601 duration format with moment.js http://momentjs.com/docs/#/durations/as-iso-string/
+    go.micro.srv.user.User createdBy = 3; // team member id
+    string source = 4;; //can be null but represents if this data is coming from any specific source
+    repeated Recurrence recurrence = 5;
+    go.micro.srv.todo.Todo todo = 6;
+}
+
+message Recurrence {
+    string RRule = 1;
+};
+
+message Place {
+    Place containedInPlace = 1; //can be null
+    string type = 2;
+    string name = 3;
+	Geo geo = 4;
+    go.micro.srv.static.Address address = 5;
+    string telephone = 6;
+    string identifier = 7;
+    string url = 8;
+	string id = 9;
+	string image = 10;
+	OpeningHours opening_hours = 11;
+	repeated Photo photos = 12;
+	string place_id = 13; //can be null
+	repeated AltId alt_ids = 14; //can be null
+    repeated string types = 15; //categoryitems
+	string reference = 16;
+	string vicinity = 17;
+}
+
+message Geo {
+	double latitude = 1;
+	double longitude = 2;
+}
+
+message OpeningHours {
+    bool open_now = 1;
+}
+
+message Photo {
+    uint64 height = 1;
+    repeated string html_attributions = 2;
+    string photo_reference = 3;
+    uint64 width = 4;
+}
+
+message AltId {
+    string place_id = 1;
+    string scope = 2;
+}
+
+// for activity-
+
+message Activity {
+	string id = 40;
+	string source = 41;
+	Class class = 1;
+	Place location = 2;
+	Organizer organizer = 3;
+	Park park = 4;
+	repeated SubEvent subEvent = 5;    
+    Restrictions restrictions = 6;
+    string startDate = 10;
+    string endDate = 11;
+    string duration = 12;
+    string identifier = 13;
+    string descriptionFormat = 21;    
+    string meetingPoint = 18;
+    string eventLogo = 27;
+    string video = 28;
+    string sessionUrl = 29;
+    Contributor contributor = 31;
+    repeated ActivityAttr activity = 36;
+    repeated Offer offer = 37;
+}
+
+
+message Restrictions {
+    string genderRestriction = 6;
+    string level = 7;
+    string ageRange = 8;
+    string maxAttendees = 14;
+    string exertion = 19;
+}
+
+message Organizer {
+	string id = 1;
+	string type = 2;
+    string name = 3;
+    string url = 4;
+    string email = 5;
+    string telephone = 6;
+    string logo = 7;
+}
+
+message Class {
+	ClassStatus status = 1; 
+	int64 date = 2;
+	ClassType type = 3;
+	Coach coach = 4;
+}
+
+message ClassStatus {
+
+}
+
+message ClassType {
+
+}
+
+message Coach {
+    string firstName = 1;
+    string lastName = 2;
+    string image = 3;
+    string thumbnail = 4;
+    string square_image = 5;
+}
+
+message ActivityAttr {
+	string type = 1;
+	int32 notation = 2;
+	string prefLabel = 3;
+	string inScheme = 4;
+}
+
+message Offer {
+	string url = 1;
+	string type = 2;
+	string name = 3;
+	string priceCurrency = 4;
+	string price = 5;
+}
+
+message Contributor {
+	string type = 1;
+	string name = 2;
+}
+
+message Park {
+	string title = 1;
+	string id = 2;
+	string description = 3;
+	string descriptionFormat = 4;
+	string parkLogo = 5;
+	go.micro.srv.static.Address address = 6;
+}
+
+message Borough {
+	string title = 1;
+	string id = 2;
+	string introText = 3;
+	string introTextFormat = 4;
+	string boroughLogo = 5;
+	string boroughVideoSlug = 6;
+	string boroughVideoTitle = 7;
+	string boroughVideo = 8;
+	string boroughTwitterAccount = 9;
+	go.micro.srv.static.Address address = 10;
+}
+
+message SubEvent {
+	string type = 1;
+	string startDate = 2;
+	string endDate = 3;
+	string duration = 4;
+}
+
+message ShareContentRequest {
+    repeated Content contents = 1;
+    repeated go.micro.srv.user.User users = 2;
+    string user_id = 3;
+    string org_id = 4;
+    string team_id = 5;
+}
+
+message ShareContentResponse {
+    int64 code = 1;
+    string message = 2;
+}
+
+message ShareContentUser {
+    string id = 1;
+    Content content = 2;
+    go.micro.srv.user.User user = 3;
+    go.micro.srv.static.ShareStatus status = 4;
+    int64 updated = 5;
+    go.micro.srv.user.User shared_by = 6; // this has to be the employee from the session key
+    int64 created = 7;
+}
+
+message CategoryResponse {
+    string category_id = 1;
+    string name = 2;
+    string icon_slug = 3;
+}
+
+message ContentResponse {
+    string content_id = 1;
+    string image = 2;
+    string title = 3;
+    string author = 4;
+    Source source = 5;
+    string category_id = 6;
+    string category_icon_slug = 7;
+    string category_name = 8;
+}
+
+message ContentRecommendation {
+    string id = 1;
+    string org_id = 2;
+    string user_id = 3;
+    Content content = 4;
+    int64 created = 5;
+    int64 updated = 6;
+    repeated go.micro.srv.static.ContentCategoryItem tags = 8;
+}
+
+message Recommendation {
+    string content_id = 1;
+    string content_image = 2;
+    string content_title = 3;
+    string content_author = 4;
+    Source content_source = 5;
+    string category_id = 6;
+    string category_icon_slug = 7;
+    string category_name = 8;
+    string user_id = 9;
+    repeated go.micro.srv.static.ContentCategoryItem tags = 10;
+}
+
+
+message Product {
+    string id = 1;
+    string org_id = 2;
+    int64 created = 3;
+    int64 updated = 4;
+    string name = 5;
+    string description = 6;
+    string squareImage = 7;
+    string thumbnailImage = 8;
+    string largeImage = 9;
+    string url = 10;
+    int64 rating = 11;
+    string audience = 12;
+    string award = 13;
+    string brand = 14;
+    string category = 15;
+    string gtin = 16;
+    string manufacturer = 17;
+    string material = 18;
+    string model = 19;
+    int64 offers = 20;
+    int64 productionDate = 21;
+    int64 purchaseDate = 22;
+    int64 releaseDate = 23;
+    string review = 24;
+    int64 weight = 25;
+    int64 depth = 26;
+    int64 height = 27;
+    int64 width = 28;
+    string color = 29;
+}
+
+message Service {
+    string id = 1;
+    string org_id = 2;
+    int64 created = 3;
+    int64 updated = 4;
+    string name = 5;
+    string description = 6;
+    string squareImage = 7;
+    string thumbnailImage = 8;
+    string largeImage = 9;
+    string url = 10;
+    int64 rating = 11;
+    string audience = 12;
+    string award = 13;
+    string brand = 14;
+    string category = 15;
+    string manufacturer = 16;
+    string material = 17;
+    string model = 18;
+    int64 offers = 19;
+    string review = 20;
+    string areaServed = 21;
+    // string audience = 22;
+    string availableChannel = 23;
+    string thirdPartyBroker = 24;
+    string hasOfferCatalog = 25;
+    string hoursAvailable = 26;
+    string serviceProvider = 27;
+    string serviceOutput = 28;
+}
+
+message Event {
+    string id = 1;
+    string org_id = 2;
+    int64 created = 3;
+    int64 updated = 4;
+    string name = 5;
+    string description = 6;
+    string squareImage = 7;
+    string thumbnailImage = 8;
+    string largeImage = 9;
+    int64 startDate = 10;
+    int64 endDate = 11;
+    string duration = 12;
+    string location = 13;
+    string organizer = 14;
+    string superEvent = 15;
+    string subEvent = 16;
+    string activity = 17;
+    string format = 18;
+    string schedule = 19;
+    string url = 20;
+    string person = 21;
+    int64 rating = 22;
+    int64 status = 23;
+    string language = 24;
+    int64 capacity = 25;
+    int64 offer = 26;
+    string review = 27;
+    int64 ageRange = 28;
+}
+
+message Video {
+    string id = 1;
+    string org_id = 2;
+    int64 created = 3;
+    int64 updated = 4;
+    int64 bitrate = 5;
+    int64 contentSize = 6;
+    string contentUrl = 7;
+    string duration = 8;
+    string embedUrl = 9;
+    string encodingFormat = 10;
+    int64 expires = 11;
+    int64 height = 12;
+    int64 playerType = 13;
+    int64 productionCompany = 14;
+    int64 regionsAllowed = 15;
+    string requiresSubscription = 16;
+    int64 uploadDate = 17;
+    int64 width = 18;
+}
+
+message Research {
+    string id = 1;
+    string org_id = 2;
+    int64 created = 3;
+    int64 updated = 4;
+    string articleBody = 5;
+    string articleSection = 6;
+    int64 pageEnd = 7;
+    int64 pageStart = 8;
+    int64 wordCount = 9;
+    string keywords = 10;
+    string category = 11;
+    string source = 12;
+    string tags = 13;
+    string safe = 14;
+    string topic = 15;
+    string summary = 16;
+    string objective = 17;
+    string coAuthors = 18;
+    string conclusion = 19;
+    string summarySmall = 20;
+    // string summary = 21;
+}
+
+message SharedContent {
+    string id = 1;
+    string content_id = 2;
+    string image = 3;
+    string title = 4;
+    string summary = 5;
+    string category = 6;
+    string category_id = 7;
+    go.micro.srv.user.User shared_by = 11;
+    google.protobuf.Any item = 12;
+}
+
+message GetTopTagsRequest {
+    string org_id = 1;
+    int64 n = 2;
+}
+
+message GetTopTagsResponse {
+    message Data {
+        repeated string tags = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message AutocompleteTagsRequest {
+    string org_id = 1;
+    string name = 2;
+}
+
+message AutocompleteTagsResponse {
+    message Data {
+        repeated string tags = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message WarmupCacheContentRequest {
+}
+
+message WarmupCacheContentResponse {
+
+}
+
+message AutocompleteContentCategoryItemRequest {
+    string name = 1;
+    string name_slug = 2;
+}
+
+message AutocompleteContentCategoryItemResponse {
+    message Data {
+        repeated ContentCategoryItemResponse response = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message AllContentCategoryItemByNameslugRequest {
+    string name_slug = 2; 
+}
+
+message AllContentCategoryItemByNameslugResponse {
+    message Data {
+        repeated ContentCategoryItemResponse response = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message ContentCategoryItemResponse {
+    string category_id = 1;
+    string category_nameslug = 2;
+    string categoryitem_id = 3;
+    string categoryitem_name = 4;
+}

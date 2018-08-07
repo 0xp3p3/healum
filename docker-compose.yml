@@ -1,0 +1,143 @@
+version: "3.3"
+# interaction
+services:
+  consul:
+    command: -server -bootstrap-expect 1 -data-dir /tmp/consul -advertise=127.0.0.1 -client=127.0.0.1
+    image: progrium/consul:latest
+    hostname: "registry"
+    ports:
+    - "8300:8300"
+    - "8400:8400"
+    - "8500:8500"
+    - "8600:53/udp"
+    network_mode: "host"
+
+  nats:
+    image: nats:0.8.0
+    hostname: "nats"
+    ports:
+    - "8222:8222"
+    - "4222:4222"
+    entrypoint: "/gnatsd -DV -a 127.0.0.1"
+    network_mode: "host"
+
+  # databases
+  db:
+    network_mode: "host"
+    image: mysql
+    hostname: "db"
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+
+  elasticsearch:
+   network_mode: "host"
+   container_name: elasticsearch
+   image: elasticsearch:latest
+   hostname: "elasticsearch"
+   ports:
+     - "9200:9200"
+     - "9300:9300"
+
+  redis:
+    network_mode: "host"
+    container_name: uniqush-redis
+    image: redis:alpine
+    restart: always
+
+  arangodb:
+    network_mode: "host"
+    image: arangodb
+    ports:
+      - "8529:8529"
+    environment:
+        - ARANGO_NO_AUTH=1
+
+  # microservices
+  db-reg:
+    build:
+      context: .
+      dockerfile: ./db-srv/Dockerfile.db
+    depends_on:
+      - consul
+      - nats
+      - db
+    network_mode: "host"
+
+  db-srv:
+    build:
+      context: .
+      dockerfile: ./db-srv/Dockerfile
+    command: -config /src/server/db-srv/config.json -metrics_address 127.0.0.1 --registry_address=127.0.0.1:8500 --broker=nats --transport=nats --broker_address=127.0.0.1:4222 --transport_address=127.0.0.1:4222
+    volumes:
+      - ./db-srv:/src/server/db-srv
+    network_mode: "host"
+    depends_on:
+      - db
+      - db-reg
+      - consul
+      - nats
+      - elasticsearch
+      - arangodb
+      - redis
+
+  user-srv:
+    network_mode: "host"
+    build:
+      context: .
+      dockerfile: ./user-srv/Dockerfile
+    command: -config /src/server/user-srv/config.json -metrics_address 127.0.0.1 --registry_address=127.0.0.1:8500 --broker=nats --transport=nats --broker_address=127.0.0.1:4222 --transport_address=127.0.0.1:4222
+    volumes:
+      - ./user-srv:/src/server/user-srv
+      - ./db-srv:/src/server/db-srv
+    depends_on:
+      - consul
+      - nats
+      - db-srv
+
+  organisation-srv:
+    network_mode: "host"
+    build:
+      context: .
+      dockerfile: ./organisation-srv/Dockerfile
+    command: -config /src/server/organisation-srv/config.json -metrics_address 127.0.0.1 --registry_address=127.0.0.1:8500 --broker=nats --transport=nats --broker_address=127.0.0.1:4222 --transport_address=127.0.0.1:4222
+    volumes:
+      - ./organisation-srv:/src/server/organisation-srv
+      - ./db-srv:/src/server/db-srv
+    depends_on:
+      - consul
+      - nats
+      - db-srv
+
+  # api
+  micro-api:
+    network_mode: "host"
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile.api
+    command: --api_handler=proxy --registry_address=127.0.0.1:8500 --register_interval=10 --register_ttl=10 api
+    depends_on:
+      - consul
+      - nats
+    ports:
+    - "80:80"
+    - "8080:8080"
+
+  api:
+    network_mode: "host"
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile
+    command: -config /src/server/api/config.json -metrics_address 127.0.0.1 --registry_address=127.0.0.1:8500 --broker=nats --transport=nats --broker_address=127.0.0.1:4222 --transport_address=127.0.0.1:4222
+    volumes:
+      - ./api:/src/server/api
+      - ./user-srv:/src/server/user-srv
+      - ./db-srv:/src/server/db-srv
+      - ./organisation-srv:/src/server/organisation-srv
+    depends_on:
+      - consul
+      - nats
+      - micro-api
+      - user-srv
+      - organisation-srv

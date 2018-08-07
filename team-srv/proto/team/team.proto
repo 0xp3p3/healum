@@ -1,0 +1,376 @@
+syntax = "proto3";
+
+import "server/static-srv/proto/static/static.proto";
+import "server/account-srv/proto/account/account.proto";
+import "server/organisation-srv/proto/organisation/organisation.proto";
+import "server/user-srv/proto/user/user.proto";
+import "server/product-srv/proto/product/product.proto";
+
+package go.micro.srv.team;
+
+service TeamService {
+  rpc All(AllRequest) returns (AllResponse) {}
+  rpc Create(CreateRequest) returns (CreateResponse) {}
+  rpc Update(UpdateRequest) returns (UpdateResponse) {}
+  rpc Read(ReadRequest) returns (ReadResponse) {}
+  rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+  rpc Filter(FilterRequest) returns (FilterResponse) {}
+  rpc Search(SearchRequest) returns (SearchResponse) {}
+
+  rpc AllTeamMember(AllTeamMemberRequest) returns (AllTeamMemberResponse) {}
+  rpc CreateTeamMember(CreateTeamMemberRequest) returns (CreateTeamMemberResponse) {}
+  rpc ReadTeamMember(ReadTeamMemberRequest) returns (ReadTeamMemberResponse) {}
+  rpc FilterTeamMember(FilterTeamMemberRequest) returns (FilterTeamMemberResponse) {}
+
+  rpc CreateEmployeeEdge(CreateEmployeeEdgeRequest) returns (CreateEmployeeEdgeResponse) {}
+  rpc CreateEmployeeProfile(CreateEmployeeProfileRequest) returns (CreateEmployeeProfileResponse) {}
+  rpc CreateTeamMembership(CreateTeamMembershipRequest) returns (CreateTeamMembershipResponse) {}
+  rpc CreateEmployeeModuleAccess(CreateEmployeeModuleAccessRequest) returns (CreateEmployeeModuleAccessResponse) {}
+  rpc GetAccessibleModulesByEmployee(GetAccessibleModulesByEmployeeRequest) returns (GetAccessibleModulesByEmployeeResponse) {}
+
+  rpc ReadEmployeeInfo(ReadEmployeeInfoRequest)
+      returns (ReadEmployeeInfoResponse) {}
+  rpc PutEmployeeInfo(PutEmployeeInfoRequest)
+      returns (PutEmployeeInfoResponse) {}
+  rpc CheckValidEmployee(ReadEmployeeInfoRequest)
+      returns (CheckValidEmployeeResponse) {}
+  rpc DeleteEmployee(DeleteEmployeeRequest) returns (DeleteEmployeeResponse) {}
+}
+
+message Data { Team team = 1; }
+
+message ArrData { repeated Team teams = 1; }
+
+message AllRequest {
+  string org_id = 1;
+  string team_id = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+  string sort_parameter = 5;
+  string sort_direction = 6;
+}
+
+message AllResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateRequest {
+  Team team = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message CreateResponse {
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message UpdateRequest {
+  Team team = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message UpdateResponse {
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ReadRequest {
+  string id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message ReadResponse {
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message DeleteRequest {
+  string id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message DeleteResponse {
+  int64 code = 2;
+  string message = 3;
+}
+
+message FilterRequest {
+  string org_id = 1;
+  string team_id = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+  string sort_parameter = 5;
+  string sort_direction = 6;
+  repeated string product = 7;
+}
+
+message FilterResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message SearchRequest {
+  string org_id = 1;
+  string team_id = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+  string team_name = 5;
+  string team_member = 6;
+  string sort_parameter = 7;
+  string sort_direction = 8;
+}
+
+message SearchResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message AllTeamMemberRequest {
+  string org_id = 1;
+  string team_id = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+  string sort_parameter = 5;
+  string sort_direction = 6;
+}
+
+message AllTeamMemberResponse {
+  message Data { repeated Employee employees = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateTeamMemberRequest {
+  go.micro.srv.user.User user = 1;
+  go.micro.srv.account.Account account = 2;
+  Employee employee = 3;
+  string org_id = 4;
+  string team_id = 5;
+}
+
+message CreateTeamMemberResponse {
+  message Data {
+    Employee employee = 1;
+    go.micro.srv.user.User user = 2;
+    go.micro.srv.account.Account account = 3;
+  }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ReadTeamMemberRequest {
+  string user_id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message ReadTeamMemberResponse {
+  message Data {
+    go.micro.srv.user.User user = 1;
+    Employee employee = 2;
+  }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message FilterTeamMemberRequest {
+  string org_id = 1;
+  string team_id = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+  string sort_parameter = 5;
+  string sort_direction = 6;
+  repeated string team = 7;
+}
+
+message FilterTeamMemberResponse {
+  message Data { repeated Employee employees = 1; }
+  Data data = 1;
+  int32 code = 2;
+  string message = 3;
+}
+
+message CreateEmployeeEdgeRequest {
+  Employee employee = 1;
+  string user_id = 2;
+  string org_id = 3;
+}
+
+message CreateEmployeeEdgeResponse {
+  message Data { Employee employee = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateEmployeeProfileRequest { EmployeeProfile profile = 1; }
+
+message CreateEmployeeProfileResponse {
+  message Data { EmployeeProfile profile = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateTeamMembershipRequest {
+  Employee employee = 1;
+  go.micro.srv.user.User user = 2;
+}
+
+message CreateTeamMembershipResponse {
+  int64 code = 1;
+  string message = 2;
+}
+
+message CreateEmployeeModuleAccessRequest {
+  string user_id = 1;
+  repeated go.micro.srv.static.Module modules = 2;
+  string org_id = 3;
+}
+
+message CreateEmployeeModuleAccessResponse {
+  int64 code = 1;
+  string message = 2;
+}
+
+message GetAccessibleModulesByEmployeeRequest {
+  string user_id = 1;
+  string org_id = 2;
+}
+
+message GetAccessibleModulesByEmployeeResponse {
+  message Data { repeated go.micro.srv.static.Module modules = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message DeleteEmployeeRequest {
+  string employee_id = 1;
+  string user_id = 2;
+  string org_id = 3;
+}
+
+message DeleteEmployeeResponse {
+  int64 code  = 1;
+  string message = 2;
+}
+
+// organisation teams
+message Team {
+  string id = 1;
+  string org_id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string name = 5;
+  string description = 6;
+  string image = 7; // can be null
+  string color = 8;
+  repeated TeamMember team_members = 9;                // stored as an edge
+  repeated go.micro.srv.product.Product products = 10; // stored as an edge
+  repeated go.micro.srv.product.Service services = 11; // stored as an edge
+  go.micro.srv.user.User createdBy = 12;               // team member id
+}
+
+message TeamMembership {
+  Team team = 1;                     // to
+  go.micro.srv.user.User user = 2;   // from
+  go.micro.srv.static.Role role = 3; // can be null
+}
+
+message TeamMember {
+  go.micro.srv.user.User user = 1;   // from
+  go.micro.srv.static.Role role = 2; // can be null
+}
+
+// this is the edge table between User and Organisation
+message Employee {
+  string id = 1;
+  string org_id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  go.micro.srv.static.Role role = 5; // overall role
+  EmployeeProfile profile = 6;
+  repeated Team teams = 7;
+  go.micro.srv.user.User user = 8;
+  go.micro.srv.organisation.Organisation organisation = 9;
+  repeated go.micro.srv.static.Module modules = 10;
+}
+
+message ReadEmployeeInfoRequest { string user_id = 1; }
+
+message ReadEmployeeInfoResponse { EmployeeInfo employee = 1; }
+
+message PutEmployeeInfoRequest {
+  string user_id = 1;
+  string org_id = 2;
+}
+
+message CheckValidEmployeeResponse {
+  bool valid = 1;
+  Employee employee = 3;
+}
+
+message PutEmployeeInfoResponse {
+  message Data { Employee employee = 1; }
+  Data data = 1;
+}
+
+message EmployeeInfo {
+  string user_id = 1;
+  string org_id = 2;
+  Employee employee = 3;
+}
+
+message EmployeeProfile {
+  string id = 1;
+  string org_id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  repeated Qualification qualifications = 5;
+  repeated Experience experiences = 6;
+}
+
+message Qualification {
+  string id = 1;
+  string org_id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string title = 5;
+  string summary = 6;
+  string description = 7;
+}
+
+message Experience {
+  string id = 1;
+  string org_id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string title = 5;
+  string summary = 6;
+  string description = 7;
+  string duration = 8; // RRule
+}
+
+message ModuleAuthorisation {
+  string id = 1;
+  string org_id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  go.micro.srv.static.Module module = 5;
+  go.micro.srv.static.Role role = 6; // module role
+}

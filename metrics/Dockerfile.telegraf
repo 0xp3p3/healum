@@ -1,0 +1,10 @@
+FROM telegraf
+
+ADD ./metrics /src/server/metrics
+ADD ./common /src/server/common
+ADD ./vendor /src/server/vendor
+
+RUN chmod 777 /src/server/metrics/wait_container
+RUN cp /src/server/metrics/wait_container /bin/
+
+ENTRYPOINT ["wait_container", "/entrypoint.sh"]

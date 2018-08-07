@@ -1,0 +1,663 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+import "github.com/golang/protobuf/ptypes/struct/struct.proto";
+import "server/static-srv/proto/static/static.proto";
+import "server/account-srv/proto/account/account.proto";
+
+package go.micro.srv.user;
+
+service UserService {
+  rpc All(AllRequest) returns (AllResponse) {}
+  rpc Create(CreateRequest) returns (CreateResponse) {}
+  rpc Update(UpdateRequest) returns (UpdateResponse) {}
+  rpc Read(ReadRequest) returns (ReadResponse) {}
+  rpc Filter(FilterRequest) returns (FilterResponse) {}
+  rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+
+  rpc UpdateTokens(UpdateTokenRequest) returns (UpdateTokenResponse) {}
+  rpc ReadByAccount(ReadByAccountRequest) returns (ReadByAccountResponse) {}
+  rpc ReadTokens(ReadTokensRequest) returns (ReadTokensResponse) {}
+
+  rpc SaveUserPreference(SaveUserPreferenceRequest) returns (SaveUserPreferenceResponse) {}
+  rpc ReadUserPreference(ReadUserPreferenceRequest) returns (ReadUserPreferenceResponse) {}
+  rpc ListUserFeedback(ListUserFeedbackRequest) returns (ListUserFeedbackResponse) {}
+  rpc FilterUser(FilterUserRequest) returns (FilterUserResponse) {}
+  rpc SearchUser(SearchUserRequest) returns (SearchUserResponse) {}
+  rpc AutocompleteUser(AutocompleteUserRequest) returns (AutocompleteUserResponse) {}
+  rpc SetAccountStatus(go.micro.srv.account.SetAccountStatusRequest) returns (go.micro.srv.account.SetAccountStatusResponse) {}
+  rpc GetAccountStatus(go.micro.srv.account.GetAccountStatusRequest) returns (go.micro.srv.account.GetAccountStatusResponse) {}
+
+  rpc ResetUserPassword(go.micro.srv.account.ResetUserPasswordRequest) returns (go.micro.srv.account.ResetUserPasswordResponse) {}
+
+  rpc AddMultipleMeasurements(AddMultipleMeasurementsRequest) returns (AddMultipleMeasurementsResponse) {}
+  rpc GetAllMeasurementsHistory(GetAllMeasurementsHistoryRequest) returns (GetAllMeasurementsHistoryResponse) {}
+  rpc GetMeasurementsHistory(GetMeasurementsHistoryRequest) returns (GetMeasurementsHistoryResponse) {}
+  rpc GetAllTrackedMarkers(GetAllTrackedMarkersRequest) returns (GetAllTrackedMarkersResponse) {}
+  rpc GetSharedResources(GetSharedResourcesRequest) returns (GetSharedResourcesResponse) {}
+  rpc GetAllShareableResources(GetShareableResourcesRequest) returns (GetShareableResourcesResponse) {}
+  rpc ShareResources(ShareResourcesRequest) returns (ShareResourcesResponse) {}
+  rpc ShareMultipleResources(ShareMultipleResourcesRequest) returns (ShareResourcesResponse) {}
+  
+}
+
+message UserData { User user = 1; }
+
+message UserArrData { repeated User users = 1; }
+
+message UserTokenData {
+  User user = 1;
+  go.micro.srv.account.Account account = 2;
+}
+
+message AllRequest {
+  string org_id = 1;
+  string team_id = 2;
+  int64 offset = 3;
+  int64 limit = 4;
+  string sort_parameter = 5;
+  string sort_direction = 6;
+}
+
+message AllResponse {
+  UserArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateRequest {
+  User user = 1;
+  go.micro.srv.account.Account account = 2;
+  string org_id = 3;
+  string team_id = 4;
+}
+
+message CreateResponse {
+  UserTokenData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ReadRequest {
+  string user_id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message ReadResponse {
+  UserData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message UpdateRequest {
+  User user = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message UpdateResponse {
+  UserData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message FilterRequest {
+  string org_id = 1;
+  string team_id = 2;
+  int64 offset = 3;
+  int64 limit = 4;
+  string sort_parameter = 5;
+  string sort_direction = 6;
+  repeated string users = 7;
+}
+
+message FilterResponse {
+  UserArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message DeleteRequest {
+  string user_id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message DeleteResponse {
+  int64 code = 1;
+  string message = 2;
+}
+
+message UpdateTokenRequest {
+  string user_id = 1;
+  map<string,Token> tokens = 2;
+}
+
+message UpdateTokenResponse {}
+
+message ReadByAccountRequest { string account_id = 1; }
+
+message ReadByAccountResponse {
+  UserData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ReadTokensRequest { repeated string user_ids = 1; }
+
+message ReadTokensResponse { 
+  repeated Token tokens = 1; 
+}
+
+message SaveUserPreferenceRequest {
+  Preferences preference = 1;
+  string user_id = 2;
+  string org_id = 3;
+  string team_id = 4;
+}
+
+message SaveUserPreferenceResponse {
+  message Data { Preferences preference = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ReadUserPreferenceRequest {
+  string user_id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message ReadUserPreferenceResponse {
+  message Data { Preferences preference = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ListUserFeedbackRequest {
+  string user_id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message ListUserFeedbackResponse {
+  message Data { repeated UserFeedback feedbacks = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message FilterUserRequest {
+  repeated string tags = 1;
+  Preferences preference = 2;
+  go.micro.srv.account.AccountStatus status = 3;
+  string org_id = 4;
+  string team_id = 5;
+  int64 offset = 6;
+  int64 limit = 7;
+  string sort_parameter = 8;
+  string sort_direction = 9;
+}
+
+message FilterUserResponse {
+  message Data { repeated SearchResponse response = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message SearchUserRequest {
+  string org_id = 1;
+  string team_id = 2;
+  int64 offset = 3;
+  int64 limit = 4;
+  string name = 5;
+  go.micro.srv.static.Gender gender = 6;
+  int64 dob = 7;
+  repeated go.micro.srv.static.Address addresses = 8;
+  repeated ContactDetail contact_details = 9;
+}
+
+message SearchUserResponse {
+  message Data { repeated SearchResponse response = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message AutocompleteUserRequest {
+  string name = 1;
+  string org_id = 2;
+  string team_id = 3;
+  int64 offset = 4;
+  int64 limit = 5;
+  string sort_parameter = 6;
+  string sort_direction = 7;
+}
+
+message AutocompleteUserResponse {
+  message Data { repeated SearchResponse response = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message AddMultipleMeasurementsRequest {
+  repeated Measurement measurements = 1;
+  string user_id = 2;
+  string org_id = 3;
+  string team_id = 4;
+}
+
+message AddMultipleMeasurementsResponse {
+  message Data { repeated UserMeasurementEdge response = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message GetAllMeasurementsHistoryRequest {
+  string user_id = 1;
+  string org_id = 2;
+  int64 offset = 3;
+  int64 limit = 4;
+  string team_id = 5;
+}
+
+message GetAllMeasurementsHistoryResponse {
+  message Data { repeated Measurement measurements = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+message GetMeasurementsHistoryRequest {
+  string user_id = 1;
+  string org_id = 2;
+  int64 offset = 3;
+  int64 limit = 4;
+  string team_id = 5;
+  string marker_id = 6;
+}
+
+message GetMeasurementsHistoryResponse {
+  message Data { repeated Measurement measurements = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message GetAllTrackedMarkersRequest {
+  string user_id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message GetAllTrackedMarkersResponse {
+  message Data { repeated go.micro.srv.static.Marker markers = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ReadAccountTokenRequest {
+  string account_id = 1;
+}
+
+message ReadAccountTokenResponse {
+  string token = 1;
+}
+
+message GetSharedResourcesRequest { 
+  string user_id = 1; 
+  string org_id = 2;
+  string team_id = 3;
+  repeated string type = 4;
+  repeated string shared_by = 5;
+  repeated go.micro.srv.static.ShareStatus status = 6;
+  int64 offset = 7;
+  int64 limit = 8;
+  string query = 9;
+}
+
+message GetSharedResourcesResponse {
+  message Data { repeated SharedResourcesResponse shared_resources = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message GetShareableResourcesRequest { 
+  string user_id = 1; 
+  string org_id = 2;
+  string team_id = 3;
+  repeated string type = 4;
+  repeated string created_by = 5;
+  int64 offset = 7;
+  int64 limit = 8;
+  string query = 9;
+}
+
+message GetShareableResourcesResponse {
+  message Data { repeated SharedResourcesResponse resources = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message SharedResourcesResponse {
+  string id = 1;
+  string org_id = 2;
+  string resource_id = 3;
+  string image = 4;
+  string title = 5;
+  string summary = 6;
+  User shared_by = 7;
+  int64 current = 8;
+  go.micro.srv.static.Target target = 9;
+  string duration = 10;
+  int64 count = 11;
+  string type = 12;
+  int64 response_time = 13;
+}
+
+message GoalResponse {
+    string id = 1;
+    string org_id = 2;
+    string title = 3;
+    string image = 4;
+    string summary = 5;
+    string duration = 6;
+    go.micro.srv.static.Target target = 7;
+    User shared_by = 8;
+}
+
+message AllGoalResponseRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;
+    string user_id = 5;	
+    repeated string created_by = 6;
+    string query = 7;
+    string sort_direction = 8;
+    string sort_parameter = 9;
+}
+
+message AllGoalResponseResponse {
+    message Data {
+        repeated GoalResponse goals = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+
+message ChallengeResponse {
+    string id = 1;
+    string org_id = 2;
+    string title = 3;
+    string image = 4;
+    string summary = 5;
+    string duration = 6;
+    go.micro.srv.static.Target target = 7;
+    User shared_by = 8;
+}
+
+message AllChallengeResponseRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string user_id = 5;
+    repeated string created_by = 6;
+    string query = 7;
+    string sort_direction = 8;
+    string sort_parameter = 9;
+}
+
+message AllChallengeResponseResponse {
+    message Data {
+        repeated ChallengeResponse challenges = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+
+message HabitResponse {
+    string id = 1;
+    string org_id = 2;
+    string title = 3;
+    string image = 4;
+    string summary = 5;
+    string duration = 6;
+    go.micro.srv.static.Target target = 7;
+    User shared_by = 8;
+}
+
+message AllHabitResponseRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string user_id = 5;
+    repeated string created_by = 6;
+    string query = 7;    
+    string sort_direction = 8;
+    string sort_parameter = 9;   
+}
+
+message AllHabitResponseResponse {
+    message Data {
+        repeated HabitResponse habits = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ShareResourcesRequest { 
+  string user_id = 1; 
+  string org_id = 2;
+  string team_id = 3;
+  map<string, Resource> shares = 4;
+  message Resource {
+    repeated ShareResource resource = 1;
+  }
+}
+
+message ShareMultipleResourcesRequest { 
+  string org_id = 1;
+  string team_id = 2;
+  repeated string users = 3;
+  map<string, Resource> shares = 4;
+  message Resource {
+    repeated string resource = 1;
+  }
+}
+
+message ShareResourcesResponse {
+  int64 code = 1;
+  string message = 2;
+}
+
+message ShareResource {
+  string resource_id = 1;
+  int64 currentValue = 2; // can be null
+  go.micro.srv.static.ExpectedProgressType expectedProgress = 3;
+  string unit = 4;
+}
+
+message ShareableSurvey {
+    string id = 1;
+    string org_id = 2;
+    string title = 3;
+    string summary = 4;
+    User shared_by = 5;
+    int64 count = 6;
+    int64 response_time = 7;
+}
+
+message GetShareableSurveyRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;
+    string user_id = 5;	
+    repeated string created_by = 6;
+    string query = 7;
+}
+
+message GetShareableSurveyResponse {
+    message Data {
+        repeated ShareableSurvey surveys = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ShareableContent {
+    string id = 1;
+    string org_id = 2;
+    string title = 3;
+    string image = 4;
+    string summary = 5;
+    User shared_by = 6;
+    google.protobuf.Any item = 7;
+}
+
+message GetShareableContentRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;
+    string user_id = 5;	
+    repeated string created_by = 6;
+    string query = 7;
+    repeated string type = 8;
+}
+
+message GetShareableContentResponse {
+    message Data {
+        repeated ShareableContent contents = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message User {
+  string id = 1;
+  string org_id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string firstname = 5;
+  string lastname = 6;
+  string avatar_url = 7;
+  go.micro.srv.static.Gender gender = 8;
+  int64 dob = 9;
+  repeated go.micro.srv.static.Address addresses =
+      10; // move content.proto address to static.proto and use it here as well
+  repeated ContactDetail contact_details = 11;
+  go.micro.srv.static.Batch currentBatch = 12;
+  User pointOfContact = 13;
+  repeated string tags = 14;
+  repeated go.micro.srv.static.Notification notifications = 15;
+  bool physicallyFit = 16;
+  bool mentallyFit = 17;
+  bool onboarding_complete = 18;
+  Preferences preference = 19;
+  map<string,Token> tokens = 20;
+}
+
+message Token {
+  string device_token = 1;
+  int32 platform = 2;
+  string unique_identifier = 3;
+  string app_identifier = 4;
+}
+
+message ContactDetail {
+  string id = 1;
+  ContactDetailType type = 2;
+  string value = 3;
+  bool primary =
+      4; // IMPORTANT!!!! only one item of each ContactDetailType can be primary
+  bool dnd = 5;
+}
+
+enum ContactDetailType {
+  ContactDetailType_NONE = 0;
+  EMAIL = 1;
+  PHONE = 2;
+}
+
+// should be stored in user-srv
+message Preferences {
+  string id = 1;
+  string org_id = 2;
+  string user_id = 11;
+  int64 created = 3;
+  int64 updated = 4;
+  repeated Measurement currentMeasurements = 5;
+  repeated go.micro.srv.static.ContentCategoryItem conditions = 6;
+  repeated go.micro.srv.static.ContentCategoryItem allergies = 7;
+  repeated go.micro.srv.static.ContentCategoryItem food = 8;
+  repeated go.micro.srv.static.ContentCategoryItem cuisines = 9;
+  repeated go.micro.srv.static.ContentCategoryItem ethinicties = 10;
+}
+
+// should be stored in user-srv
+message Measurement {
+  string id = 1;
+  string user_id = 2;
+  string org_id = 3;
+  int64 created = 4;
+  int64 updated = 5;
+  go.micro.srv.static.Marker marker = 6;
+  go.micro.srv.static.TrackerMethod method = 7;
+  go.micro.srv.user.User measuredBy = 8; // can be null, employee or
+  google.protobuf.Value value = 9;
+  string unit = 10;
+}
+
+message PreferencesMessage {
+  string user_id = 1;
+  string org_id = 2;
+  Preferences preference = 3;
+}
+
+message UserFeedback {
+  string id = 1;
+  string user_id = 2;
+  string org_id = 3;
+  string feedback = 4;
+  int64 rating = 5;
+  int64 created = 6;
+  int64 updated = 7;
+}
+
+message SearchResponse {
+  string user_id = 1;
+  string org_id = 2;
+  string firstname = 3;
+  string lastname = 4;
+  string avatar_url = 5;
+}
+
+message UserMeasurementEdge {
+  string id = 1;
+  string user_id = 2;
+  string org_id = 3;
+  int64 created = 4;
+  int64 updated = 5;
+  User measuredBy = 6;        // can be null, employee or normal user
+  string track_marker_id = 7; // TrackMarker.id
+  go.micro.srv.static.TrackerMethod method = 8;
+}

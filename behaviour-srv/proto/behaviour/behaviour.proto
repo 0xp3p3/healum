@@ -1,0 +1,647 @@
+syntax = "proto3";
+
+import "server/static-srv/proto/static/static.proto";
+import "server/todo-srv/proto/todo/todo.proto";
+import "server/user-srv/proto/user/user.proto";
+import "server/content-srv/proto/content/content.proto";
+
+package go.micro.srv.behaviour;
+
+service BehaviourService {
+    rpc AllGoals(AllGoalsRequest) returns (AllGoalsResponse) {}
+    rpc ReadGoal(ReadGoalRequest) returns (ReadGoalResponse) {}
+    rpc CreateGoal(CreateGoalRequest) returns (CreateGoalResponse) {}
+    rpc UpdateGoal(UpdateGoalRequest) returns (UpdateGoalResponse) {}
+    rpc DeleteGoal(DeleteGoalRequest) returns (DeleteGoalResponse) {}
+    rpc AllChallenges(AllChallengesRequest) returns (AllChallengesResponse) {}
+    rpc ReadChallenge(ReadChallengeRequest) returns (ReadChallengeResponse) {}
+    rpc CreateChallenge(CreateChallengeRequest) returns (CreateChallengeResponse) {}
+    rpc UpdateChallenge(UpdateChallengeRequest) returns (UpdateChallengeResponse) {}
+    rpc DeleteChallenge(DeleteChallengeRequest) returns (DeleteChallengeResponse) {}
+    rpc AllHabits(AllHabitsRequest) returns (AllHabitsResponse) {}
+    rpc ReadHabit(ReadHabitRequest) returns (ReadHabitResponse) {}
+    rpc CreateHabit(CreateHabitRequest) returns (CreateHabitResponse) {}
+    rpc UpdateHabit(UpdateHabitRequest) returns (UpdateHabitResponse) {}
+    rpc DeleteHabit(DeleteHabitRequest) returns (DeleteHabitResponse) {}
+    rpc Filter(FilterRequest) returns (FilterResponse) {}
+    rpc Search(SearchRequest) returns (SearchResponse) {}
+
+    rpc UploadGoals(UploadGoalsRequest) returns (UploadGoalsResponse) {}
+  //  rpc UploadChallenges(UploadChallengesRequest) returns (UploadChallengesResponse) {}
+  //  rpc UploadHabits(UploadHabitsRequest) returns (UploadHabitsResponse) {}
+
+    rpc ShareGoal(ShareGoalRequest) returns (ShareGoalResponse) {}
+    rpc ShareChallenge(ShareChallengeRequest) returns (ShareChallengeResponse) {}
+    rpc ShareHabit(ShareHabitRequest) returns (ShareHabitResponse) {}
+    rpc AutocompleteGoalSearch(AutocompleteSearchRequest) returns (AutocompleteSearchResponse) {}
+    rpc AutocompleteChallengeSearch(AutocompleteSearchRequest) returns (AutocompleteSearchResponse) {}
+    rpc AutocompleteHabitSearch(AutocompleteSearchRequest) returns (AutocompleteSearchResponse) {}
+
+    rpc GetSharedGoal(GetSharedGoalRequest) returns (GetSharedGoalResponse) {}
+    rpc GetSharedChallenge(GetSharedChallengeRequest) returns (GetSharedChallengeResponse) {}
+    rpc GetSharedHabit(GetSharedHabitRequest) returns (GetSharedHabitResponse) {}
+
+    rpc GetTopTags(GetTopTagsRequest) returns (GetTopTagsResponse) {}
+    rpc AutocompleteTags(AutocompleteTagsRequest) returns (AutocompleteTagsResponse) {}
+    rpc WarmupCacheBehaviour(WarmupCacheBehaviourRequest) returns (WarmupCacheBehaviourResponse) {}
+
+    rpc AllGoalResponse(go.micro.srv.user.AllGoalResponseRequest) returns (go.micro.srv.user.AllGoalResponseResponse) {}
+    rpc AllChallengeResponse(go.micro.srv.user.AllChallengeResponseRequest) returns (go.micro.srv.user.AllChallengeResponseResponse) {}
+    rpc AllHabitResponse(go.micro.srv.user.AllHabitResponseRequest) returns (go.micro.srv.user.AllHabitResponseResponse) {}
+    
+}
+
+message GoalData {
+    Goal goal = 1;
+}
+
+message GoalArrData {
+    repeated Goal goals = 1;
+}
+
+message HabitData {
+    Habit habit = 1;
+}
+
+message HabitArrData {
+    repeated Habit habits = 1;
+}
+
+message ChallengeData {
+    Challenge challenge = 1;
+}
+
+message ChallengeArrData {
+    repeated Challenge challenges = 1;
+}
+
+message AllGoalsRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6;
+}
+
+message AllGoalsResponse {
+    GoalArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateGoalRequest {
+    Goal goal = 1;
+    string user_id = 2;
+    string org_id = 3;
+    string team_id = 4;
+}
+
+message CreateGoalResponse {
+    GoalData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateGoalRequest {
+    Goal goal = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateGoalResponse {
+    GoalData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadGoalRequest {
+    string goal_id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadGoalResponse {
+    GoalData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteGoalRequest {
+    string goal_id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteGoalResponse {
+    int64 code = 2;
+    string message  = 3;
+}
+
+message AllHabitsRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6;
+}
+
+message AllHabitsResponse {
+    HabitArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateHabitRequest {
+    Habit habit = 1;
+    string user_id = 2;
+    string org_id = 3;
+    string team_id = 4;
+}
+
+message CreateHabitResponse {
+    HabitData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateHabitRequest {
+    Habit habit = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateHabitResponse {
+    HabitData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadHabitRequest {
+    string habit_id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadHabitResponse {
+    HabitData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteHabitRequest {
+    string habit_id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteHabitResponse {
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UploadGoalsRequest {
+    string id = 1;
+    string org_id = 2;
+
+}
+
+message UploadGoalsResponse {
+    int64 code = 1;
+    string message = 2;
+    
+}
+
+// message UploadChallengesRequest {
+//     string id = 1;
+//     string org_id = 2;
+
+// }
+
+// message UploadChallengesResponse {
+//     int64 code = 1;
+//     string message = 2;
+    
+// }
+// message UploadHabitsRequest {
+//     string id = 1;
+//     string org_id = 2;
+
+// }
+
+// message UploadHabitsResponse {
+//     int64 code = 1;
+//     string message = 2;
+    
+// }
+
+message AllChallengesRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    string sort_parameter = 5;
+    string sort_direction = 6;
+}
+
+message AllChallengesResponse {
+    ChallengeArrData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message CreateChallengeRequest {
+    Challenge challenge = 1;
+    string user_id = 2;
+    string org_id = 3;
+    string team_id = 4;
+}
+
+message CreateChallengeResponse {
+    ChallengeData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message UpdateChallengeRequest {
+    Challenge challenge = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateChallengeResponse {
+    ChallengeData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message ReadChallengeRequest {
+    string challenge_id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadChallengeResponse {
+    ChallengeData data = 1;
+    int64 code = 2;
+    string message  = 3;
+}
+
+message DeleteChallengeRequest {
+    string challenge_id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteChallengeResponse {
+    int64 code = 2;
+    string message  = 3;
+}
+
+message FilterRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+    int64 offset = 4;	
+    repeated string type = 5;
+    repeated Status status = 6;
+    repeated string category = 7;
+    repeated string creator = 8;
+    string sort_parameter = 9;
+    string sort_direction = 10;
+}
+
+message FilterResponse {
+    message Data {
+        repeated Goal goals = 1;
+        repeated Habit habits = 2;
+        repeated Challenge challenges = 3;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message SearchRequest {
+    string org_id = 1;
+    string team_id = 2;
+    int64 limit = 3;
+	int64 offset = 4;	
+    string name = 5;
+    string summary = 6;
+    string description = 7;
+    string sort_parameter = 8;
+    string sort_direction = 9;
+}
+
+message SearchResponse {
+    message Data {
+        repeated Goal goals = 1;
+        repeated Habit habits = 2;
+        repeated Challenge challenges = 3;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message ShareGoalRequest {
+    repeated go.micro.srv.behaviour.Goal goals = 1;
+    repeated TargetedUser users = 2;
+    string user_id = 3;
+    string org_id = 4;
+    string team_id = 5;
+}
+
+message ShareGoalResponse {
+    int64 code = 1;
+    string message = 2;
+}
+
+message ShareChallengeRequest {
+    repeated go.micro.srv.behaviour.Challenge challenges = 1;
+    repeated TargetedUser users = 2;
+    string user_id = 3;
+    string org_id = 4;
+    string team_id = 5;
+}
+
+message ShareChallengeResponse {
+    int64 code = 1;
+    string message = 2;
+}
+
+message ShareHabitRequest {
+    repeated go.micro.srv.behaviour.Habit habits = 1;
+    repeated TargetedUser users = 2;
+    string user_id = 3;
+    string org_id = 4;
+    string team_id = 5;
+}
+
+message ShareHabitResponse {
+    int64 code = 1;
+    string message = 2;
+}
+
+message AutocompleteSearchRequest {
+    string title = 1;
+}
+
+message AutocompleteSearchResponse {
+    message Data {
+        repeated go.micro.srv.static.AutocompleteResponse response = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3; 
+}
+
+message Goal {
+    string id = 1;
+    string title = 2;
+    string summary = 3;
+    string description = 4;
+    string image = 5;  //can be null
+    repeated string tags = 6;
+    int64 created = 7;
+    int64 updated = 8;
+    go.micro.srv.static.BehaviourCategory category = 9;
+    go.micro.srv.static.Target target = 10;
+    string duration = 11;  //ISO 8601 duration format with moment.js http://momentjs.com/docs/#/durations/as-iso-string/
+    string org_id = 12; 
+    go.micro.srv.user.User createdBy = 13;
+    string source = 17; //can be null but represents if this data is coming from any specific source
+    repeated Tracker trackers = 18;
+    repeated Criteria success_criterias = 19;
+    repeated Challenge challenges = 20;
+    repeated Habit habits = 21;
+    repeated go.micro.srv.content.Article articles = 22;
+    repeated go.micro.srv.static.ModuleTrigger triggers = 23;
+    repeated go.micro.srv.static.Setback setbacks = 24;
+    repeated TargetedUser users = 25; // with whom this goal will be shared
+    bool completionApprovalRequired = 26;    
+    Status status = 27;
+    go.micro.srv.static.Setting setting = 28;
+    go.micro.srv.todo.Todo todos = 29;
+
+}
+
+// enum Visibility {
+//     PUBLIC = 0;
+//     PRIVATE = 1;
+// }
+
+message Tracker {
+    go.micro.srv.static.Marker marker = 1;  //what
+    Frequency frequency = 2;  //how often
+    go.micro.srv.static.TrackerMethod method = 3;  // how
+    string until = 4;  //ISO 8601 duration format with moment.js http://momentjs.com/docs/#/durations/as-iso-string/
+}
+
+
+enum Frequency {
+    Frequency_NONE = 0;
+    DAILY = 1;
+    HOURLY = 2;
+    WEEKLY = 3;
+    MONTHLY = 4;
+}
+
+message Criteria {
+    int64 value = 1;
+    bool mark_sucessful = 2;
+    string extra_time = 3; //ISO 8601 duration format with moment.js http://momentjs.com/docs/#/durations/as-iso-string/
+    go.micro.srv.static.Target newTarget = 4;
+}
+
+message Challenge {
+    string id = 1;
+    string title = 2;
+    string summary = 3;
+    string description = 4;
+    string image = 5; //can be null
+    repeated string tags = 6;
+    int64 created = 7;
+    int64 updated = 8;
+    go.micro.srv.static.BehaviourCategory category = 9;
+    go.micro.srv.static.Target target = 10; 
+    string duration = 11; //ISO 8601 duration format with moment.js http://momentjs.com/docs/#/durations/as-iso-string/
+    string org_id = 12;
+    go.micro.srv.user.User createdBy = 13;
+    string source = 17; //can be null but represents if this data is coming from any specific source
+    repeated Tracker trackers = 18;
+    repeated Habit habits = 19;
+    repeated go.micro.srv.content.Article articles = 20;
+    repeated go.micro.srv.static.ModuleTrigger triggers = 21;
+    repeated TargetedUser users = 22; // with whom this challenge will be shared
+    bool completionApprovalRequired = 23;  
+    Status status = 24;  
+    repeated go.micro.srv.static.Setback setbacks = 25;
+    go.micro.srv.static.Setting setting = 26;
+    go.micro.srv.todo.Todo todos = 27;
+}
+
+message Habit {
+    string id = 1;
+    string title = 2;
+    string summary = 3;
+    string description = 4;
+    string image = 5; //can be null
+    repeated string tags = 6;
+    int64 created = 7;
+    int64 updated = 8;
+    go.micro.srv.static.BehaviourCategory category = 9;
+    go.micro.srv.static.Target target = 10;
+    string duration = 11;  //ISO 8601 duration format with moment.js http://momentjs.com/docs/#/durations/as-iso-string/
+    string org_id = 12;
+    go.micro.srv.user.User createdBy = 13;
+    string source = 17; //can be null but represents if this data is coming from any specific source
+    repeated Tracker trackers = 18;
+    repeated go.micro.srv.content.Article articles = 19;
+    repeated go.micro.srv.static.ModuleTrigger triggers = 20;
+    repeated TargetedUser users = 21; // with whom this challenge will be shared
+    bool completionApprovalRequired = 22;
+    Status status = 23;
+    repeated go.micro.srv.static.Setback setbacks = 24;
+    go.micro.srv.static.Setting setting = 25;
+    go.micro.srv.todo.Todo todos = 26;
+}
+
+enum Status {
+    Status_NONE = 0;
+    DRAFT = 1;
+    PUBLISHED = 2;
+}
+
+message Category {
+    string id = 1;
+    string name = 2;
+    string summary = 3;
+    string description = 4;
+    string icon_slug = 5;
+    string org_id = 6;
+    int64 created = 7;
+    int64 updated = 8;
+    repeated string tags = 9;
+}
+
+message TargetedUser {
+    go.micro.srv.user.User user = 1;
+    int64 currentValue = 2; // can be null
+    go.micro.srv.static.ExpectedProgressType expectedProgress = 3;
+    string unit = 4;
+}
+
+message ShareGoalUser {
+    string id = 1;
+    Goal goal = 2;
+    go.micro.srv.user.User user = 3;
+    go.micro.srv.static.ShareStatus status = 4;
+    int64 updated = 5;
+    go.micro.srv.user.User shared_by = 6; // this has to be the employee from the session key
+    int64 currentValue = 7; // can be null
+    go.micro.srv.static.ExpectedProgressType expectedProgress = 8;
+    int64 created = 9;
+}
+
+message ShareChallengeUser {
+    string id = 1;
+    Challenge challenge = 2;
+    go.micro.srv.user.User user = 3;
+    go.micro.srv.static.ShareStatus status = 4;
+    int64 updated = 5;
+    go.micro.srv.user.User shared_by = 6; // this has to be the employee from the session key
+    int64 currentValue = 7; // can be null
+    go.micro.srv.static.ExpectedProgressType expectedProgress = 8;
+    int64 created = 9;
+}
+
+message ShareHabitUser {
+    string id = 1;
+    Habit habit = 2;
+    go.micro.srv.user.User user = 3;
+    go.micro.srv.static.ShareStatus status = 4;
+    int64 updated = 5;
+    go.micro.srv.user.User shared_by = 6; // this has to be the employee from the session key
+    int64 currentValue = 7; // can be null
+    go.micro.srv.static.ExpectedProgressType expectedProgress = 8;
+    int64 created = 9;
+}
+
+message GetSharedGoalRequest {
+    string user_id = 1;
+    string goal_id = 2;
+}
+
+message GetSharedGoalResponse {
+    message Data {
+        ShareGoalUser goal = 1;
+    }
+    Data data = 1;
+}
+
+message GetSharedChallengeRequest {
+    string user_id = 1;
+    string challenge_id = 2;
+}
+
+message GetSharedChallengeResponse {
+    message Data {
+        ShareChallengeUser challenge = 1;
+    }
+    Data data = 1;
+}
+
+message GetSharedHabitRequest {
+    string user_id = 1;
+    string habit_id = 2;
+}
+
+message GetSharedHabitResponse {
+    message Data {
+        ShareHabitUser habit = 1;
+    }
+    Data data = 1;
+}
+
+message GetTopTagsRequest {
+    string object = 1;
+    string org_id = 2;
+    int64 n = 3;
+}
+
+message GetTopTagsResponse {
+    message Data {
+        repeated string tags = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message AutocompleteTagsRequest {
+    string org_id = 1;
+    string object = 2;
+    string name = 3;
+    string sort_parameter = 4;
+    string sort_direction = 5;
+}
+
+message AutocompleteTagsResponse {
+    message Data {
+        repeated string tags = 1;
+    }
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message WarmupCacheBehaviourRequest {
+    string object  = 1;
+}
+
+message WarmupCacheBehaviourResponse {
+
+}

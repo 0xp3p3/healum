@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+cmd="$1"
+shift
+args="$@"
+
+sleep 11
+
+>&2 echo "running $cmd $args"
+exec $cmd $args

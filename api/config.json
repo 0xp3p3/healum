@@ -1,0 +1,21 @@
+{
+  "service": {
+    "version": "0.0.1",
+    "name": "go.micro.api.server",
+    "description": "Service RESTful API"
+  },
+  "swagger": {
+    "http.server.host": "localhost",
+    "http.server.port": 8080,
+    "http.server.cors": true,
+    "swagger.path": "/apidocs/",
+    "swagger.file.path": "./swagger-ui/dist"
+  },
+  "hystrix":{
+    "DefaultTimeout": 10000,
+	"DefaultMaxConcurrent": 10,
+	"DefaultVolumeThreshold": 20,
+	"DefaultSleepWindow": 50000,
+	"DefaultErrorPercentThreshold": 20
+  }
+}

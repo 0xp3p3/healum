@@ -1,0 +1,7 @@
+{
+  "service": {
+    "version": "0.0.1",
+    "name": "go.micro.srv.account",
+    "description": "Task server is a microservice to store account"
+  }
+}

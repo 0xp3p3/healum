@@ -1,0 +1,142 @@
+syntax = "proto3";
+
+import "server/user-srv/proto/user/user.proto";
+
+package go.micro.srv.todo;
+
+service TodoService {
+  rpc All(AllRequest) returns (AllResponse) {}
+  rpc Create(CreateRequest) returns (CreateResponse) {}
+  rpc Update(UpdateRequest) returns (UpdateResponse) {}
+  rpc Read(ReadRequest) returns (ReadResponse) {}
+  rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+  rpc Search(SearchRequest) returns (SearchResponse) {}
+
+  rpc ByCreator(ByCreatorRequest) returns (ByCreatorResponse) {}
+}
+
+message Data { Todo todo = 1; }
+
+message ArrData { repeated Todo todos = 1; }
+
+message AllRequest {
+  string org_id = 1;
+  string team_id = 2;
+  int64 limit = 3;
+  int64 offset = 4;
+  string sort_parameter = 5;
+  string sort_direction = 6;
+}
+
+message AllResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateRequest {
+  Todo todo = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message CreateResponse {
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message UpdateRequest {
+  Todo todo = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message UpdateResponse {
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ReadRequest {
+  string id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message ReadResponse {
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message DeleteRequest {
+  string id = 1;
+  string org_id = 2;
+  string team_id = 3;
+}
+
+message DeleteResponse {
+  int64 code = 2;
+  string message = 3;
+}
+
+message SearchRequest {
+  string name = 1;
+  string org_id = 2;
+  string team_id = 3;
+  int64 limit = 4;
+  int64 offset = 5;
+  int64 from = 6;
+  int64 to = 7;
+  string sort_parameter = 8;
+  string sort_direction = 9;
+}
+
+message SearchResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message ByCreatorRequest {
+  string user_id = 1;
+  string org_id = 11;
+  string team_id = 12;
+  int64 limit = 13;
+  int64 offset = 14;
+  string sort_parameter = 5;
+  string sort_direction = 6;
+}
+
+message ByCreatorResponse {
+  ArrData data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message Todo {
+  string id = 1;
+  string name = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  go.micro.srv.user.User creator =
+      5; // SHOULD BE a team member i.e. should be a user that belongs to a team
+  repeated TodoItem items = 6;
+  string org_id = 7;
+}
+
+message TodoItem {
+  string id = 1;
+  string title = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  TodoStatus status = 5;
+  int64 dateCompleted = 6;
+}
+
+enum TodoStatus {
+  TodoStatus_NONE = 0;
+  COMPLETE = 1;
+  INCOMPLETE = 2;
+}

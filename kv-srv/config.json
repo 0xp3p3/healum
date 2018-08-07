@@ -1,0 +1,9 @@
+{
+  "service": {
+    "version": "0.0.1",
+    "name": "go.micro.srv.kv",
+    "description": "Kv server is a microservice to store kv",
+    "server": "127.0.0.1:6379",
+    "password": ""
+  }
+}

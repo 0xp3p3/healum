@@ -1,0 +1,7 @@
+{
+  "service": {
+    "version": "0.0.1",
+    "name": "go.micro.srv.todo",
+    "description": "Todo server is a microservice to store todo"
+  }
+}

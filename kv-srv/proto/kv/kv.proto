@@ -1,0 +1,211 @@
+syntax = "proto3";
+
+package go.micro.srv.kv;
+
+import "github.com/golang/protobuf/ptypes/struct/struct.proto";
+
+service KvService {
+  rpc Get(GetRequest) returns (GetResponse) {}
+  rpc Put(PutRequest) returns (PutResponse) {}
+  rpc Del(DelRequest) returns (DelResponse) {}
+
+  // businses logic
+  // account-srv
+  rpc GetEx(GetExRequest) returns (GetExResponse) {}
+  rpc PutEx(PutExRequest) returns (PutExResponse) {}
+  rpc DelEx(DelExRequest) returns (DelExResponse) {}
+
+  rpc ConfirmToken(ConfirmTokenRequest) returns (ConfirmTokenResponse) {}
+  rpc RemoveToken(RemoveTokenRequest) returns (RemoveTokenResponse) {}
+  rpc Locked(LockedRequest) returns (LockedResponse) {}
+  rpc UnLock(UnLockRequest) returns (UnLockResponse) {}
+  rpc IsLocked(IsLockedRequest) returns (IsLockedResponse) {}
+  rpc AuthFailed(AuthFailedRequest) returns (AuthFailedResponse) {}
+  rpc RemoveSession(RemoveSessionRequest) returns (RemoveSessionResponse) {}
+  rpc ReadSession(ReadSessionRequest) returns (ReadSessionResponse) {}
+
+  // track-srv
+  rpc IncTrackCount(IncTrackCountRequest) returns (IncTrackCountResponse) {}
+  rpc GetTrackCount(GetTrackCountRequest) returns (GetTrackCountResponse) {}
+  rpc SetTrackCount(SetTrackCountRequest) returns (SetTrackCountResponse) {}
+  rpc GetTrackValue(GetTrackValueRequest) returns (GetTrackValueResponse) {}
+  
+  //badge count
+  rpc IncBadgeCount(IncBadgeCountRequest) returns (IncBadgeCountResponse) {}
+  rpc DecrBadgeCount(DecrBadgeCountRequest) returns (DecrBadgeCountResponse) {}
+  rpc GetBadgeCount(GetBadgeCountRequest) returns (GetBadgeCountResponse) {}
+  rpc SetBadgeCount(SetBadgeCountRequest) returns (SetBadgeCountResponse) {}
+
+  // cloud tags
+  rpc TagsCloud(TagsCloudRequest) returns (TagsCloudResponse) {}
+  rpc GetTopTags(GetTopTagsRequest) returns (GetTopTagsResponse) {}
+}
+
+message Item {
+  string key = 1;
+  bytes value = 2;
+  int64 expiration = 3; // duration in seconds
+}
+
+message GetRequest { string key = 1; }
+
+message GetResponse { Item item = 1; }
+
+message PutRequest { Item item = 1; }
+
+message PutResponse {}
+
+message DelRequest { string key = 1; }
+
+message DelResponse {}
+
+message GetExRequest {
+  int64 index = 1;
+  string key = 2;
+}
+
+message GetExResponse { Item item = 1; }
+
+message PutExRequest {
+  int64 index = 1;
+  Item item = 2;
+}
+
+message PutExResponse {}
+
+message DelExRequest {
+  int64 index = 1;
+  string key = 2;
+}
+
+message DelExResponse {}
+
+message ConfirmTokenRequest { string key = 1; }
+
+message ConfirmTokenResponse { string value = 1; }
+
+message RemoveTokenRequest { 
+  string account_id = 1; 
+  string token = 2; 
+}
+
+message RemoveTokenResponse {}
+
+message LockedRequest {
+  int64 index = 1;
+  string account_id = 2;
+}
+
+message LockedResponse { bool locked = 1; }
+
+message UnLockRequest {
+  int64 auth_fail_index = 1;
+  int64 lock_index = 2;
+  string account_id = 3;
+}
+
+message UnLockResponse { bool locked = 1; }
+
+message IsLockedRequest {
+  int64 index = 1;
+  string account_id = 2;
+}
+
+message IsLockedResponse { bool locked = 1; }
+
+message AuthFailedRequest {
+  int64 index = 1;
+  string account_id = 2;
+}
+
+message AuthFailedResponse { int64 failed = 1; }
+
+message RemoveSessionRequest {
+  int64 index = 1;
+  string session_id = 2;
+}
+
+message RemoveSessionResponse {}
+
+message ReadSessionRequest {
+  int64 index = 1;
+  string session_id = 2;
+}
+
+message ReadSessionResponse { string value = 1; }
+
+message IncTrackCountRequest {
+  int64 index = 1;
+  string key = 2;
+}
+
+message IncTrackCountResponse { int64 count = 1; }
+
+message GetTrackCountRequest {
+  int64 index = 1;
+  string key = 2;
+}
+
+message GetTrackCountResponse { int64 count = 1; }
+
+message SetTrackCountRequest {
+  int64 index = 1;
+  string key = 2;
+  int64 count = 3;
+}
+
+message SetTrackCountResponse {}
+
+message IncBadgeCountRequest {
+  int64 index = 1;
+  string key = 2;
+}
+
+message IncBadgeCountResponse { int64 count = 1; }
+
+message DecrBadgeCountRequest {
+  int64 index = 1;
+  string key = 2;
+}
+
+message DecrBadgeCountResponse { int64 count = 1; }
+
+message GetBadgeCountRequest {
+  int64 index = 1;
+  string key = 2;
+}
+
+message GetBadgeCountResponse { int64 count = 1; }
+
+message SetBadgeCountRequest {
+  int64 index = 1;
+  string key = 2;
+  int64 count = 3;
+}
+
+message SetBadgeCountResponse {}
+
+message GetTrackValueRequest {
+  int64 index = 1;
+  string key = 2;
+}
+
+message GetTrackValueResponse { google.protobuf.Value value = 1; }
+
+message TagsCloudRequest {
+  int64 index = 1;
+  string org_id = 2;
+  string object = 3;
+  repeated string tags = 4;
+}
+
+message TagsCloudResponse {}
+
+message GetTopTagsRequest {
+  int64 index = 1;
+  int64 n = 2;
+  string org_id = 3;
+  string object = 4;
+}
+
+message GetTopTagsResponse { repeated string tags = 1; }

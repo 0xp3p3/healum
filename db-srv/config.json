@@ -1,0 +1,7 @@
+{
+  "service": {
+    "version": "0.0.1",
+    "name": "go.micro.srv.db",
+    "description": "The DB server is an experimental proxy layer for backend databases"
+  }
+}

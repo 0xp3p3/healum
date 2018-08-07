@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package go.micro.srv.static;
+
+message PublishBulkNotification {
+  BulkNotification notification = 1;
+}
+
+message PublishPersonalNotification {
+  repeated PersonalNotification notification = 1;
+}
+
+//single message to all users
+message BulkNotification {
+  repeated string user_ids = 1;
+  string message = 2;
+  Alert alert = 3;
+  map<string, string> data = 4;
+}
+
+//single (personalised) message for every user
+message PersonalNotification {
+  string user_id = 1;
+  string message = 2;
+  Alert alert = 3;
+}
+
+message Alert {
+    string title = 1;
+    string body = 2;
+    string subtitle = 3;
+    string action = 4;
+    string actionLocKey = 5;
+    string launchImage = 6;
+    string locKey = 7;
+    string titleLocKey = 8;
+    repeated string locArgs = 9;
+    repeated string titleLocArgs = 10;
+}
+
+message SubscribeRequest { string channel = 1; }
+
+message SubscribeResponse { bool success = 1; }

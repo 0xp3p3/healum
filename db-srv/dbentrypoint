@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+micro --registry_address=127.0.0.1 --register_interval=5 --register_ttl=10 register service '{"name": "go.micro.db.mysql", "version": "0.0.1", "nodes": [{"id": "kv-1", "address": "127.0.0.1", "port": 3306, "metadata": {"driver": "mysql"}}]}'
+micro --registry_address=127.0.0.1 --register_interval=5 --register_ttl=10 register service '{"name": "go.micro.db.elasticsearch", "version": "0.0.1", "nodes": [{"id": "kv-2", "address": "127.0.0.1", "port": 9200, "metadata": {"driver": "elasticsearch"}}]}'
+micro --registry_address=127.0.0.1 --register_interval=5 --register_ttl=10 register service '{"name": "go.micro.db.redis", "version": "0.0.1", "nodes": [{"id": "kv-3", "address": "127.0.0.1", "port": 6379, "metadata": {"driver": "redis"}}]}'
+micro --registry_address=127.0.0.1 --register_interval=5 --register_ttl=10 register service '{"name": "go.micro.db.arangodb", "version": "0.0.1", "nodes": [{"id": "kv-4", "address": "127.0.0.1", "port": 8529, "metadata": {"driver": "arangodb"}}]}'
+micro --registry_address=127.0.0.1 --register_interval=5 --register_ttl=10 register service '{"name": "go.micro.db.influxdb", "version": "0.0.1", "nodes": [{"id": "kv-5", "address": "127.0.0.1", "port": 8086, "metadata": {"driver": "influxdb"}}]}'
+

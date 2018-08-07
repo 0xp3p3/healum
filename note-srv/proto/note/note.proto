@@ -1,0 +1,178 @@
+syntax = "proto3";
+
+import "server/user-srv/proto/user/user.proto";
+
+package go.micro.srv.note;
+
+service NoteService {
+    rpc All(AllRequest) returns (AllResponse) {}
+    rpc Create(CreateRequest) returns (CreateResponse) {}
+    rpc Update(UpdateRequest) returns (UpdateResponse) {}
+    rpc Read(ReadRequest) returns (ReadResponse) {}
+    rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+    rpc Search(SearchRequest) returns (SearchResponse) {}
+
+    rpc ByCreator(ByCreatorRequest) returns (ByCreatorResponse) {}
+    rpc ByUser(ByUserRequest) returns (ByUserResponse) {}
+    rpc Filter(FilterRequest) returns (FilterResponse) {}
+}
+
+message Data {
+    Note note = 1;
+}
+
+message ArrData {
+    repeated Note notes = 1;
+}
+
+message AllRequest {
+	string org_id = 1;
+    string team_id = 2;
+	int64 limit = 3;
+    int64 offset = 4;
+    string sort_parameter = 5;
+    string sort_direction = 6; 
+}
+
+message AllResponse {
+    ArrData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message CreateRequest {
+    Note note = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message CreateResponse {
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message UpdateRequest {
+    Note note = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message UpdateResponse {
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message ReadRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message ReadResponse {
+    Data data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message DeleteRequest {
+    string id = 1;
+    string org_id = 2;
+    string team_id = 3;
+}
+
+message DeleteResponse {
+    int64 code = 2;
+    string message = 3;
+}
+
+message SearchRequest {
+	string name = 1; 
+    string org_id = 2;
+    string team_id = 3;
+	int64 limit = 4;
+    int64 offset = 5;
+    int64 from = 6;
+    int64 to = 7;
+    string sort_parameter = 8;
+    string sort_direction = 9; 
+}
+
+message SearchResponse {
+    ArrData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message ByCreatorRequest {
+    string user_id = 1;
+    string org_id = 11;
+    string team_id = 12;
+	int64 limit = 13;
+    int64 offset = 14;
+    string sort_parameter = 2;
+    string sort_direction = 3; 
+}
+
+message ByCreatorResponse {
+    ArrData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message ByUserRequest {
+    string user_id = 1;
+    string org_id = 11;
+    string team_id = 12;
+	int64 limit = 13;
+    int64 offset = 14;
+    string sort_parameter = 2;
+    string sort_direction = 3; 
+}
+
+message ByUserResponse {
+    ArrData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message FilterRequest {
+    repeated string category = 1;
+    repeated string tags = 2;
+    string org_id = 3;
+    string team_id = 4;
+	int64 limit = 5;
+    int64 offset = 6;
+    string sort_parameter = 7;
+    string sort_direction = 8; 
+}
+
+message FilterResponse {
+    ArrData data = 1;
+    int64 code = 2;
+    string message = 3;
+}
+
+message Note {
+    string id = 1;
+    string title = 2;
+    string description = 3;
+    int64 created = 4;
+    int64 updated = 5;
+    go.micro.srv.user.User user = 6;
+    go.micro.srv.user.User creator = 7;  // SHOULD BE a team member i.e. should be a user that belongs to a team 
+    string category = 8;
+    repeated string tags = 9;
+    int64 priority = 10;
+    repeated string links = 11;
+    VisiblityEnum visibility = 12;
+    string org_id = 20;
+}
+  
+enum VisiblityEnum {
+    VisiblityEnum_NONE = 0;
+    DEFAULT = 1;
+    PUBLIC = 2;
+    PRIVATE = 3;
+}

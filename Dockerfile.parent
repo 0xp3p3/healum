@@ -1,0 +1,19 @@
+FROM golang
+
+ENV GOPATH /
+ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
+
+WORKDIR $GOPATH
+
+RUN go get github.com/micro/micro github.com/micro/go-plugins/broker/nats github.com/micro/go-plugins/transport/nats
+
+ADD ./plugins.go /src/server/
+RUN chmod 777 ./src/server/plugins.go \
+&& cp ./src/server/plugins.go ./src/github.com/micro/micro/ \
+&& go build -i -o $GOPATH/bin/micro $GOPATH/src/github.com/micro/micro/main.go $GOPATH/src/github.com/micro/micro/plugins.go
+
+ADD ./docker/common/ /src/server/docker/common
+RUN chmod 777 ./src/server/docker/common/wait_container \
+&& cp ./src/server/docker/common/wait_container ./bin/
+
+ADD ./vendor /src/server/vendor

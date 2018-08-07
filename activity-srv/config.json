@@ -1,0 +1,329 @@
+{
+  "service": {
+    "version": "0.0.1",
+    "name": "go.micro.srv.activity",
+    "description": "Activity service that returns activity related information with different backend."
+  },
+  "external": [
+    {
+      "name": "better",
+      "appURL": "https://www.better.org.uk",
+      "next": "/odi/sessions.json?afterTimestamp=2015-08-05T11:13:09&afterId=5231587",
+      "weight": 100,
+      "timeInterval": 1,
+      "enabled": true,
+      "transform": [
+        {
+          "type": "geo",
+          "path": "location/containedInPlace/geo",
+          "variable": "location/geo"
+        },
+        {
+          "type": "object",
+          "path": "activity",
+          "variable": "activity"
+        },
+        {
+          "type": "object",
+          "path": "offer",
+          "variable": "offer"
+        }
+      ]
+    },
+    {
+      "name": "fusion",
+      "appURL": "https://fusionfunctions.azurewebsites.net",
+      "next": "/api/FusOpenFunction?afterChangeNumber=93292",
+      "weight": 101,
+      "timeInterval": 1,
+      "enabled": true,
+      "transform": [
+        {
+          "type": "post",
+          "path": "location/containedInPlace/address/postalCode",
+          "variable": "location/geo"
+        },
+        {
+          "type": "string",
+          "path": "activity",
+          "variable": "activity"
+        }
+      ]
+    },
+    {
+      "name": "ourparks",
+      "appURL": "https://ourparks.org.uk",
+      "next": "/getSessions?afterTimestamp=1496085327&afterId=45208",
+      "weight": 102,
+      "timeInterval": 1,
+      "enabled": true,
+      "transform": [
+        {
+          "type": "post",
+          "path": "postcode",
+          "variable": "location/geo"
+        }
+      ]
+    },
+    {
+      "name": "activenewham",
+      "appURL": "https://activenewham-openactive.herokuapp.com/",
+      "next": "",
+      "weight": 103,
+      "timeInterval": 1,
+      "enabled": true,
+      "transform": [
+        {
+          "type": "object",
+          "path": "offer",
+          "variable": "offer"
+        },
+        {
+          "type": "stringArray",
+          "path": "activity",
+          "variable": "activity"
+        }
+      ]
+    },
+    {
+      "name": "clubspark",
+      "appURL": "https://api.clubspark.uk",
+      "next": "/odi/public/courses?afterTimestamp=1519126926610&afterID=fd14f36c-a193-4607-92f3-0ca9538737aa",
+      "weight": 100,
+      "timeInterval": 1,
+      "enabled": true,
+      "transform": [
+        {
+          "type": "object",
+          "path": "activity",
+          "variable": "activity"
+        },
+        {
+          "type": "variable",
+          "path": "offer",
+          "variable": "offer"
+        }
+      ]
+    },
+    {
+      "name": "playwaze",
+      "appURL": "https://playwaze.com",
+      "next": "/Webservices/Playwazeservice.svc/Groupplay/GetOpenActiveData",
+      "weight": 100,
+      "timeInterval": 1,
+      "enabled": true,
+      "transform": [
+        {
+          "type": "stringAddress",
+          "path": "location",
+          "variable": "location"
+        },
+        {
+          "type": "string",
+          "path": "start_date",
+          "variable": "startDate"
+        },
+        {
+          "type": "string",
+          "path": "end_date",
+          "variable": "endDate"
+        }
+      ]
+    },
+    {
+      "name": "letsride",
+      "appURL": "http://api.letsride.co.uk",
+      "next": "/public/v1/rides",
+      "weight": 100,
+      "timeInterval": 1,
+      "enabled": true,
+      "transform": [
+        {
+          "type": "variable",
+          "path": "id",
+          "variable": "id"
+        },
+        {
+          "type": "post",
+          "path": "location/address/postalCode",
+          "variable": "location/geo"
+        },
+        {
+          "type": "string",
+          "path": "start_time",
+          "variable": "startDate"
+        }
+      ]
+    },
+    {
+      "name": "makesweat",
+      "appURL": "https://makesweat.com",
+      "next": "/service/openactive.php",
+      "weight": 100,
+      "timeInterval": 1,
+      "enabled": true,
+      "transform": [
+        {
+          "type": "geoVariable",
+          "path": "location/geo",
+          "variable": "location/geo"
+        },
+        {
+          "type": "object",
+          "path": "activity",
+          "variable": "activity"
+        }
+      ]
+    },
+    {
+      "name": "vision-rcl-openactive",
+      "appURL": "https://vision-rcl-openactive.herokuapp.com",
+      "next": "/",
+      "weight": 100,
+      "timeInterval": 1,
+      "enabled": true,
+      "transform": [
+        {
+          "type": "object",
+          "path": "offer",
+          "variable": "offer"
+        },
+        {
+          "type": "stringArray",
+          "path": "activity",
+          "variable": "activity"
+        },
+        {
+          "type": "stringAddress1",
+          "path": "location/address",
+          "variable": "location/address"
+        }
+      ]
+    },
+    {
+      "name": "bookwhen",
+      "appURL": "https://bookwhen.com",
+      "next": "/api/openactive/event_types",
+      "weight": 100,
+      "timeInterval": 1,
+      "enabled": true,
+      "transform": [
+        {
+          "type": "stringAddress1",
+          "path": "location/address",
+          "variable": "location/address"
+        }
+      ]
+    },
+    {
+      "name": "tabletennis365",
+      "appURL": "https://www.tabletennis365.com",
+      "next": "/TableTennisEngland/API/OpenActive/v1/Clubs",
+      "weight": 100,
+      "timeInterval": 1,
+      "enabled": true,
+      "transform": [
+        {
+          "type": "variable",
+          "path": "id",
+          "variable": "id"
+        }
+      ]
+    },
+    {
+      "name": "gomammoth",
+      "appURL": "https://reports.gomammoth.co.uk",
+      "next": "/api/OpenData/Leagues?afterTimestamp=0",
+      "weight": 100,
+      "timeInterval": 1,
+      "enabled": true,
+      "transform": [
+        {
+          "type": "variable",
+          "path": "VenueId",
+          "variable": "id"
+        },
+        {
+          "type": "string",
+          "path": "SeasonStart",
+          "variable": "startDate"
+        },
+        {
+          "type": "string",
+          "path": "SeasonEnd",
+          "variable": "endDate"
+        },
+        {
+          "type": "stringAddress",
+          "path": "VenueAddress",
+          "variable": "location"
+        }
+      ]
+    },
+    {
+      "name": "pingengland",
+      "appURL": "http://www.pingengland.co.uk",
+      "next": "/realtime.php",
+      "weight": 100,
+      "timeInterval": 1,
+      "enabled": true,
+      "transform": [
+        {
+          "type": "stringAddress",
+          "path": "address",
+          "variable": "location"
+        }
+      ]
+    },
+    {
+      "name": "salford-lc-openactive",
+      "appURL": "https://salford-lc-openactive.herokuapp.com/",
+      "next": "",
+      "weight": 100,
+      "timeInterval": 1,
+      "enabled": true,
+      "transform": [
+        {
+          "type": "object",
+          "path": "offer",
+          "variable": "offer"
+        },
+        {
+          "type": "stringArray",
+          "path": "activity",
+          "variable": "activity"
+        },
+        {
+          "type": "stringAddress1",
+          "path": "location/address",
+          "variable": "location/address"
+        }
+      ]
+    },
+    {
+      "name": "lw-colchester-openactive",
+      "appURL": "https://lw-colchester-openactive.herokuapp.com",
+      "next": "",
+      "weight": 100,
+      "timeInterval": 1,
+      "enabled": true,
+      "transform": [
+        {
+          "type": "object",
+          "path": "offer",
+          "variable": "offer"
+        },
+        {
+          "type": "stringArray",
+          "path": "activity",
+          "variable": "activity"
+        },
+        {
+          "type": "stringAddress1",
+          "path": "location/address",
+          "variable": "location/address"
+        }
+      ]
+    }
+  ]
+}

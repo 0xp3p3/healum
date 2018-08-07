@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package go.micro.os.db;
+
+message Database {
+	string name = 1;
+	string table = 2;
+}
+
+message Record {
+	string id = 1;
+	int64 created = 2;
+	int64 updated = 3;
+	map<string,string> metadata = 4;
+	string bytes = 5;
+}

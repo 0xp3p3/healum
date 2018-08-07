@@ -1,0 +1,397 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+// import "google/protobuf/struct.proto";
+import "github.com/golang/protobuf/ptypes/struct/struct.proto";
+import "server/user-srv/proto/user/user.proto";
+import "server/behaviour-srv/proto/behaviour/behaviour.proto";
+import "server/content-srv/proto/content/content.proto";
+import "server/static-srv/proto/static/static.proto";
+
+package go.micro.srv.track;
+
+service TrackService {
+
+  rpc CreateTrackGoal(CreateTrackGoalRequest)
+      returns (CreateTrackGoalResponse) {}
+  rpc GetGoalCount(GetGoalCountRequest) returns (GetGoalCountResponse) {}
+  rpc GetGoalHistory(GetGoalHistoryRequest) returns (GetGoalHistoryResponse) {}
+
+  rpc CreateTrackChallenge(CreateTrackChallengeRequest)
+      returns (CreateTrackChallengeResponse) {}
+  rpc GetChallengeCount(GetChallengeCountRequest)
+      returns (GetChallengeCountResponse) {}
+  rpc GetChallengeHistory(GetChallengeHistoryRequest)
+      returns (GetChallengeHistoryResponse) {}
+
+  rpc CreateTrackHabit(CreateTrackHabitRequest)
+      returns (CreateTrackHabitResponse) {}
+  rpc GetHabitCount(GetHabitCountRequest) returns (GetHabitCountResponse) {}
+  rpc GetHabitHistory(GetHabitHistoryRequest)
+      returns (GetHabitHistoryResponse) {}
+
+  rpc CreateTrackContent(CreateTrackContentRequest)
+      returns (CreateTrackContentResponse) {}
+  rpc GetContentCount(GetContentCountRequest)
+      returns (GetContentCountResponse) {}
+  rpc GetContentHistory(GetContentHistoryRequest)
+      returns (GetContentHistoryResponse) {}
+
+  rpc CreateTrackMarker(CreateTrackMarkerRequest)
+      returns (CreateTrackMarkerResponse) {}
+  rpc GetLastMarker(GetLastMarkerRequest) returns (GetLastMarkerResponse) {}
+  rpc GetMarkerHistory(GetMarkerHistoryRequest)
+      returns (GetMarkerHistoryResponse) {}
+  rpc GetAllMarkerHistory(GetAllMarkerHistoryRequest)
+      returns (GetAllMarkerHistoryResponse) {}
+
+  rpc SubscribeMarker(SubscribeMarkerRequest)
+      returns (SubscribeMarkerResponse) {}
+
+  rpc GetDefaultMarkerHistory(GetDefaultMarkerHistoryRequest)
+      returns (GetDefaultMarkerHistoryResponse) {}
+}
+
+message SubscribeMarker {
+  google.protobuf.Any value = 1;
+  string unit = 2;
+}
+
+message SubscribeMarkerRequest { string channel = 1; }
+
+message SubscribeMarkerResponse { bool success = 1; }
+
+message CreateTrackGoalRequest {
+  go.micro.srv.user.User user = 1;
+  string goal_id = 2;
+  string org_id = 3;
+  string team_id = 4;
+}
+
+message CreateTrackGoalResponse {
+  message Data {
+    TrackGoal track_goal = 1;
+    int64 count = 2;
+  }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message GetGoalCountRequest {
+  string user_id = 8;
+  string goal_id = 1;
+  string org_id = 2;
+  string team_id = 3;
+  int64 limit = 4;
+  int64 offset = 5;
+  int64 from = 6;
+  int64 to = 7;
+  string sort_parameter = 9;
+  string sort_direction = 10;
+}
+
+message GetGoalCountResponse {
+  message Data { int64 count = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message GetGoalHistoryRequest {
+  string goal_id = 1;
+  string org_id = 2;
+  string team_id = 3;
+  int64 limit = 4;
+  int64 offset = 5;
+  int64 from = 6;
+  int64 to = 7;
+  string sort_parameter = 8;
+  string sort_direction = 9;
+}
+
+message GetGoalHistoryResponse {
+  message Data { repeated TrackGoal track_goals = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateTrackContentRequest {
+  go.micro.srv.user.User user = 1;
+  string content_id = 2;
+  string org_id = 3;
+  string team_id = 4;
+}
+
+message CreateTrackContentResponse {
+  message Data {
+    TrackContent track_content = 1;
+    int64 count = 2;
+  }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message GetContentCountRequest {
+  string user_id = 8;
+  string content_id = 1;
+  string org_id = 2;
+  string team_id = 3;
+  int64 limit = 4;
+  int64 offset = 5;
+  int64 from = 6;
+  int64 to = 7;
+}
+
+message GetContentCountResponse {
+  message Data { int64 count = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message GetContentHistoryRequest {
+  string content_id = 1;
+  string org_id = 2;
+  string team_id = 3;
+  int64 limit = 4;
+  int64 offset = 5;
+  int64 from = 6;
+  int64 to = 7;
+  string sort_parameter = 8;
+  string sort_direction = 9;
+}
+
+message GetContentHistoryResponse {
+  message Data { repeated TrackContent track_contents = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateTrackChallengeRequest {
+  go.micro.srv.user.User user = 1;
+  string challenge_id = 2;
+  string org_id = 3;
+  string team_id = 4;
+}
+
+message CreateTrackChallengeResponse {
+  message Data {
+    TrackChallenge track_challenge = 1;
+    int64 count = 2;
+  }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message GetChallengeCountRequest {
+  string user_id = 8;
+  string challenge_id = 1;
+  string org_id = 2;
+  string team_id = 3;
+  int64 limit = 4;
+  int64 offset = 5;
+  int64 from = 6;
+  int64 to = 7;
+}
+
+message GetChallengeCountResponse {
+  message Data { int64 count = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message GetChallengeHistoryRequest {
+  string challenge_id = 1;
+  string org_id = 2;
+  string team_id = 3;
+  int64 limit = 4;
+  int64 offset = 5;
+  int64 from = 6;
+  int64 to = 7;
+  string sort_parameter = 8;
+  string sort_direction = 9;
+}
+
+message GetChallengeHistoryResponse {
+  message Data { repeated TrackChallenge track_challenges = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateTrackHabitRequest {
+  go.micro.srv.user.User user = 1;
+  string habit_id = 2;
+  string org_id = 3;
+  string team_id = 4;
+}
+
+message CreateTrackHabitResponse {
+  message Data {
+    TrackHabit track_habit = 1;
+    int64 count = 2;
+  }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message GetHabitCountRequest {
+  string user_id = 8;
+  string habit_id = 1;
+  string org_id = 2;
+  string team_id = 3;
+  int64 limit = 4;
+  int64 offset = 5;
+  int64 from = 6;
+  int64 to = 7;
+}
+
+message GetHabitCountResponse {
+  message Data { int64 count = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message GetHabitHistoryRequest {
+  string habit_id = 1;
+  string org_id = 2;
+  string team_id = 3;
+  int64 limit = 4;
+  int64 offset = 5;
+  int64 from = 6;
+  int64 to = 7;
+  string sort_parameter = 8;
+  string sort_direction = 9;
+}
+
+message GetHabitHistoryResponse {
+  message Data { repeated TrackHabit track_habits = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message CreateTrackMarkerRequest {
+  google.protobuf.Value value = 1;
+  string unit = 2; // can be null
+  string user_id = 3;
+  string marker_id = 4;
+  string org_id = 5;
+  go.micro.srv.static.TrackerMethod tracker_method = 6;
+}
+
+message CreateTrackMarkerResponse {
+  message Data { TrackMarker track_marker = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message GetLastMarkerRequest {
+  string marker_id = 1;
+  string user_id = 2;
+  string org_id = 3;
+}
+
+message GetLastMarkerResponse {
+  message Data { google.protobuf.Value value = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message GetMarkerHistoryRequest {
+  string marker_id = 1;
+  int64 from = 2;
+  int64 to = 3;
+  int64 offset = 4;
+  int64 limit = 5;
+  string sort_parameter = 6;
+  string sort_direction = 7;
+}
+
+message GetMarkerHistoryResponse {
+  message Data { repeated TrackMarker track_markers = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message GetAllMarkerHistoryRequest {
+  int64 from = 1;
+  int64 to = 2;
+  int64 offset = 3;
+  int64 limit = 4;
+  string sort_parameter = 5;
+  string sort_direction = 6;
+}
+
+message GetAllMarkerHistoryResponse {
+  message Data { repeated TrackMarker track_markers = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message GetDefaultMarkerHistoryRequest {
+  string user_id = 1;
+  int64 offset = 2;
+  int64 limit = 3;
+  int64 from = 4;
+  int64 to = 5;
+  string sort_parameter = 6;
+  string sort_direction = 7;
+}
+
+message GetDefaultMarkerHistoryResponse {
+  message Data { repeated TrackMarker track_markers = 1; }
+  Data data = 1;
+  int64 code = 2;
+  string message = 3;
+}
+
+message TrackGoal {
+  go.micro.srv.user.User user = 1;
+  string org_id = 2;
+  go.micro.srv.behaviour.Goal goal = 3;
+  int64 created = 4;
+}
+
+message TrackChallenge {
+  go.micro.srv.user.User user = 1;
+  string org_id = 2;
+  go.micro.srv.behaviour.Challenge challenge = 3;
+  int64 created = 4;
+}
+
+message TrackHabit {
+  go.micro.srv.user.User user = 1;
+  string org_id = 2;
+  go.micro.srv.behaviour.Habit habit = 3;
+  int64 created = 4;
+}
+
+message TrackContent {
+  go.micro.srv.user.User user = 1;
+  string org_id = 2;
+  go.micro.srv.content.Content content = 3;
+  int64 created = 4;
+}
+
+message TrackMarker {
+  string id = 1;
+  go.micro.srv.user.User user = 2;
+  string org_id = 3;
+  go.micro.srv.static.Marker marker = 4;
+  int64 created = 5;
+  google.protobuf.Value value = 6;
+  string unit = 7; // can be null
+}

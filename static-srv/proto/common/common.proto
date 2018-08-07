@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package go.micro.srv.static;
+
+import "google/protobuf/any.proto";
+import "server/user-srv/proto/user/user.proto";
+import "server/todo-srv/proto/todo/todo.proto";
+import "server/organisation-srv/proto/organisation/organisation.proto";
+
+message Pending {
+  string id = 1;
+  string org_id = 2;
+  int64 created = 5;
+  go.micro.srv.user.User shared_by = 6;
+  go.micro.srv.user.User shared_with = 7;
+  google.protobuf.Any item = 8;
+  int64 updated = 9;
+}
+
+message PendingResponse {
+  string id = 1;
+  string org_id = 2;
+  string image = 3;
+  string title = 4;
+  int64 created = 5;
+  string shared_with_id = 6;
+  string summary = 7;
+  go.micro.srv.user.User shared_by = 8;
+  google.protobuf.Any item = 9;
+  string duration = 10;
+  int32 count = 11;
+}
+
+message DayItems { repeated DayItem items = 1; }
+
+message DayItem {
+  string id = 1;
+  string content_id = 2;
+  string category_id = 3;
+  string category_icon_slug = 4;
+  string category_name = 5;
+  string content_title = 6;
+  string content_pic_url = 7;
+  bool primary = 8;
+  string time = 9;                  // can be null
+  go.micro.srv.todo.Todo pre = 10;  // can be null
+  go.micro.srv.todo.Todo post = 11; // can be null
+  repeated DayItem options = 12;    // primary = false
+}
+
+message AccountConfirmationMessage {
+  string verification_token = 1;
+  go.micro.srv.user.User user = 2;
+  go.micro.srv.organisation.Organisation organisation = 3;
+}
+
+message CommonFilter { string id = 1; }

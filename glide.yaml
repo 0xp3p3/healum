@@ -1,0 +1,65 @@
+package: server
+import:
+- package: github.com/afex/hystrix-go
+  subpackages:
+  - hystrix
+- package: github.com/emicklei/go-restful
+  version: ^1.2.0
+  subpackages:
+  - swagger
+- package: github.com/go-sql-driver/mysql
+  version: ^1.2.0
+- package: github.com/golang/protobuf
+  subpackages:
+  - proto
+- package: github.com/mailgun/lemma
+  version: ^0.0.2
+  subpackages:
+  - secret
+- package: github.com/sirupsen/logrus
+  version: master
+- package: github.com/mattbaird/elastigo
+  version: ^1.0.0
+- package: github.com/micro/cli
+- package: github.com/micro/go-micro
+  subpackages:
+  - broker
+  - client
+  - errors
+  - metadata
+  - registry
+  - selector
+- package: github.com/micro/go-os
+  subpackages:
+  - config
+  - config/source/file
+  - event/proto
+  - metrics
+- package: github.com/micro/go-plugins
+  subpackages:
+  - broker/nats
+  - transport/nats
+  - wrapper/breaker/hystrix
+  - wrapper/ratelimiter/ratelimit
+- package: github.com/micro/go-web
+- package: github.com/micro/place-srv
+  subpackages:
+  - proto
+- package: github.com/pborman/uuid
+  version: ^1.0.0
+- package: golang.org/x/crypto
+  subpackages:
+  - bcrypt
+- package: golang.org/x/net
+  subpackages:
+  - context
+- package: golang.org/x/oauth2
+  subpackages:
+  - google
+- package: google.golang.org/api
+  subpackages:
+  - storage/v1
+- package: gopkg.in/redis.v4
+  version: ^4.1.5
+- package: github.com/go-redis/redis
+  version: ^6.9.0
